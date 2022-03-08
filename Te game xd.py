@@ -130,13 +130,13 @@ class MyGame(arcade.Window):
         y = 200
         radius = 100
         mode = 'soft'
-        color = arcade.csscolor.WHITE
+        color = arcade.csscolor.GRAY
         light = Light(x, y, radius, color, mode)
         self.light_layer.add(light)
 
-        radius = 150
+        radius = 300
         mode = 'soft'
-        color = arcade.csscolor.WHITE
+        color = arcade.csscolor.GREY
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
 
     def on_draw(self):
