@@ -11,6 +11,9 @@ CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 10
 AMBIENT_COLOR = (0, 0, 0)
+SPRINT_SPEED = 5
+
+
 
 def load_texture_pair(filename):
     return [
@@ -96,6 +99,7 @@ class MyGame(arcade.Window):
         # self.physics_engine = None
         self.light_layer = None
         self.player_light = None
+        self.sprinting = False
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -159,24 +163,25 @@ class MyGame(arcade.Window):
         
     def process_keychange(self):
         angle = 0
+        print(self.sprinting)
         if self.up_pressed and not self.down_pressed:
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED
-            self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
             self.legs_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED
-            self.legs_sprite.change_y = -PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.legs_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
             self.legs_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
             self.legs_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
-            self.legs_sprite.change_x = PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.legs_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
             self.legs_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
-            self.legs_sprite.change_x = -PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.legs_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
             self.legs_sprite.angle = 0
         
 
@@ -193,8 +198,9 @@ class MyGame(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.D:
             self.right_pressed = True
-        elif modifiers & arcade.key.MOD_SHIFT:
-            self.shift_pressed = True
+        
+        self.sprinting = modifiers and arcade.key.MOD_SHIFT
+        
         self.process_keychange()
         if key == arcade.key.SPACE:
             if self.player_light in self.light_layer:
@@ -211,8 +217,8 @@ class MyGame(arcade.Window):
             self.left_pressed = False
         elif key == arcade.key.D:
             self.right_pressed = False
-        elif modifiers & arcade.key.MOD_SHIFT:
-            self.shift_pressed = False
+        
+        self.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
  
