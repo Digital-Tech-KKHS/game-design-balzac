@@ -130,6 +130,7 @@ class MyGame(arcade.Window):
         y = 200
         radius = 100
         mode = 'soft'
+
         color = arcade.csscolor.GRAY
         light = Light(x, y, radius, color, mode)
         self.light_layer.add(light)
