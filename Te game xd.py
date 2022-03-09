@@ -9,7 +9,7 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
-PLAYER_MOVEMENT_SPEED = 10
+PLAYER_MOVEMENT_SPEED = 7
 AMBIENT_COLOR = (0, 0, 0)
 
 SPRINT_SPEED = 5
@@ -36,7 +36,7 @@ class PlayerCharacter(arcade.Sprite):
 
         self.walk_textures = []
         for i in range(14):
-            for j in range(4):
+            for j in range(5):
                 texture = load_texture_pair(f"./legs/legs_{i}.png")
                 self.walk_textures.append(texture)
 
@@ -129,7 +129,7 @@ class MyGame(arcade.Window):
 
         x = 100
         y = 200
-        radius = 100
+        radius = 500
         mode = 'soft'
 
         color = arcade.csscolor.GRAY
