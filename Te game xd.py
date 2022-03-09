@@ -1,6 +1,6 @@
 import arcade
 import math
-from arcade.experimental import Shadertoy
+from arcade.experimental.lights import Light, LightLayer
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
@@ -9,7 +9,9 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 10
+AMBIENT_COLOR = (0, 0, 0)
+
 SPRINT_SPEED = 5
 
 
@@ -82,9 +84,9 @@ class PlayerCharacter(arcade.Sprite):
 
 
 class MyGame(arcade.Window):
-    def __init__(self):
+    def __init__(self, width, height, title):
 
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__(width, height, title,)
         
         self.player_list = None
         self.legs_list = None
@@ -95,6 +97,9 @@ class MyGame(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
         self.shift_pressed = False
+        # self.physics_engine = None
+        self.light_layer = None
+        self.player_light = None
         self.sprinting = False
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -120,14 +125,44 @@ class MyGame(arcade.Window):
         self.legs_list.append(self.legs_sprite)
         self.set_mouse_visible(False)
 
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        x = 100
+        y = 200
+        radius = 100
+        mode = 'soft'
+
+        color = arcade.csscolor.GRAY
+        light = Light(x, y, radius, color, mode)
+        self.light_layer.add(light)
+
+        radius = 300
+        mode = 'soft'
+        color = arcade.csscolor.GREY
+        self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
+
     def on_draw(self):
 
         self.clear()
-        arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
+        
         self.legs_list.draw()
         self.player_list.draw()
         self.cursor_list.draw()
 
+        with self.light_layer:
+            self.clear()
+            arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
+            self.legs_list.draw()
+            self.player_list.draw()
+            self.cursor_list.draw()
+
+            
+        
+        self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+
+    def on_resize(self, width, height):
+        self.light_layer.resize(width, height)
+        
     def process_keychange(self):
         angle = 0
         print(self.sprinting)
@@ -169,6 +204,11 @@ class MyGame(arcade.Window):
         self.sprinting = modifiers and arcade.key.MOD_SHIFT
         
         self.process_keychange()
+        if key == arcade.key.SPACE:
+            if self.player_light in self.light_layer:
+                self.light_layer.remove(self.player_light)
+            else:
+                self.light_layer.add(self.player_light)
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W:
@@ -201,11 +241,13 @@ class MyGame(arcade.Window):
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
             self.player_sprite.angle = math.degrees(angle) - 90
+        
+        self.player_light.position = self.player_sprite.position
 
 
 def main():
 
-    window = MyGame()
+    window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     window.setup()
     arcade.run()
 
