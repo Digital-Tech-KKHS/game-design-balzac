@@ -10,7 +10,7 @@ LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
-AMBIENT_COLOR = (0, 0, 0)
+AMBIENT_COLOR = (1, 1, 1)
 
 SPRINT_SPEED = 5
 
@@ -97,7 +97,6 @@ class MyGame(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
         self.shift_pressed = False
-        # self.physics_engine = None
         self.light_layer = None
         self.player_light = None
         self.sprinting = False
@@ -131,7 +130,6 @@ class MyGame(arcade.Window):
         y = 200
         radius = 500
         mode = 'soft'
-
         color = arcade.csscolor.GRAY
         light = Light(x, y, radius, color, mode)
         self.light_layer.add(light)
@@ -140,6 +138,7 @@ class MyGame(arcade.Window):
         mode = 'soft'
         color = arcade.csscolor.GREY
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
+        self.light_layer.add(self.player_light)
 
     def on_draw(self):
 
