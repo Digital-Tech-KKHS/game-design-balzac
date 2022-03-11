@@ -164,7 +164,7 @@ class MyGame(arcade.Window):
         
     def process_keychange(self):
         angle = 0
-        print(self.sprinting)
+        
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
             self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
