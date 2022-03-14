@@ -22,7 +22,7 @@ def load_texture_pair(filename):
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
-class Light(arcade.Sprite):
+class Lights(arcade.Sprite):
     def __init__(self, x, y):
         super().__init__("Level 0 assets\Flourescent lights.png", center_x=x, center_y=y)
         x = 100
@@ -147,7 +147,7 @@ class MyGame(arcade.Window):
 
         radius = 300
         mode = 'soft'
-        color = arcade.color_from_hex_string("#1c1c1c")
+        color = arcade.color_from_hex_string("#363636")
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
 
