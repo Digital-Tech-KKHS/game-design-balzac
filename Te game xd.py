@@ -12,7 +12,7 @@ CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
 AMBIENT_COLOR = (1, 1, 1)
 
-SPRINT_SPEED = 5
+SPRINT_SPEED = 3
 
 
 
@@ -136,35 +136,32 @@ class MyGame(arcade.Window):
 
         radius = 300
         mode = 'soft'
-        color = arcade.csscolor.GREY
+        color = arcade.color_from_hex_string("#1c1c1c")
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
 
     def on_draw(self):
 
         self.clear()
-        
+
         self.legs_list.draw()
         self.player_list.draw()
-        self.cursor_list.draw()
 
         with self.light_layer:
             self.clear()
             arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
             self.legs_list.draw()
             self.player_list.draw()
-            self.cursor_list.draw()
 
-            
-        
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        self.cursor_list.draw()
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
     def process_keychange(self):
         angle = 0
-        print(self.sprinting)
+        
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
             self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
