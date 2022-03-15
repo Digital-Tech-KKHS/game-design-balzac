@@ -1,6 +1,7 @@
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
+import pyglet
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
@@ -21,6 +22,7 @@ def load_texture_pair(filename):
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
+
 
 class Lights(arcade.Sprite):
     def __init__(self, x, y):
@@ -102,7 +104,6 @@ class MyGame(arcade.Window):
         self.player_list = None
         self.legs_list = None
         self.player_sprite = None
-        self.cursor_list = None
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
@@ -111,39 +112,51 @@ class MyGame(arcade.Window):
         self.light_layer = None
         self.player_light = None
         self.sprinting = False
+        self.scene = None
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
     def setup(self):
+        tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx")
+        self.scene = arcade.Scene.from_tilemap(tile_map)
 
-        self.player_list = arcade.SpriteList()
-        self.cursor_list = arcade.SpriteList()
-        self.legs_list = arcade.SpriteList()
+        self.scene.add_sprite_list('legs_list')
+        self.scene.add_sprite_list('player_list')
+
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
         self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
         self.player_sprite.center_x = 320
         self.player_sprite.center_y = 240
-        self.player_list.append(self.player_sprite)
+        self.scene['player_list'].append(self.player_sprite)
         self.player_sprite.angle = 180
-        cursor = "cursor.png"
-        self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
-        self.cursor_list.append(self.cursor_sprite)
+
+
+        image = pyglet.image.load('cursor.png')
+        cursor = pyglet.window.ImageMouseCursor(image, 16, 8)
+        self.set_mouse_cursor(cursor)
+
+
         self.legs_sprite = PlayerCharacter()
         self.legs_sprite.center_x = self.player_sprite.center_x
         self.legs_sprite.center_y = self.player_sprite.center_y
-        self.legs_list.append(self.legs_sprite)
+        self.scene['legs_list'].append(self.legs_sprite)
         self.set_mouse_visible(False)
 
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        x = 100
-        y = 200
-        radius = 500
-        mode = 'soft'
-        color = arcade.csscolor.GRAY
-        light = Light(x, y, radius, color, mode)
-        self.light_layer.add(light)
+        for sprite in self.scene['lights']:
+            print(sprite.center_y)
+            light = Light(sprite.center_x, sprite.center_y, sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+            self.light_layer.add(light)
+
+        # x = 100
+        # y = 200
+        # radius = 500
+        # mode = 'soft'
+        # color = arcade.csscolor.GRAY
+        # light = Light(x, y, radius, color, mode)
+        # self.light_layer.add(light)
 
         radius = 300
         mode = 'soft'
@@ -155,17 +168,13 @@ class MyGame(arcade.Window):
 
         self.clear()
 
-        self.legs_list.draw()
-        self.player_list.draw()
 
         with self.light_layer:
             self.clear()
             arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
-            self.legs_list.draw()
-            self.player_list.draw()
+            self.scene.draw()
 
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
-        self.cursor_list.draw()
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -235,19 +244,15 @@ class MyGame(arcade.Window):
         self.set_viewport(self.legs_sprite.center_x - SCREEN_WIDTH/2, self.legs_sprite.center_x + SCREEN_WIDTH/2,
                           self.legs_sprite.center_y - SCREEN_HEIGHT/2, self.legs_sprite.center_y + SCREEN_HEIGHT/2)
         self.player_sprite.update()
-        self.cursor_sprite.update()
         self.legs_sprite.update(delta_time)
-        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
-        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
-        for player in self.player_list:
-            start_x = self.player_sprite.center_x
-            start_y = self.player_sprite.center_y
-            dest_x = self.cursor_sprite.center_x
-            dest_y = self.cursor_sprite.center_y
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-            self.player_sprite.angle = math.degrees(angle) - 90
+        start_x = self.player_sprite.center_x
+        start_y = self.player_sprite.center_y
+        dest_x = self._mouse_x + self.get_viewport()[0]
+        dest_y = self._mouse_y + self.get_viewport()[2]
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+        self.player_sprite.angle = math.degrees(angle) - 90
         
         self.player_light.position = self.player_sprite.position
 
