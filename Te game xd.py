@@ -12,9 +12,9 @@ LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
-AMBIENT_COLOR = (0, 0, 0)
-ENEMY_SCALE = 0.4
-SPRINT_SPEED = 5
+AMBIENT_COLOR = (1, 1, 1)
+
+SPRINT_SPEED = 3
 
 
 
@@ -23,6 +23,17 @@ def load_texture_pair(filename):
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
+
+class Lights(arcade.Sprite):
+    def __init__(self, x, y):
+        super().__init__("Level 0 assets\Flourescent lights.png", center_x=x, center_y=y)
+        x = 100
+        y = 200
+        radius = 500
+        mode = 'soft'
+        color = arcade.csscolor.GRAY
+        light = Light(x, y, radius, color, mode)
+        self.light_layer.add(light)
 
 
 class PlayerCharacter(arcade.Sprite):
@@ -84,6 +95,14 @@ class PlayerCharacter(arcade.Sprite):
 
         self.update_animation()
         
+class Enemy(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.scale = CHARACTER_SCALING
+    
+    
+
+
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
@@ -91,15 +110,16 @@ class MyGame(arcade.Window):
         
     
         self.player_list = None
+        self.enemy_list = None
         self.legs_list = None
         self.player_sprite = None
+        self.enemy_sprite = None
         self.cursor_list = None
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
         self.shift_pressed = False
-        # self.physics_engine = None
         self.light_layer = None
         self.player_light = None
         self.sprinting = False
@@ -109,10 +129,18 @@ class MyGame(arcade.Window):
     def setup(self):
 
         self.player_list = arcade.SpriteList()
+        self.enemy_list = arcade.SpriteList()
         self.cursor_list = arcade.SpriteList()
         self.legs_list = arcade.SpriteList()
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
+        
+        enemy = "faceling.png"
+        self.enemy_sprite = arcade.Sprite(enemy, CHARACTER_SCALING)
+        self.enemy_sprite.center_x = 320
+        self.enemy_sprite.center_y = 240
+        self.enemy_list.append(self.enemy_sprite)
+        
         self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
         self.player_sprite.center_x = 320
         self.player_sprite.center_y = 240
@@ -133,40 +161,40 @@ class MyGame(arcade.Window):
         y = 200
         radius = 500
         mode = 'soft'
-
         color = arcade.csscolor.GRAY
         light = Light(x, y, radius, color, mode)
         self.light_layer.add(light)
 
         radius = 300
         mode = 'soft'
-        color = arcade.csscolor.GREY
+        color = arcade.color_from_hex_string("#363636")
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
+        self.light_layer.add(self.player_light)
 
     def on_draw(self):
 
         self.clear()
         self.legs_list.draw()
         self.player_list.draw()
-        self.cursor_list.draw()
+        self.enemy_list.draw()
 
         with self.light_layer:
             self.clear()
             arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
             self.legs_list.draw()
             self.player_list.draw()
-            self.cursor_list.draw()
+            self.enemy_list.draw()
 
-            
-        
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        self.cursor_list.draw()
+        
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
     def process_keychange(self):
         angle = 0
-        print(self.sprinting)
+        
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
             self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
@@ -229,6 +257,7 @@ class MyGame(arcade.Window):
         self.set_viewport(self.legs_sprite.center_x - SCREEN_WIDTH/2, self.legs_sprite.center_x + SCREEN_WIDTH/2,
                           self.legs_sprite.center_y - SCREEN_HEIGHT/2, self.legs_sprite.center_y + SCREEN_HEIGHT/2)
         self.player_sprite.update()
+        self.enemy_sprite.update()
         self.cursor_sprite.update()
         self.legs_sprite.update(delta_time)
         self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
@@ -242,7 +271,17 @@ class MyGame(arcade.Window):
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
             self.player_sprite.angle = math.degrees(angle) - 90
-        
+
+        for emeny in self.enemy_list:
+            start_x = self.enemy_sprite.center_x
+            start_y = self.enemy_sprite.center_y
+            dest_x = self.player_sprite.center_x
+            dest_y = self.player_sprite.center_y
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+            self.enemy_sprite.angle = math.degrees(angle) - 90
+
         self.player_light.position = self.player_sprite.position
 
 
