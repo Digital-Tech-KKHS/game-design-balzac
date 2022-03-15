@@ -1,3 +1,5 @@
+from re import X
+from tkinter import Y
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
@@ -11,7 +13,7 @@ CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
 AMBIENT_COLOR = (0, 0, 0)
-
+ENEMY_SCALE = 0.4
 SPRINT_SPEED = 5
 
 
@@ -81,13 +83,13 @@ class PlayerCharacter(arcade.Sprite):
         self.center_y += self.change_y
 
         self.update_animation()
-
-
+        
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title,)
         
+    
         self.player_list = None
         self.legs_list = None
         self.player_sprite = None
@@ -144,7 +146,6 @@ class MyGame(arcade.Window):
     def on_draw(self):
 
         self.clear()
-        
         self.legs_list.draw()
         self.player_list.draw()
         self.cursor_list.draw()
