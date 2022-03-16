@@ -11,7 +11,7 @@ CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
 AMBIENT_COLOR = (1, 1, 1)
-
+GRAVITY = 1
 SPRINT_SPEED = 3
 
 
@@ -134,6 +134,10 @@ class MyGame(arcade.Window):
         self.legs_sprite.center_y = self.player_sprite.center_y
         self.legs_list.append(self.legs_sprite)
         self.set_mouse_visible(False)
+
+        # self.physics_engine = arcade.PhysicsEngineSimple(
+        #     self.player_sprite, gravity_constant=GRAVITY, walls=self.scene['walls']
+        # )
 
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
