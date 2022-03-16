@@ -10,7 +10,7 @@ LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
 PLAYER_MOVEMENT_SPEED = 7
-AMBIENT_COLOR = (1, 1, 1)
+AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 3
 
@@ -21,17 +21,6 @@ def load_texture_pair(filename):
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
-
-class Lights(arcade.Sprite):
-    def __init__(self, x, y):
-        super().__init__("Level 0 assets\Flourescent lights.png", center_x=x, center_y=y)
-        x = 100
-        y = 200
-        radius = 500
-        mode = 'soft'
-        color = arcade.csscolor.GRAY
-        light = Light(x, y, radius, color, mode)
-        self.light_layer.add(light)
 
 
 class PlayerCharacter(arcade.Sprite):
@@ -98,7 +87,6 @@ class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title,)
-        
         self.player_list = None
         self.legs_list = None
         self.player_sprite = None
@@ -114,7 +102,6 @@ class MyGame(arcade.Window):
         self.scene = None
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
-
     def setup(self):
         tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
@@ -125,8 +112,8 @@ class MyGame(arcade.Window):
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
         self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
-        self.player_sprite.center_x = 9601
-        self.player_sprite.center_y = 6272
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6016
         self.scene['player_list'].append(self.player_sprite)
         self.player_sprite.angle = 180
         cursor = "cursor.png"
@@ -141,9 +128,8 @@ class MyGame(arcade.Window):
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         for sprite in self.scene['lights']:
-            print(sprite.center_y)
-            light = Light(sprite.center_x, sprite.center_y, sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
-        self.light_layer.add(light)
+            light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+            self.light_layer.add(light)
 
         radius = 300
         mode = 'soft'
@@ -151,16 +137,16 @@ class MyGame(arcade.Window):
         self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
 
+        
     def on_draw(self):
-
+        
         self.clear()
-
+        
         with self.light_layer:
             self.clear()
-            arcade.draw_lrwh_rectangle_textured(0,0,1280,960,self.floor)
             self.scene.draw()
-
-            self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        
+        self.light_layer.draw(ambient_color=AMBIENT_COLOR)
         self.cursor_list.draw()
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
