@@ -44,14 +44,16 @@ class PlayerCharacter(arcade.Sprite):
 
     def update_animation(self, delta_time: float = 1 / 60):
 
-        if self.change_x < 0 and self.character_face_direction == LEFT_FACING:
-            self.character_face_direction = RIGHT_FACING
+        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
         elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
-        if self.change_y < 0 and self.character_face_direction == LEFT_FACING:
+        if self.change_y != 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
-        elif self.change_y > 0 and self.character_face_direction == LEFT_FACING:
-            self.character_face_direction = RIGHT_FACING
+        if self.change_y != 0 and self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+
+
 
         elif self.change_x == 0:
             self.texture = self.idle_texture_pair[self.character_face_direction]
