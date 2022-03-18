@@ -50,10 +50,12 @@ class PlayerCharacter(arcade.Sprite):
             self.character_face_direction = LEFT_FACING
         elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
-        if self.change_y < 0 and self.character_face_direction == LEFT_FACING:
+        if self.change_y != 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
-        elif self.change_y > 0 and self.character_face_direction == LEFT_FACING:
-            self.character_face_direction = RIGHT_FACING
+        if self.change_y != 0 and self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+
+
 
         elif self.change_x == 0:
             self.texture = self.idle_texture_pair[self.character_face_direction]
@@ -61,14 +63,7 @@ class PlayerCharacter(arcade.Sprite):
         elif self.change_y == 0:
             self.texture = self.idle_texture_pair[self.character_face_direction]
 
-        if self.change_x != 0:
-            self.cur_texture += 1
-            if self.cur_texture > len(self.walk_textures) - 1:
-                self.cur_texture = 0
-            self.texture = self.walk_textures[self.cur_texture][
-                self.character_face_direction
-            ]
-        if self.change_y != 0:
+        if self.change_x or self.change_y != 0:
             self.cur_texture += 1
             if self.cur_texture > len(self.walk_textures) - 1:
                 self.cur_texture = 0
@@ -148,7 +143,6 @@ class MyGame(arcade.Window):
         self.legs_sprite.center_y = self.player_sprite.center_y
         self.scene['legs_list'].append(self.legs_sprite)
         self.set_mouse_visible(False)
-
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         for sprite in self.scene['lights']:
