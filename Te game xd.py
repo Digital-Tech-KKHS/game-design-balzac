@@ -134,11 +134,6 @@ class MyGame(arcade.Window):
         self.legs_sprite.center_y = self.player_sprite.center_y
         self.legs_list.append(self.legs_sprite)
         self.set_mouse_visible(False)
-
-        # self.physics_engine = arcade.PhysicsEngineSimple(
-        #     self.player_sprite, gravity_constant=GRAVITY, walls=self.scene['walls']
-        # )
-
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         x = 100
