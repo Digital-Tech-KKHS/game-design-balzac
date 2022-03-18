@@ -1,3 +1,5 @@
+from re import X
+from tkinter import Y
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
@@ -76,15 +78,26 @@ class PlayerCharacter(arcade.Sprite):
         self.center_y += self.change_y
 
         self.update_animation()
+        
+class faceling(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.scale = CHARACTER_SCALING
+    
+    
 
 
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title,)
+        
+    
         self.player_list = None
+        self.faceling_list = None
         self.legs_list = None
         self.player_sprite = None
+        self.faceling_sprite = None
         self.cursor_list = None
         self.left_pressed = False
         self.right_pressed = False
@@ -101,15 +114,26 @@ class MyGame(arcade.Window):
         tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
 
+        self.player_list = arcade.SpriteList()
+        self.faceling_list = arcade.SpriteList()
         self.scene.add_sprite_list('legs_list')
         self.scene.add_sprite_list('player_list')
+        self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
+        
+        faceling = "faceling.png"
+        self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
+        self.faceling_sprite.center_x = 9472
+        self.faceling_sprite.center_y = 6016
+        self.faceling_list.append(self.faceling_sprite)
+        
         self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
         self.player_sprite.center_x = 9472
         self.player_sprite.center_y = 6016
         self.scene['player_list'].append(self.player_sprite)
+        self.scene['faceling_list'].append(self.faceling_sprite)
         self.player_sprite.angle = 180
         cursor = "cursor.png"
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
@@ -136,6 +160,7 @@ class MyGame(arcade.Window):
         
         self.clear()
         
+
         with self.light_layer:
             self.clear()
             self.scene.draw()
@@ -210,10 +235,31 @@ class MyGame(arcade.Window):
         self.set_viewport(self.legs_sprite.center_x - SCREEN_WIDTH/2, self.legs_sprite.center_x + SCREEN_WIDTH/2,
                           self.legs_sprite.center_y - SCREEN_HEIGHT/2, self.legs_sprite.center_y + SCREEN_HEIGHT/2)
         self.player_sprite.update()
+        self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.legs_sprite.update(delta_time)
         self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
         self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
+        for player in self.player_list:
+            start_x = self.player_sprite.center_x
+            start_y = self.player_sprite.center_y
+            dest_x = self.cursor_sprite.center_x
+            dest_y = self.cursor_sprite.center_y
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+            self.player_sprite.angle = math.degrees(angle) - 90
+
+        for emeny in self.faceling_list:
+            start_x = self.faceling_sprite.center_x
+            start_y = self.faceling_sprite.center_y
+            dest_x = self.player_sprite.center_x
+            dest_y = self.player_sprite.center_y
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+            self.faceling_sprite.angle = math.degrees(angle) - 90
+
         start_x = self.player_sprite.center_x
         start_y = self.player_sprite.center_y
         dest_x = self.cursor_sprite.center_x
