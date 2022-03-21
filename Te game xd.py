@@ -78,7 +78,10 @@ class PlayerCharacter(arcade.Sprite):
         self.center_y += self.change_y
     
 
-        self.update_animation()
+        self.update_animation()\
+
+    def on_draw(self):
+        return
         
 class faceling(arcade.Sprite):
     def __init__(self):
@@ -123,17 +126,15 @@ class MyGame(arcade.Window):
         self.cursor_list = arcade.SpriteList()
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
-        
+        self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6016
+        self.scene['player_list'].append(self.player_sprite)
         faceling = "faceling.png"
         self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 9472
         self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
-        
-        self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
-        self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6016
-        self.scene['player_list'].append(self.player_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
         self.player_sprite.angle = 180
         cursor = "cursor.png"
@@ -145,6 +146,8 @@ class MyGame(arcade.Window):
         self.scene['legs_list'].append(self.legs_sprite)
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
 
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
