@@ -77,7 +77,10 @@ class PlayerCharacter(arcade.Sprite):
         self.center_x += self.change_x
         self.center_y += self.change_y
 
-        self.update_animation()
+        self.update_animation()\
+
+    def on_draw(self):
+        return
         
 class faceling(arcade.Sprite):
     def __init__(self):
@@ -122,17 +125,15 @@ class MyGame(arcade.Window):
         self.cursor_list = arcade.SpriteList()
         self.floor = arcade.load_texture("floor.png")
         player = "dude.png"
-        
+        self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6016
+        self.scene['player_list'].append(self.player_sprite)
         faceling = "faceling.png"
         self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 9472
         self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
-        
-        self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
-        self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6016
-        self.scene['player_list'].append(self.player_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
         self.player_sprite.angle = 180
         cursor = "cursor.png"
