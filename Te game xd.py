@@ -76,9 +76,18 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-    
 
-        self.update_animation()\
+        self.update_animation()
+
+    def rotate_to_mouse(self, mouse_x, mouse_y):
+        start_x = self.center_x
+        start_y = self.center_y
+        dest_x = mouse_x
+        dest_y = mouse_y
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+        self.angle = math.degrees(angle) - 90
 
     def on_draw(self):
         return
@@ -112,8 +121,11 @@ class MyGame(arcade.Window):
         self.player_light = None
         self.sprinting = False
         self.scene = None
+        self.physics = None
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
+
+
     def setup(self):
         tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
@@ -130,13 +142,13 @@ class MyGame(arcade.Window):
         self.player_sprite.center_x = 9472
         self.player_sprite.center_y = 6016
         self.scene['player_list'].append(self.player_sprite)
+        self.player_sprite.angle = 180
         faceling = "faceling.png"
         self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 9472
         self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
-        self.player_sprite.angle = 180
         cursor = "cursor.png"
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
@@ -236,6 +248,8 @@ class MyGame(arcade.Window):
         self.process_keychange()
  
     def on_update(self, delta_time):
+        self.legs_sprite.center_x = self.player_sprite.center_x
+        self.legs_sprite.center_y = self.player_sprite.center_y
         self.set_viewport(self.legs_sprite.center_x - SCREEN_WIDTH/2, self.legs_sprite.center_x + SCREEN_WIDTH/2,
                           self.legs_sprite.center_y - SCREEN_HEIGHT/2, self.legs_sprite.center_y + SCREEN_HEIGHT/2)
         self.player_sprite.update()
@@ -253,6 +267,10 @@ class MyGame(arcade.Window):
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
             self.player_sprite.angle = math.degrees(angle) - 90
+        
+        self.legs_sprite.rotate_to_mouse(self._mouse_x, self._mouse_y)
+        
+        self.physics_engine.update()
 
         for emeny in self.faceling_list:
             start_x = self.faceling_sprite.center_x
