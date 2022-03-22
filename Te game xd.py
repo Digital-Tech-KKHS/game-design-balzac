@@ -11,10 +11,10 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
-SPRINT_SPEED = 3
+SPRINT_SPEED = 2
 
 
 
@@ -79,15 +79,6 @@ class PlayerCharacter(arcade.Sprite):
 
         self.update_animation()
 
-    def rotate_to_mouse(self, mouse_x, mouse_y):
-        start_x = self.center_x
-        start_y = self.center_y
-        dest_x = mouse_x
-        dest_y = mouse_y
-        x_diff = dest_x - start_x
-        y_diff = dest_y - start_y
-        angle = math.atan2(y_diff, x_diff)
-        self.angle = math.degrees(angle) - 90
 
     def on_draw(self):
         return
@@ -105,11 +96,10 @@ class MyGame(arcade.Window):
 
         super().__init__(width, height, title,)
         
-    
         self.player_list = None
         self.faceling_list = None
-        self.legs_list = None
-        self.player_sprite = None
+        self.torso_list = None
+        self.torso_sprite = None
         self.faceling_sprite = None
         self.cursor_list = None
         self.left_pressed = False
@@ -132,30 +122,28 @@ class MyGame(arcade.Window):
 
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
-        self.scene.add_sprite_list('legs_list')
         self.scene.add_sprite_list('player_list')
+        self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-        self.floor = arcade.load_texture("floor.png")
-        player = "dude.png"
-        self.player_sprite = arcade.Sprite(player, CHARACTER_SCALING)
-        self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6016
-        self.scene['player_list'].append(self.player_sprite)
-        self.player_sprite.angle = 180
+
+        torso = "dude.png"
+        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
+        self.scene['torso_list'].append(self.torso_sprite)
         faceling = "faceling.png"
         self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 9472
         self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
+        self.torso_sprite.angle = 180
         cursor = "cursor.png"
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
-        self.legs_sprite = PlayerCharacter()
-        self.legs_sprite.center_x = self.player_sprite.center_x
-        self.legs_sprite.center_y = self.player_sprite.center_y
-        self.scene['legs_list'].append(self.legs_sprite)
+        self.player_sprite = PlayerCharacter()
+        self.scene['player_list'].append(self.player_sprite)
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6016
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -168,7 +156,7 @@ class MyGame(arcade.Window):
         radius = 300
         mode = 'soft'
         color = arcade.color_from_hex_string("#363636")
-        self.player_light = Light(self.player_sprite.center_x, self.player_sprite.center_y, radius, color, mode)
+        self.player_light = Light(self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
 
         
@@ -191,28 +179,26 @@ class MyGame(arcade.Window):
         
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.legs_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.legs_sprite.angle = 90
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.player_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
             self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.legs_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.legs_sprite.angle = -90
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.player_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
-            self.legs_sprite.change_y = 0
+            self.player_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.legs_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.legs_sprite.angle = 0
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.player_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.legs_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.legs_sprite.angle = 0
-        
-
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.player_sprite.angle = 0
         else:
             self.player_sprite.change_x = 0
-            self.legs_sprite.change_x = 0
+            self.player_sprite.change_x = 0
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.W:
@@ -248,14 +234,15 @@ class MyGame(arcade.Window):
         self.process_keychange()
  
     def on_update(self, delta_time):
-        self.legs_sprite.center_x = self.player_sprite.center_x
-        self.legs_sprite.center_y = self.player_sprite.center_y
-        self.set_viewport(self.legs_sprite.center_x - SCREEN_WIDTH/2, self.legs_sprite.center_x + SCREEN_WIDTH/2,
-                          self.legs_sprite.center_y - SCREEN_HEIGHT/2, self.legs_sprite.center_y + SCREEN_HEIGHT/2)
-        self.player_sprite.update()
+
+        self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
+                          self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
+        self.torso_sprite.center_x = self.player_sprite.center_x
+        self.torso_sprite.center_y = self.player_sprite.center_y
+        self.torso_sprite.update()
         self.faceling_sprite.update()
         self.cursor_sprite.update()
-        self.legs_sprite.update(delta_time)
+        self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
         self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
         for player in self.player_list:
@@ -284,14 +271,36 @@ class MyGame(arcade.Window):
 
         start_x = self.player_sprite.center_x
         start_y = self.player_sprite.center_y
+        self.physics_engine.update()
+        start_x = self.torso_sprite.center_x
+        start_y = self.torso_sprite.center_y
         dest_x = self.cursor_sprite.center_x
         dest_y = self.cursor_sprite.center_y
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
-        self.player_sprite.angle = math.degrees(angle) - 90
+        self.torso_sprite.angle = math.degrees(angle) - 90
+
+        for enemy in self.faceling_list:
+            start_x = self.faceling_sprite.center_x
+            start_y = self.faceling_sprite.center_y
+            dest_x = self.torso_sprite.center_x
+            dest_y = self.torso_sprite.center_y
+            x_diff = dest_x - start_x
+            y_diff = dest_y - start_y
+            angle = math.atan2(y_diff, x_diff)
+            self.faceling_sprite.angle = math.degrees(angle) - 90
+
+        start_x = self.torso_sprite.center_x
+        start_y = self.torso_sprite.center_y
+        dest_x = self.cursor_sprite.center_x
+        dest_y = self.cursor_sprite.center_y
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+        self.torso_sprite.angle = math.degrees(angle) - 90
         
-        self.player_light.position = self.player_sprite.position
+        self.player_light.position = self.torso_sprite.position
 
 
 def main():
