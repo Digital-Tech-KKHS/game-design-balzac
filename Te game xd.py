@@ -11,10 +11,10 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
 CURSOR_SCALING = 0.2
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
-SPRINT_SPEED = 3
+SPRINT_SPEED = 2
 
 
 
@@ -264,7 +264,7 @@ class MyGame(arcade.Window):
         angle = math.atan2(y_diff, x_diff)
         self.torso_sprite.angle = math.degrees(angle) - 90
 
-        for emeny in self.faceling_list:
+        for enemy in self.faceling_list:
             start_x = self.faceling_sprite.center_x
             start_y = self.faceling_sprite.center_y
             dest_x = self.torso_sprite.center_x
