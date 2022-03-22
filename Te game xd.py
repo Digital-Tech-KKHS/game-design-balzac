@@ -123,11 +123,8 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-        self.floor = arcade.load_texture("floor.png")
-        player = "dude.png"
-        self.torso_sprite = arcade.Sprite(player, CHARACTER_SCALING)
-        self.torso_sprite.center_x = 9472
-        self.torso_sprite.center_y = 6016
+        torso = "dude.png"
+        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
         faceling = "faceling.png"
         self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
@@ -140,9 +137,9 @@ class MyGame(arcade.Window):
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = PlayerCharacter()
-        self.player_sprite.center_x = self.torso_sprite.center_x
-        self.player_sprite.center_y = self.torso_sprite.center_y
         self.scene['player_list'].append(self.player_sprite)
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6016
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -195,8 +192,6 @@ class MyGame(arcade.Window):
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
             self.player_sprite.angle = 0
-        
-
         else:
             self.player_sprite.change_x = 0
             self.player_sprite.change_x = 0
@@ -237,6 +232,8 @@ class MyGame(arcade.Window):
     def on_update(self, delta_time):
         self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
                           self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
+        self.torso_sprite.center_x = self.player_sprite.center_x
+        self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
         self.cursor_sprite.update()
