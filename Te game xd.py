@@ -79,15 +79,6 @@ class PlayerCharacter(arcade.Sprite):
 
         self.update_animation()
 
-    def rotate_to_mouse(self, mouse_x, mouse_y):
-        start_x = self.center_x
-        start_y = self.center_y
-        dest_x = mouse_x
-        dest_y = mouse_y
-        x_diff = dest_x - start_x
-        y_diff = dest_y - start_y
-        angle = math.atan2(y_diff, x_diff)
-        self.angle = math.degrees(angle) - 90
 
     def on_draw(self):
         return
