@@ -76,9 +76,18 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-    
 
-        self.update_animation()\
+        self.update_animation()
+
+    def rotate_to_mouse(self, mouse_x, mouse_y):
+        start_x = self.center_x
+        start_y = self.center_y
+        dest_x = mouse_x
+        dest_y = mouse_y
+        x_diff = dest_x - start_x
+        y_diff = dest_y - start_y
+        angle = math.atan2(y_diff, x_diff)
+        self.angle = math.degrees(angle) - 90
 
     def on_draw(self):
         return
@@ -111,8 +120,11 @@ class MyGame(arcade.Window):
         self.player_light = None
         self.sprinting = False
         self.scene = None
+        self.physics = None
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
+
+
     def setup(self):
         tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
@@ -123,6 +135,7 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
+
         torso = "dude.png"
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
@@ -230,6 +243,7 @@ class MyGame(arcade.Window):
         self.process_keychange()
  
     def on_update(self, delta_time):
+
         self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
                           self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
@@ -240,7 +254,7 @@ class MyGame(arcade.Window):
         self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
         self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
-
+        self.physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.cursor_sprite.center_x
