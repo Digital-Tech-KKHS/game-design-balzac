@@ -112,6 +112,9 @@ class MyGame(arcade.Window):
         self.sprinting = False
         self.scene = None
         self.physics = None
+        self.camera = None
+        self.HUD_camera = None
+        self.sprint_bar = None
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -149,6 +152,9 @@ class MyGame(arcade.Window):
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
 
+        self.camera = arcade.Camera(self.width, self.height)
+        self.hud_camera = arcade.Camera(self.width, self.height)
+
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
             self.light_layer.add(light)
@@ -163,6 +169,8 @@ class MyGame(arcade.Window):
     def on_draw(self):
         
         self.clear()
+
+        self.camera.use()
         
 
         with self.light_layer:
@@ -232,19 +240,29 @@ class MyGame(arcade.Window):
         self.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
- 
-    def on_update(self, delta_time):
+    def center_camera_to_player(self):
 
-        self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
-                          self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
+        screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
+
+        screen_center_y = self.player_sprite.center_y - (
+
+            self.camera.viewport_height / 2
+
+        )
+        player_centered = screen_center_x, screen_center_y
+        self.camera.move_to(player_centered)
+    def on_update(self, delta_time):
+        self.center_camera_to_player()
+     #    self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
+       #                   self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
-        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
-        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
+        self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
+        self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
         self.physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
