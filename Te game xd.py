@@ -255,8 +255,6 @@ class MyGame(arcade.Window):
             angle = math.atan2(y_diff, x_diff)
             self.player_sprite.angle = math.degrees(angle) - 90
         
-        self.legs_sprite.rotate_to_mouse(self._mouse_x, self._mouse_y)
-        
         self.physics_engine.update()
 
         for emeny in self.faceling_list:
