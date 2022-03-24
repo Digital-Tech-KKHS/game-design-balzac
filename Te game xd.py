@@ -154,7 +154,10 @@ class MyGame(arcade.Window):
 
         self.camera = arcade.Camera(self.width, self.height)
         self.hud_camera = arcade.Camera(self.width, self.height)
-
+        self.sprint_bar_sprite = arcade.SpriteList()
+        
+        Red_bar = arcade.Sprite(':resources:gui_basic_assets/red_button_normal.png', center_x=50 + 50 * i, center_y=SCREEN_HEIGHT-50, scale=0.8)
+            self.sprint_bar_sprite.append(Red_bar) 
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
             self.light_layer.add(light)
