@@ -261,37 +261,8 @@ class MyGame(arcade.Window):
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
-<<<<<<< HEAD
-        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
-        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
-        for player in self.player_list:
-            start_x = self.player_sprite.center_x
-            start_y = self.player_sprite.center_y
-            dest_x = self.cursor_sprite.center_x
-            dest_y = self.cursor_sprite.center_y
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-            self.player_sprite.angle = math.degrees(angle) - 90
-        
-        self.physics_engine.update()
-
-        for emeny in self.faceling_list:
-            start_x = self.faceling_sprite.center_x
-            start_y = self.faceling_sprite.center_y
-            dest_x = self.player_sprite.center_x
-            dest_y = self.player_sprite.center_y
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-            self.faceling_sprite.angle = math.degrees(angle) - 90
-
-        start_x = self.player_sprite.center_x
-        start_y = self.player_sprite.center_y
-=======
         self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
         self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
->>>>>>> e218cad59b721d56a4fb27bafc0e01ed467742ff
         self.physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
