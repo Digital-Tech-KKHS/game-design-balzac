@@ -16,7 +16,7 @@ PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 2
-SPRITE_SPEED = 2
+SPRITE_SPEED = 5
 
 
 def load_texture_pair(filename):
@@ -84,7 +84,7 @@ class PlayerCharacter(arcade.Sprite):
     def on_draw(self):
         return
         
-class faceling(arcade.Sprite):
+class Faceling(arcade.Sprite):
 
     def follow_sprite(self, player_sprite):
         if self.center_y < player_sprite.center_y:
@@ -142,9 +142,9 @@ class MyGame(arcade.Window):
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
         faceling = "faceling.png"
-        self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
-        self.faceling_sprite.center_x = random.randrange(SCREEN_WIDTH)
-        self.faceling_sprite.center_y = random.randrange(SCREEN_HEIGHT)
+        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
+        self.faceling_sprite.center_x = 9472
+        self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
         self.torso_sprite.angle = 180
@@ -154,7 +154,7 @@ class MyGame(arcade.Window):
         self.player_sprite = PlayerCharacter()
         self.scene['player_list'].append(self.player_sprite)
         self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6016
+        self.player_sprite.center_y = 6500
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -265,7 +265,7 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         for faceling_sprite in self.faceling_list:
-            faceling.follow_sprite(self, self.player_sprite)
+            faceling_sprite.follow_sprite(self.player_sprite)
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
