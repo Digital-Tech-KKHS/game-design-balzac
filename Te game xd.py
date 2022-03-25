@@ -184,8 +184,8 @@ class MyGame(arcade.Window):
         
         self.clear()
 
-        self.camera.use()
-        self.HUD_camera.use()
+        # self.camera.use()
+        # self.HUD_camera.use()
         self.sprint_bar.draw()
 
         with self.light_layer:
