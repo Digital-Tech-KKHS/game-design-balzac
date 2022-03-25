@@ -162,7 +162,6 @@ class MyGame(arcade.Window):
 
         self.camera = arcade.Camera(self.width, self.height)
         self.hud_camera = arcade.Camera(self.width, self.height)
-
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
             self.light_layer.add(light)
