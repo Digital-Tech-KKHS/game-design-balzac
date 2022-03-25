@@ -170,16 +170,17 @@ class MyGame(arcade.Window):
         
         self.clear()
 
-        self.camera.use()
-        self.HUD_camera.use()
-        self.sprint_bar.draw()
 
+        self.camera.use()
         with self.light_layer:
             self.clear()
             self.scene.draw()
         
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
         self.cursor_list.draw()
+        
+        self.HUD_camera.use()
+        self.sprint_bar.draw()
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
