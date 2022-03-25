@@ -261,8 +261,6 @@ class MyGame(arcade.Window):
         self.camera.move_to(player_centered)
     def on_update(self, delta_time):
         self.center_camera_to_player()
-     #    self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
-       #                   self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
