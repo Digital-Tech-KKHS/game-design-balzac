@@ -270,17 +270,17 @@ class MyGame(arcade.Window):
         player_centered = screen_center_x, screen_center_y
         self.camera.move_to(player_centered)
     def on_update(self, delta_time):
-        self.center_camera_to_player()
+
+        self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
+                          self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
-        for faceling_sprite in self.faceling_list:
-            faceling_sprite.follow_sprite(self.player_sprite)
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
-        self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
-        self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
+        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
+        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
         self.physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
