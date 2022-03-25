@@ -1,7 +1,9 @@
+
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
 import random
+
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
@@ -34,6 +36,7 @@ class PlayerCharacter(arcade.Sprite):
         self.cur_texture = 0
         self.scale = CHARACTER_SCALING
         self.idle_texture_pair = load_texture_pair(f"./legs/idle.png")
+        self.stamina = 100
 
         self.walk_textures = []
         for i in range(14):
@@ -75,7 +78,9 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-
+        self.stamina += 0.1
+        if self.stamina > 100:
+            self.stamina
         self.update_animation()
 
 
@@ -189,34 +194,42 @@ class MyGame(arcade.Window):
         
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
         self.cursor_list.draw()
+
+        arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH*self.player_sprite.stamina/100, 20, 0, arcade.color.BABY_BLUE)
+
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
     def process_keychange(self):
         angle = 0
+        sprint_speed = SPRINT_SPEED
+
+        if self.player_sprite.stamina <= 10:
+            sprint_speed = 0
         
         if self.up_pressed and not self.down_pressed:
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
             self.player_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + SPRINT_SPEED * self.sprinting
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -SPRINT_SPEED * self.sprinting
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         else:
             self.player_sprite.change_x = 0
             self.player_sprite.change_x = 0
+
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.W:
@@ -263,17 +276,17 @@ class MyGame(arcade.Window):
         self.HUD_camera.move_to(player_centered)
         self.camera.move_to(player_centered)
     def on_update(self, delta_time):
-        self.center_camera_to_player()
+
+        self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
+                          self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
-        for faceling_sprite in self.faceling_list:
-            faceling_sprite.follow_sprite(self.player_sprite)
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
-        self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
-        self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
+        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
+        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
         self.physics_engine.update()
         self.faceling_physics_engine.update()
         start_x = self.torso_sprite.center_x
