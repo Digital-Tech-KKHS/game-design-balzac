@@ -1,5 +1,3 @@
-from re import X
-from tkinter import Y
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
@@ -16,7 +14,7 @@ PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 2
-SPRITE_SPEED = 5
+SPRITE_SPEED = 7
 
 
 def load_texture_pair(filename):
@@ -159,6 +157,8 @@ class MyGame(arcade.Window):
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
+        
 
         self.camera = arcade.Camera(self.width, self.height)
         self.hud_camera = arcade.Camera(self.width, self.height)
@@ -271,6 +271,7 @@ class MyGame(arcade.Window):
         self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
         self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
         self.physics_engine.update()
+        self.faceling_physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.cursor_sprite.center_x
