@@ -155,13 +155,14 @@ class MyGame(arcade.Window):
         self.player_sprite.center_y = 6500
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-
+       
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
         
 
         self.camera = arcade.Camera(self.width, self.height)
-        self.hud_camera = arcade.Camera(self.width, self.height)
+        self.HUD_camera = arcade.Camera(self.width, self.height)
+
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
             self.light_layer.add(light)
@@ -171,6 +172,7 @@ class MyGame(arcade.Window):
         color = arcade.color_from_hex_string("#363636")
         self.player_light = Light(self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
+        self.sprint_bar= arcade.SpriteList()
 
         
     def on_draw(self):
@@ -178,7 +180,8 @@ class MyGame(arcade.Window):
         self.clear()
 
         self.camera.use()
-        
+        self.HUD_camera.use()
+        self.sprint_bar.draw()
 
         with self.light_layer:
             self.clear()
@@ -257,6 +260,7 @@ class MyGame(arcade.Window):
 
         )
         player_centered = screen_center_x, screen_center_y
+        self.HUD_camera.move_to(player_centered)
         self.camera.move_to(player_centered)
     def on_update(self, delta_time):
         self.center_camera_to_player()
