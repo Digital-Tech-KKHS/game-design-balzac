@@ -1,8 +1,7 @@
-from re import X
-from tkinter import Y
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
+import random
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
@@ -15,7 +14,7 @@ PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 2
-
+SPRITE_SPEED = 7
 
 
 def load_texture_pair(filename):
@@ -83,11 +82,18 @@ class PlayerCharacter(arcade.Sprite):
     def on_draw(self):
         return
         
-class faceling(arcade.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.scale = CHARACTER_SCALING
-    
+class Faceling(arcade.Sprite):
+
+    def follow_sprite(self, player_sprite):
+        if self.center_y < player_sprite.center_y:
+            self.center_y += min(SPRITE_SPEED, player_sprite.center_y - self.center_y)
+        elif self.center_y > player_sprite.center_y:
+            self.center_y -= min(SPRITE_SPEED, self.center_y - player_sprite.center_y)
+
+        if self.center_x < player_sprite.center_x:
+            self.center_x += min(SPRITE_SPEED,player_sprite.center_x - self.center_x)
+        elif self.center_x > player_sprite.center_x:
+            self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
     
 
 
@@ -134,7 +140,7 @@ class MyGame(arcade.Window):
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
         faceling = "faceling.png"
-        self.faceling_sprite = arcade.Sprite(faceling, CHARACTER_SCALING)
+        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 9472
         self.faceling_sprite.center_y = 6016
         self.faceling_list.append(self.faceling_sprite)
@@ -146,14 +152,17 @@ class MyGame(arcade.Window):
         self.player_sprite = PlayerCharacter()
         self.scene['player_list'].append(self.player_sprite)
         self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6016
+        self.player_sprite.center_y = 6500
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
        
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
+        
 
         self.camera = arcade.Camera(self.width, self.height)
         self.HUD_camera = arcade.Camera(self.width, self.height)
+
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
             self.light_layer.add(light)
@@ -258,12 +267,15 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
+        for faceling_sprite in self.faceling_list:
+            faceling_sprite.follow_sprite(self.player_sprite)
         self.faceling_sprite.update()
         self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self._mouse_x + self.torso_sprite.center_x-SCREEN_WIDTH/2
         self.cursor_sprite.center_y = self._mouse_y + self.torso_sprite.center_y-SCREEN_HEIGHT/2
         self.physics_engine.update()
+        self.faceling_physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.cursor_sprite.center_x
