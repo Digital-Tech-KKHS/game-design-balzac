@@ -126,6 +126,7 @@ class MyGame(arcade.Window):
         self.camera = None
         self.HUD_camera = None
         self.sprint_bar = None
+        
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -133,7 +134,6 @@ class MyGame(arcade.Window):
     def setup(self):
         tile_map = arcade.load_tilemap("testlvl.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
-
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
         self.scene.add_sprite_list('player_list')
@@ -160,7 +160,6 @@ class MyGame(arcade.Window):
         self.player_sprite.center_y = 6500
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-       
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
         
@@ -184,16 +183,17 @@ class MyGame(arcade.Window):
         
         self.clear()
 
-        # self.camera.use()
-        # self.HUD_camera.use()
-        self.sprint_bar.draw()
-
+        self.camera.use()
         with self.light_layer:
             self.clear()
             self.scene.draw()
         
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
         self.cursor_list.draw()
+        
+        self.HUD_camera.use()
+        self.sprint_bar.draw()
+
 
         arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH*self.player_sprite.stamina/100, 20, 0, arcade.color.BABY_BLUE)
 
@@ -263,6 +263,7 @@ class MyGame(arcade.Window):
         self.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
+
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -275,6 +276,7 @@ class MyGame(arcade.Window):
         player_centered = screen_center_x, screen_center_y
         self.HUD_camera.move_to(player_centered)
         self.camera.move_to(player_centered)
+
     def on_update(self, delta_time):
 
         self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
