@@ -131,7 +131,7 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-        tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
+        tile_map = arcade.load_tilemap("testlvl.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
 
         self.player_list = arcade.SpriteList()
