@@ -189,10 +189,14 @@ class MyGame(arcade.Window):
             self.scene.draw()
         
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        
+        self.HUD_camera.use()
+        self.sprint_bar.draw()
         self.cursor_list.draw()
         
         self.HUD_camera.use()
         self.sprint_bar.draw()
+
 
 
         arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH*self.player_sprite.stamina/100, 20, 0, arcade.color.BABY_BLUE)
@@ -274,33 +278,34 @@ class MyGame(arcade.Window):
 
         )
         player_centered = screen_center_x, screen_center_y
-        self.HUD_camera.move_to(player_centered)
         self.camera.move_to(player_centered)
 
     def on_update(self, delta_time):
+        self.center_camera_to_player()
 
-        self.set_viewport(self.player_sprite.center_x - SCREEN_WIDTH/2, self.player_sprite.center_x + SCREEN_WIDTH/2,
-                          self.player_sprite.center_y - SCREEN_HEIGHT/2, self.player_sprite.center_y + SCREEN_HEIGHT/2)
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
         for faceling_sprite in self.faceling_list:
             faceling_sprite.follow_sprite(self.player_sprite)
-        self.cursor_sprite.update()
         self.player_sprite.update(delta_time)
-        self.cursor_sprite.center_x = self._mouse_x + self.get_viewport()[0]
-        self.cursor_sprite.center_y = self._mouse_y + self.get_viewport()[2]
-        self.physics_engine.update()
+
+
+        self.cursor_sprite.center_x = self._mouse_x 
+        self.cursor_sprite.center_y = self._mouse_y
+
         self.faceling_physics_engine.update()
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
-        dest_x = self.cursor_sprite.center_x
-        dest_y = self.cursor_sprite.center_y
+        dest_x = self.camera.position.x + self._mouse_x
+        dest_y = self.camera.position.y + self._mouse_y
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
         self.torso_sprite.angle = math.degrees(angle) - 90
+        print(f"{start_x=} {start_y=} {dest_x=} {dest_y=} {self.camera.position.x=} {self.camera.position.y=} {angle=}")
+ 
 
         for enemy in self.faceling_list:
             start_x = self.faceling_sprite.center_x
@@ -311,18 +316,10 @@ class MyGame(arcade.Window):
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
             self.faceling_sprite.angle = math.degrees(angle) - 90
-
-        start_x = self.torso_sprite.center_x
-        start_y = self.torso_sprite.center_y
-        dest_x = self.cursor_sprite.center_x
-        dest_y = self.cursor_sprite.center_y
-        x_diff = dest_x - start_x
-        y_diff = dest_y - start_y
-        angle = math.atan2(y_diff, x_diff)
-        self.torso_sprite.angle = math.degrees(angle) - 90
         
         self.player_light.position = self.torso_sprite.position
 
+        self.physics_engine.update()
 
 def main():
 
