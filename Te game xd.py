@@ -16,7 +16,7 @@ PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 2
-SPRITE_SPEED = 7
+SPRITE_SPEED = 3
 
 
 def load_texture_pair(filename):

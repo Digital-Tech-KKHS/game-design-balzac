@@ -29,7 +29,7 @@ Level.Null() is a game where you are going about your normal life and then you p
 
 ## Our team
 
-Dev: @Sonia, @Paras, @Ruben
+Dev: Austin, Dylan, Hayden, Nicolas
 
 Design: @Matt, @Antonio
 
