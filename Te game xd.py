@@ -140,18 +140,17 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-
-        torso = "dude.png"
-        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
-        self.scene['torso_list'].append(self.torso_sprite)
-        faceling = "faceling.png"
+        faceling = (f"./assets/faceling.png")
         self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
         self.faceling_sprite.center_x = 512
         self.faceling_sprite.center_y = 512
         self.faceling_list.append(self.faceling_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
+        torso = (f"./assets/dude.png")
+        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
+        self.scene['torso_list'].append(self.torso_sprite)
         self.torso_sprite.angle = 180
-        cursor = "cursor.png"
+        cursor = (f"./assets/cursor.png")
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = PlayerCharacter()
