@@ -132,7 +132,7 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-        tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
+        tile_map = arcade.load_tilemap("Level 0 assets\maptest.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
@@ -140,24 +140,23 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-
-        torso = "dude.png"
-        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
-        self.scene['torso_list'].append(self.torso_sprite)
-        faceling = "faceling.png"
+        faceling = (f"./assets/faceling.png")
         self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
-        self.faceling_sprite.center_x = 9472
-        self.faceling_sprite.center_y = 6016
+        self.faceling_sprite.center_x = 512
+        self.faceling_sprite.center_y = 512
         self.faceling_list.append(self.faceling_sprite)
         self.scene['faceling_list'].append(self.faceling_sprite)
+        torso = (f"./assets/dude.png")
+        self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
+        self.scene['torso_list'].append(self.torso_sprite)
         self.torso_sprite.angle = 180
-        cursor = "cursor.png"
+        cursor = (f"./assets/cursor.png")
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = PlayerCharacter()
         self.scene['player_list'].append(self.player_sprite)
-        self.player_sprite.center_x = 9472
-        self.player_sprite.center_y = 6500
+        self.player_sprite.center_x = 256
+        self.player_sprite.center_y = 256
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
