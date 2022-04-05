@@ -295,6 +295,7 @@ class MyGame(arcade.Window):
         self.cursor_sprite.center_y = self._mouse_y
 
         self.faceling_physics_engine.update()
+        
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self._mouse_x
