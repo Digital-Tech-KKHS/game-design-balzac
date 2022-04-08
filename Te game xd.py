@@ -132,7 +132,7 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-        tile_map = arcade.load_tilemap("Level 0 assets\maptest.tmx", TILE_SCALING)
+        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
@@ -155,8 +155,8 @@ class MyGame(arcade.Window):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = PlayerCharacter()
         self.scene['player_list'].append(self.player_sprite)
-        self.player_sprite.center_x = 256
-        self.player_sprite.center_y = 256
+        self.player_sprite.center_x = 768
+        self.player_sprite.center_y = -160
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
