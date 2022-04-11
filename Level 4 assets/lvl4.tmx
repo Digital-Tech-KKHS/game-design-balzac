@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="4" nextobjectid="5">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="5" nextobjectid="6">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="37" source="../Level 0 assets/Wall.tsx"/>
  <objectgroup id="3" name="lights">
@@ -28,7 +28,10 @@
    </properties>
   </object>
  </objectgroup>
- <layer id="2" name="floor" width="50" height="50" visible="0">
+ <objectgroup id="4" name="spawn">
+  <object id="5" gid="64" x="7680" y="9600" width="320" height="320"/>
+ </objectgroup>
+ <layer id="2" name="floor" width="50" height="50">
   <data encoding="csv">
 19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,
 19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,
