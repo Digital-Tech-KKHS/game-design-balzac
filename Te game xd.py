@@ -286,8 +286,8 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
-        for faceling_sprite in self.faceling_list:
-            faceling_sprite.follow_sprite(self.player_sprite)
+        #for faceling_sprite in self.faceling_list:
+           # faceling_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
