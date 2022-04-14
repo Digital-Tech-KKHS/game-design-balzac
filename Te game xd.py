@@ -137,6 +137,7 @@ class MyGame(arcade.Window):
             "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
         }
         tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
+        
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
