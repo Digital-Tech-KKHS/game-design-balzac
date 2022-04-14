@@ -132,7 +132,11 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-        tile_map = arcade.load_tilemap("lvl1.tmx", TILE_SCALING)
+
+        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING)
+        layer_options = {
+            "spawn": {"custom_sprite":PlayerCharacter}
+        }
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
@@ -212,25 +216,19 @@ class MyGame(arcade.Window):
         
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
-            self.player_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         else:
-            self.player_sprite.change_x = 0
             self.player_sprite.change_x = 0
 
 
@@ -266,7 +264,8 @@ class MyGame(arcade.Window):
         self.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
-
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        print (self.camera.position.x + self._mouse_x ,self.camera.position.y + self._mouse_y)
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -295,6 +294,7 @@ class MyGame(arcade.Window):
         self.cursor_sprite.center_y = self._mouse_y
 
         self.faceling_physics_engine.update()
+        
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self._mouse_x
