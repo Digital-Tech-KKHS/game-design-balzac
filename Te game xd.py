@@ -132,11 +132,11 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
+
         layer_options = {
             "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
         }
         tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
-
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
@@ -283,8 +283,8 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
-        for faceling_sprite in self.faceling_list:
-            faceling_sprite.follow_sprite(self.player_sprite)
+        #for faceling_sprite in self.faceling_list:
+           # faceling_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
