@@ -30,7 +30,7 @@ class PlayerCharacter(arcade.Sprite):
 
     """ Player Sprite"""
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         super().__init__()
         self.character_face_direction = RIGHT_FACING
         self.cur_texture = 0
@@ -132,12 +132,7 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-
-        layer_options = {
-            "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
-        }
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
-        
+        tile_map = arcade.load_tilemap("Level 0 assets\level_1.tmx", TILE_SCALING)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.faceling_list = arcade.SpriteList()
@@ -145,21 +140,24 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-        faceling = (f"./assets/faceling.png")
-        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
-        self.faceling_sprite.center_x = 512
-        self.faceling_sprite.center_y = 512
-        self.faceling_list.append(self.faceling_sprite)
-        self.scene['faceling_list'].append(self.faceling_sprite)
-        torso = (f"./assets/dude.png")
+
+        torso = "assets\dude.png"
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
+        faceling = "faceling.png"
+        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
+        self.faceling_sprite.center_x = 9472
+        self.faceling_sprite.center_y = 6016
+        self.faceling_list.append(self.faceling_sprite)
+        self.scene['faceling_list'].append(self.faceling_sprite)
         self.torso_sprite.angle = 180
-        cursor = (f"./assets/cursor.png")
+        cursor = "cursor.png"
         self.cursor_sprite = arcade.Sprite(cursor, CURSOR_SCALING)
         self.cursor_list.append(self.cursor_sprite)
-        self.player_sprite = self.scene['spawn'][0]
+        self.player_sprite = PlayerCharacter()
         self.scene['player_list'].append(self.player_sprite)
+        self.player_sprite.center_x = 9472
+        self.player_sprite.center_y = 6500
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
@@ -195,11 +193,6 @@ class MyGame(arcade.Window):
         self.HUD_camera.use()
         self.sprint_bar.draw()
         self.cursor_list.draw()
-        
-        self.HUD_camera.use()
-        self.sprint_bar.draw()
-
-
 
 
         arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH*self.player_sprite.stamina/100, 20, 0, arcade.color.BABY_BLUE)
@@ -216,19 +209,25 @@ class MyGame(arcade.Window):
         
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
+            self.player_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
             self.player_sprite.angle = 0
         else:
+            self.player_sprite.change_x = 0
             self.player_sprite.change_x = 0
 
 
@@ -264,12 +263,7 @@ class MyGame(arcade.Window):
         self.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
-<<<<<<< HEAD
 
-=======
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        print (self.camera.position.x + self._mouse_x ,self.camera.position.y + self._mouse_y)
->>>>>>> 2a55440902f04ee9bbe451034ef72f1e2e6ccbc3
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -289,13 +283,8 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
-<<<<<<< HEAD
         for faceling_sprite in self.faceling_list:
             faceling_sprite.follow_sprite(self.player_sprite)
-=======
-        #for faceling_sprite in self.faceling_list:
-           # faceling_sprite.follow_sprite(self.player_sprite)
->>>>>>> 2a55440902f04ee9bbe451034ef72f1e2e6ccbc3
         self.player_sprite.update(delta_time)
 
 
@@ -303,7 +292,6 @@ class MyGame(arcade.Window):
         self.cursor_sprite.center_y = self._mouse_y
 
         self.faceling_physics_engine.update()
-        
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self._mouse_x
@@ -312,10 +300,7 @@ class MyGame(arcade.Window):
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
         self.torso_sprite.angle = math.degrees(angle) - 90
-<<<<<<< HEAD
         print(f"{start_x=} {start_y=} {dest_x=} {dest_y=} {self.camera.position.x=} {self.camera.position.y=} {angle=}")
-=======
->>>>>>> 2a55440902f04ee9bbe451034ef72f1e2e6ccbc3
  
 
         for enemy in self.faceling_list:
@@ -335,7 +320,7 @@ class MyGame(arcade.Window):
 def main():
 
     window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    window.setup()
+    window.setup() 
     arcade.run()
 
 
