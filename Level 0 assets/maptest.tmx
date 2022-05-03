@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="4" nextobjectid="10">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="5" nextobjectid="11">
  <tileset firstgid="1" source="Wall.tsx"/>
  <tileset firstgid="37" source="../Level 4 assets/lvl4Wall.tsx"/>
  <objectgroup id="3" name="lights">
@@ -55,6 +55,14 @@
    <properties>
     <property name="color" type="color" value="#ff817f5c"/>
     <property name="radius" type="int" value="700"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="spawn">
+  <object id="10" gid="22" x="2240" y="29760" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff43433b"/>
+    <property name="radius" type="int" value="600"/>
    </properties>
   </object>
  </objectgroup>
