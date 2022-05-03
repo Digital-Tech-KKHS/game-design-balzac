@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="6" nextobjectid="48">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="6" nextobjectid="54">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 0 assets/Wall.tsx"/>
  <objectgroup id="4" name="spawn">
@@ -10,225 +10,219 @@
   </object>
  </objectgroup>
  <objectgroup id="3" name="lights">
-  <object id="1" gid="70" x="7681.33" y="9600" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff555555"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
   <object id="2" gid="70" x="7680" y="8640" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="3" gid="70" x="6720" y="9600" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="4" gid="70" x="7680" y="10560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="6" gid="70" x="5120" y="12480" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="7" gid="70" x="8640" y="9600" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="8" gid="70" x="5120" y="10560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="9" gid="70" x="3200" y="7680" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="10" gid="70" x="6080" y="4480" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="11" gid="70" x="9600" y="14720" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="12" gid="70" x="14720" y="12160" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="13" gid="70" x="11840" y="9600" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="14" gid="70" x="11840" y="5120" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="15" gid="70" x="7680" y="3200" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="16" gid="70" x="3200" y="14720" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="17" gid="70" x="2560" y="1280" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="18" gid="70" x="7680" y="1280" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="24" gid="70" x="11200" y="2560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="25" gid="70" x="12160" y="2560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="26" gid="70" x="13120" y="2560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="27" gid="70" x="14080" y="2560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff555555"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="28" gid="70" x="14080" y="3520" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff555555"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="29" gid="70" x="13120" y="3520" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff555555"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="30" gid="70" x="12160" y="3520" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff555555"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="31" gid="70" x="11200" y="3520" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff555555"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="36" gid="70" x="9600" y="12160" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="37" gid="70" x="5120" y="14720" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="38" gid="70" x="3200" y="12480" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="39" gid="70" x="2560" y="5440" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="40" gid="70" x="9600" y="7040" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="41" gid="70" x="11840" y="7360" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="42" gid="70" x="11840" y="12160" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="43" gid="70" x="12160" y="12160" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="44" gid="70" x="3200" y="10560" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
-    <property name="radius" type="int" value="600"/>
-   </properties>
-  </object>
-  <object id="45" gid="70" x="7360" y="14720" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="46" gid="70" x="7040" y="14720" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
   <object id="47" gid="70" x="6080" y="7680" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff43433b"/>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="48" gid="70" x="5120" y="1280" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="49" gid="70" x="960" y="2240" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="50" gid="70" x="9280" y="3200" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="51" gid="70" x="9280" y="5120" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="52" gid="70" x="7680" y="12480" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
+    <property name="radius" type="int" value="600"/>
+   </properties>
+  </object>
+  <object id="53" gid="70" x="960" y="14720" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff303030"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
@@ -314,14 +308,14 @@
 36,36,6,0,5,36,36,36,36,13,12,12,12,12,12,12,12,12,8,1610612765,44,36,36,6,0,37,4,4,4,38,0,0,0,0,0,0,0,0,5,36,36,36,36,36,36,36,36,36,36,36,
 36,36,6,0,5,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,5,36,36,6,0,5,36,36,36,6,0,37,4,4,4,4,38,0,5,36,36,36,36,36,36,36,36,36,36,36,
 36,36,6,0,5,36,36,36,36,6,0,37,4,4,4,4,4,4,38,0,5,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,42,30,44,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,13,46,0,45,14,36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,45,12,46,0,0,0,45,12,12,46,0,45,12,12,12,12,46,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,21,4,4,4,38,0,0,0,37,4,4,38,0,37,4,4,4,4,4,4,22,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,45,12,12,12,12,12,12,12,12,12,12,46,0,0,37,22,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,
-36,36,6,0,5,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,
+36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,6,0,45,12,12,12,12,12,12,12,12,14,36,36,
+36,36,42,30,44,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,5,36,13,46,0,45,14,36,36,6,0,5,36,36,36,36,6,0,37,4,4,4,4,4,38,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,45,12,46,0,0,0,45,12,12,46,0,45,12,12,12,12,46,0,5,36,36,36,36,36,6,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,36,36,6,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,5,36,36,36,36,36,36,21,4,4,4,38,0,0,0,37,4,4,38,0,37,4,4,4,4,4,4,22,36,36,36,36,36,6,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,45,12,12,12,12,12,12,12,12,12,12,46,0,0,37,22,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,6,0,0,5,36,36,
+36,36,6,0,5,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,21,4,4,22,36,36,
 36,36,6,0,5,36,36,36,36,21,4,4,4,4,4,38,0,37,4,4,4,4,4,38,0,5,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,
 36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,6,0,5,36,36,36,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,
 36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,6,0,5,36,36,36,36,36,6,0,5,36,36,36,6,0,5,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,
@@ -345,9 +339,9 @@
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,36,36,36,36,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,36,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
