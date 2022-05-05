@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.8" tiledversion="1.8.2" name="lvl4Wall" tilewidth="320" tileheight="320" tilecount="48" columns="8">
+<tileset version="1.8" tiledversion="1.8.2" name="lvl4Wall" tilewidth="320" tileheight="320" tilecount="48" columns="8" objectalignment="topleft">
  <image source="lvl4Wall.png" width="2560" height="1920"/>
  <wangsets>
   <wangset name="Unnamed Set" type="mixed" tile="-1">
