@@ -112,21 +112,21 @@
     <property name="radius" type="int" value="100"/>
    </properties>
   </object>
-  <object id="25" gid="70" x="12160" y="2560" width="320" height="320">
+  <object id="25" gid="70" x="12160" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="26" gid="70" x="13120" y="2560" width="320" height="320">
+  <object id="26" gid="70" x="13120" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="27" gid="70" x="14080" y="2560" width="320" height="320">
+  <object id="27" gid="70" x="14080" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
@@ -226,9 +226,9 @@
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="56" gid="70" x="11318.8" y="2418.79" width="320" height="320">
+  <object id="56" gid="70" x="11200" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
