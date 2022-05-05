@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="7" nextobjectid="57">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="7" nextobjectid="65">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 0 assets/Wall.tsx"/>
+ <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
  <objectgroup id="4" name="spawn">
   <object id="5" gid="76" x="7678" y="9602" width="320" height="320">
    <properties>
@@ -232,6 +233,54 @@
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
+  <object id="57" gid="70" x="13606" y="2448" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="58" gid="70" x="13725" y="2396.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="59" gid="70" x="13855" y="2443.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="60" gid="70" x="13921" y="2588.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="61" gid="70" x="13859" y="2728.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="62" gid="70" x="13738" y="2795.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="63" gid="70" x="13610" y="2756.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="64" gid="70" x="13539" y="2591.5" width="64" height="55">
+   <properties>
+    <property name="color" type="color" value="#ff3e3400"/>
+    <property name="radius" type="int" value="50"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="2" name="floor" width="50" height="50">
   <data encoding="csv">
@@ -349,12 +398,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,36,36,36,36,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,36,36,36,36,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,36,36,36,36,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,134,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,143,144,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
