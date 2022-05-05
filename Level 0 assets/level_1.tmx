@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="709">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="709">
  <tileset firstgid="1" source="Wall.tsx"/>
  <objectgroup id="9" name="lights">
   <object id="45" gid="22" x="22400" y="16000" width="320" height="320">
