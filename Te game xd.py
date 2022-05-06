@@ -18,7 +18,6 @@ TILE_SCALING = 0.4
 SPRINT_SPEED = 2
 SPRITE_SPEED = 3
 
-
 def load_texture_pair(filename):
     return [
         arcade.load_texture(filename),
