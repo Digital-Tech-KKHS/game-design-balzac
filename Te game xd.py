@@ -80,7 +80,7 @@ class PlayerCharacter(arcade.Sprite):
         self.center_x += self.change_x
         self.center_y += self.change_y
 
-        # test to see if the player is walking or staning still
+        # test to see if the player is walking or standing still
         if not (self.change_x or self.change_y):
             self.stamina += 0.2
         elif not self.sprinting:
