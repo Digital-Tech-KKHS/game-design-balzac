@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="7" nextobjectid="65">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
- <tileset firstgid="49" source="../Level 0 assets/Wall.tsx"/>
+ <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
- <tileset firstgid="145" source="props.tsx"/>
  <objectgroup id="4" name="spawn">
   <object id="5" gid="76" x="7678" y="9602" width="320" height="320">
    <properties>
@@ -114,21 +113,21 @@
     <property name="radius" type="int" value="100"/>
    </properties>
   </object>
-  <object id="25" gid="70" x="12160" y="2560" width="320" height="320">
+  <object id="25" gid="70" x="12160" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="26" gid="70" x="13120" y="2560" width="320" height="320">
+  <object id="26" gid="70" x="13120" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="27" gid="70" x="14080" y="2560" width="320" height="320">
+  <object id="27" gid="70" x="14080" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
@@ -228,9 +227,9 @@
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="56" gid="70" x="11318.8" y="2418.79" width="320" height="320">
+  <object id="56" gid="70" x="11200" y="2880" width="320" height="320">
    <properties>
-    <property name="color" type="color" value="#ff303030"/>
+    <property name="color" type="color" value="#ff4c4c4c"/>
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
@@ -405,8 +404,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,134,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,143,144,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -18,7 +18,6 @@ TILE_SCALING = 0.4
 SPRINT_SPEED = 2
 SPRITE_SPEED = 3
 
-
 def load_texture_pair(filename):
     return [
         arcade.load_texture(filename),
@@ -37,6 +36,8 @@ class PlayerCharacter(arcade.Sprite):
         self.scale = CHARACTER_SCALING
         self.idle_texture_pair = load_texture_pair(f"./legs/idle.png")
         self.stamina = 100
+        self.sprinting = False
+        self.resting = False
 
         self.walk_textures = []
         for i in range(14):
@@ -78,9 +79,24 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-        self.stamina += 0.1
-        if self.stamina > 100:
-            self.stamina
+
+        # test to see if the player is walking or staning still
+        if not (self.change_x or self.change_y):
+            self.stamina += 0.2
+        elif not self.sprinting:
+            self.stamina += 0.1
+        else:
+            self.stamina -= 0.4
+
+        if self.stamina >= 100:
+            self.stamina = 100
+            self.resting = False
+
+        # make sure stamina bar has some width
+        if self.stamina <= 1:
+            self.resting = True
+            self.sprinting = False
+
         self.update_animation()
 
 
@@ -120,7 +136,6 @@ class MyGame(arcade.Window):
         self.shift_pressed = False
         self.light_layer = None
         self.player_light = None
-        self.sprinting = False
         self.scene = None
         self.physics = None
         self.camera = None
@@ -178,7 +193,6 @@ class MyGame(arcade.Window):
         color = arcade.color_from_hex_string("#363636")
         self.player_light = Light(self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
-        self.sprint_bar= arcade.SpriteList()
 
         
     def on_draw(self):
@@ -193,15 +207,12 @@ class MyGame(arcade.Window):
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
         
         self.HUD_camera.use()
-        self.sprint_bar.draw()
         self.cursor_list.draw()
-        
-        self.HUD_camera.use()
-        self.sprint_bar.draw()
 
-
-
-        arcade.draw_lrtb_rectangle_filled(0, SCREEN_WIDTH*self.player_sprite.stamina/100, 20, 0, arcade.color.BABY_BLUE)
+        sprint_bar_color = arcade.color.BABY_BLUE
+        if self.player_sprite.resting:
+            sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
+        arcade.draw_lrtb_rectangle_filled(0, 100 + (SCREEN_WIDTH-100) *self.player_sprite.stamina/100, 20, 0, sprint_bar_color)
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -210,22 +221,22 @@ class MyGame(arcade.Window):
         angle = 0
         sprint_speed = SPRINT_SPEED
 
-        if self.player_sprite.stamina <= 10:
-            sprint_speed = 0
+        if self.player_sprite.resting:
+            self.player_sprite.sprinting = False
         
         if self.up_pressed and not self.down_pressed:
-            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
+            self.player_sprite.change_y = PLAYER_MOVEMENT_SPEED + sprint_speed * self.player_sprite.sprinting
             self.player_sprite.angle = 90
         elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
+            self.player_sprite.change_y = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             self.player_sprite.angle = -90
         else:
             self.player_sprite.change_y = 0
         if self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.sprinting
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED + sprint_speed * self.player_sprite.sprinting
             self.player_sprite.angle = 0
         elif self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.sprinting
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             self.player_sprite.angle = 0
         else:
             self.player_sprite.change_x = 0
@@ -241,7 +252,8 @@ class MyGame(arcade.Window):
         elif key == arcade.key.D:
             self.right_pressed = True
         
-        self.sprinting = modifiers and arcade.key.MOD_SHIFT
+        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
+        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
         
         self.process_keychange()
         if key == arcade.key.SPACE:
@@ -260,11 +272,13 @@ class MyGame(arcade.Window):
         elif key == arcade.key.D:
             self.right_pressed = False
         
-        self.sprinting = modifiers and arcade.key.MOD_SHIFT
+        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
+        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         print (self.camera.position.x + self._mouse_x ,self.camera.position.y + self._mouse_y)
+
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
