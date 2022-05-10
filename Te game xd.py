@@ -4,7 +4,7 @@ import math
 from arcade.experimental.lights import Light, LightLayer
 import random
 
-
+#-=defining our values=-
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
 SCREEN_TITLE = "crackrooms"
@@ -18,13 +18,14 @@ TILE_SCALING = 0.4
 SPRINT_SPEED = 2
 SPRITE_SPEED = 3
 
+#-=loading our texture pair=-
 def load_texture_pair(filename):
     return [
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
-
+#-=our player class, everything relating to the player will go here=-
 class PlayerCharacter(arcade.Sprite):
 
     """ Player Sprite"""
