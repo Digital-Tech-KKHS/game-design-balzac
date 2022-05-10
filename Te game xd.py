@@ -94,7 +94,7 @@ class PlayerCharacter(arcade.Sprite):
             self.resting = False
 
         # make sure stamina bar has some width
-        if self.stamina <= 1:
+        if self.stamina <= 1/20:
             self.resting = True
             self.sprinting = False
 
@@ -213,7 +213,7 @@ class MyGame(arcade.Window):
         sprint_bar_color = arcade.color.BABY_BLUE
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
-        arcade.draw_lrtb_rectangle_filled(0, 100 + (SCREEN_WIDTH-100) *self.player_sprite.stamina/100, 20, 0, sprint_bar_color)
+        arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -277,9 +277,7 @@ class MyGame(arcade.Window):
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        print (self.camera.position.x + self._mouse_x ,self.camera.position.y + self._mouse_y)
-
+    
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -299,8 +297,8 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.faceling_sprite.update()
-        #for faceling_sprite in self.faceling_list:
-           # faceling_sprite.follow_sprite(self.player_sprite)
+        for faceling_sprite in self.faceling_list:
+            faceling_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
