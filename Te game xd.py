@@ -16,7 +16,7 @@ PLAYER_MOVEMENT_SPEED = 3
 AMBIENT_COLOR = (0, 0, 0)
 TILE_SCALING = 0.4
 SPRINT_SPEED = 2
-SPRITE_SPEED = 3
+SPRITE_SPEED = 6
 
 def load_texture_pair(filename):
     return [
@@ -103,7 +103,7 @@ class PlayerCharacter(arcade.Sprite):
     def on_draw(self):
         return
         
-class Faceling(arcade.Sprite):
+class Enemy(arcade.Sprite):
 
     def follow_sprite(self, player_sprite):
         if self.center_y < player_sprite.center_y:
@@ -124,10 +124,10 @@ class MyGame(arcade.Window):
         super().__init__(width, height, title,)
         
         self.player_list = None
-        self.faceling_list = None
+        self.enemy_list = None
         self.torso_list = None
         self.torso_sprite = None
-        self.faceling_sprite = None
+        self.enemy_sprite = None
         self.cursor_list = None
         self.left_pressed = False
         self.right_pressed = False
@@ -155,17 +155,17 @@ class MyGame(arcade.Window):
         
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
-        self.faceling_list = arcade.SpriteList()
+        self.enemy_list = arcade.SpriteList()
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
-        self.scene.add_sprite_list('faceling_list')
+        self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-        faceling = (f"./assets/faceling.png")
-        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
-        self.faceling_sprite.center_x = 512
-        self.faceling_sprite.center_y = 512
-        self.faceling_list.append(self.faceling_sprite)
-        self.scene['faceling_list'].append(self.faceling_sprite)
+        enemy = (f"./assets/faceling.png")
+        self.enemy_sprite = Enemy(enemy, CHARACTER_SCALING)
+        self.enemy_sprite.center_x = 512
+        self.enemy_sprite.center_y = 512
+        self.enemy_list.append(self.enemy_sprite)
+        self.scene['enemy_list'].append(self.enemy_sprite)
         torso = (f"./assets/dude.png")
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
@@ -178,7 +178,8 @@ class MyGame(arcade.Window):
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
-        self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
+        self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.enemy_sprite, walls=self.scene["walls"])
+        self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.enemy_sprite, walls=self.scene["secrets"])
         
 
         self.camera = arcade.Camera(self.width, self.height)
@@ -295,16 +296,17 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
-        self.faceling_sprite.update()
-        for faceling_sprite in self.faceling_list:
-            faceling_sprite.follow_sprite(self.player_sprite)
+        self.enemy_sprite.update()
+        for enemy_sprite in self.enemy_list:
+            enemy_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
         self.cursor_sprite.center_x = self._mouse_x 
         self.cursor_sprite.center_y = self._mouse_y
 
-        self.faceling_physics_engine.update()
+        self.enemy_physics_engine.update()
+        self.enemy_physics_engine_secrets.update()
         
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
@@ -316,15 +318,15 @@ class MyGame(arcade.Window):
         self.torso_sprite.angle = math.degrees(angle) - 90
  
 
-        for enemy in self.faceling_list:
-            start_x = self.faceling_sprite.center_x
-            start_y = self.faceling_sprite.center_y
+        for enemy in self.enemy_list:
+            start_x = self.enemy_sprite.center_x
+            start_y = self.enemy_sprite.center_y
             dest_x = self.torso_sprite.center_x
             dest_y = self.torso_sprite.center_y
             x_diff = dest_x - start_x
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
-            self.faceling_sprite.angle = math.degrees(angle) - 90
+            self.enemy_sprite.angle = math.degrees(angle) - 90
         
         self.player_light.position = self.torso_sprite.position
 
