@@ -214,6 +214,7 @@ class MyGame(arcade.Window):
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
+        
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
