@@ -149,7 +149,8 @@ class MyGame(arcade.Window):
     def setup(self):
 
         layer_options = {
-            "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
+            "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
+            "walls": {"use_spatial_hash": True}
         }
         tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
         
@@ -214,6 +215,20 @@ class MyGame(arcade.Window):
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
+
+        for enemy in self.enemy_list:
+                if arcade.has_line_of_sight(self.player_sprite.position,
+                                            enemy.position,
+                                            self.scene["walls"]):
+                    color = arcade.color.RED
+                else:
+                    color = arcade.color.WHITE
+                arcade.draw_line(self.player_sprite.center_x,
+                                 self.player_sprite.center_y,
+                                 enemy.center_x,
+                                 enemy.center_y,
+                                 color,
+                                 2)
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
