@@ -223,6 +223,7 @@ class MyGame(arcade.Window):
                     color = arcade.color.RED
                 else:
                     color = arcade.color.WHITE
+                self.camera.use()
                 arcade.draw_line(self.player_sprite.center_x,
                                  self.player_sprite.center_y,
                                  enemy.center_x,
@@ -312,8 +313,6 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.enemy_sprite.update()
-        for enemy_sprite in self.enemy_list:
-            enemy_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
