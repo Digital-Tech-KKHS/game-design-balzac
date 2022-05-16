@@ -232,6 +232,21 @@ class MyGame(arcade.Window):
                                  color,
                                  2)
 
+        for enemy in self.enemy_list:
+                if arcade.has_line_of_sight(self.player_sprite.position,
+                                            enemy.position,
+                                            self.scene["walls"]):
+                    color = arcade.color.RED
+                else:
+                    color = arcade.color.WHITE
+                self.camera.use()
+                arcade.draw_line(self.player_sprite.center_x,
+                                 self.player_sprite.center_y,
+                                 enemy.center_x,
+                                 enemy.center_y,
+                                 color,
+                                 2)
+
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
@@ -314,8 +329,6 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.enemy_sprite.update()
-        for enemy_sprite in self.enemy_list:
-            enemy_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
