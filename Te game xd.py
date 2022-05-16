@@ -3,20 +3,9 @@ import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
 import random
-
-#-=defining our values=-
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 960
-SCREEN_TITLE = "crackrooms"
-RIGHT_FACING = 0
-LEFT_FACING = 1
-CHARACTER_SCALING = 0.4
-CURSOR_SCALING = 0.2
-PLAYER_MOVEMENT_SPEED = 3
-AMBIENT_COLOR = (0, 0, 0)
-TILE_SCALING = 0.4
-SPRINT_SPEED = 2
-SPRITE_SPEED = 6
+from PlayerCharacter import PlayerCharacter
+from constants import *
+from Enemy import Enemy
 
 #-=loading our texture pair=-
 def load_texture_pair(filename):
@@ -24,100 +13,6 @@ def load_texture_pair(filename):
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
-
-#-=our player class, everything relating to the player will go here=-
-class PlayerCharacter(arcade.Sprite):
-
-    """ Player Sprite"""
-
-    def __init__(self, **kwargs):
-        super().__init__()
-        self.character_face_direction = RIGHT_FACING
-        self.cur_texture = 0
-        self.scale = CHARACTER_SCALING
-        self.idle_texture_pair = load_texture_pair(f"./legs/idle.png")
-        self.stamina = 100
-        self.sprinting = False
-        self.resting = False
-
-        self.walk_textures = []
-        for i in range(14):
-            for j in range(6):
-                texture = load_texture_pair(f"./legs/legs_{i}.png")
-                self.walk_textures.append(texture)
-
-        self.texture = self.idle_texture_pair[0]
-
-    def update_animation(self, delta_time: float = 1 / 60):
-
-        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
-            self.character_face_direction = LEFT_FACING
-        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
-            self.character_face_direction = RIGHT_FACING
-        if self.change_y != 0 and self.character_face_direction == LEFT_FACING:
-            self.character_face_direction = RIGHT_FACING
-        if self.change_y != 0 and self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
-            self.character_face_direction = LEFT_FACING
-
-
-
-        elif self.change_x == 0:
-            self.texture = self.idle_texture_pair[self.character_face_direction]
-
-        elif self.change_y == 0:
-            self.texture = self.idle_texture_pair[self.character_face_direction]
-
-        if self.change_x or self.change_y != 0:
-            self.cur_texture += 1
-            if self.cur_texture > len(self.walk_textures) - 1:
-                self.cur_texture = 0
-            self.texture = self.walk_textures[self.cur_texture][
-                self.character_face_direction
-            ]
-
-        return
-
-    def update(self, dt):
-        self.center_x += self.change_x
-        self.center_y += self.change_y
-
-        # test to see if the player is walking or standing still
-        if not (self.change_x or self.change_y):
-            self.stamina += 0.2
-        elif not self.sprinting:
-            self.stamina += 0.1
-        else:
-            self.stamina -= 0.4
-
-        if self.stamina >= 100:
-            self.stamina = 100
-            self.resting = False
-
-        # make sure stamina bar has some width
-        if self.stamina <= 1/20:
-            self.resting = True
-            self.sprinting = False
-
-        self.update_animation()
-
-
-    def on_draw(self):
-        return
-        
-class Enemy(arcade.Sprite):
-
-    def follow_sprite(self, player_sprite):
-        if self.center_y < player_sprite.center_y:
-            self.center_y += min(SPRITE_SPEED, player_sprite.center_y - self.center_y)
-        elif self.center_y > player_sprite.center_y:
-            self.center_y -= min(SPRITE_SPEED, self.center_y - player_sprite.center_y)
-
-        if self.center_x < player_sprite.center_x:
-            self.center_x += min(SPRITE_SPEED,player_sprite.center_x - self.center_x)
-        elif self.center_x > player_sprite.center_x:
-            self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
-    
-
 
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
@@ -219,33 +114,17 @@ class MyGame(arcade.Window):
         
 
         for enemy in self.enemy_list:
-                if arcade.has_line_of_sight(self.player_sprite.position,
-                                            enemy.position,
-                                            self.scene["walls"]):
-                    color = arcade.color.RED
-                else:
-                    color = arcade.color.WHITE
-                arcade.draw_line(self.player_sprite.center_x,
-                                 self.player_sprite.center_y,
-                                 enemy.center_x,
-                                 enemy.center_y,
-                                 color,
-                                 2)
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
 
-        for enemy in self.enemy_list:
-                if arcade.has_line_of_sight(self.player_sprite.position,
-                                            enemy.position,
-                                            self.scene["walls"]):
-                    color = arcade.color.RED
-                else:
-                    color = arcade.color.WHITE
-                self.camera.use()
-                arcade.draw_line(self.player_sprite.center_x,
-                                 self.player_sprite.center_y,
-                                 enemy.center_x,
-                                 enemy.center_y,
-                                 color,
-                                 2)
+                color = arcade.color.RED
+            else:
+                color = arcade.color.WHITE
+            arcade.draw_line(self.player_sprite.center_x,
+                                self.player_sprite.center_y,
+                                enemy.center_x,
+                                enemy.center_y,
+                                color,
+                                2)
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
