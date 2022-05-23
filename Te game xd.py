@@ -127,8 +127,6 @@ class MyGame(arcade.Window):
                                 color,
                                 2)
 
-        self.scene["walls"].draw_hit_boxes(color=(255, 0, 0, 255))
-        self.torso_sprite.draw_hit_box()
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
