@@ -216,7 +216,6 @@ class MyGame(arcade.Window):
 
         self.enemy_physics_engine.update()
         self.enemy_physics_engine_secrets.update()
-        self.torso_physics_engine.update()
         
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
