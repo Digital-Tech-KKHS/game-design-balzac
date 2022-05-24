@@ -73,7 +73,6 @@ class MyGame(arcade.Window):
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
-        self.torso_physics_engine = arcade.PhysicsEngineSimple(self.torso_sprite, walls=self.scene["walls"])
         self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.enemy_sprite, walls=self.scene["walls"])
         self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.enemy_sprite, walls=self.scene["secrets"])
         
@@ -125,8 +124,7 @@ class MyGame(arcade.Window):
                                 color,
                                 2)
 
-        self.scene["walls"].draw_hit_boxes(color=(255, 0, 0, 255))
-        self.torso_sprite.draw_hit_box()
+
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
