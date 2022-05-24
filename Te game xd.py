@@ -59,8 +59,6 @@ class MyGame(arcade.Window):
         self.cursor_list = arcade.SpriteList()
         enemy = (f"./assets/faceling.png")
         self.enemy_sprite = Enemy(enemy, CHARACTER_SCALING)
-        self.enemy_sprite.center_x = 512
-        self.enemy_sprite.center_y = 512
         self.enemy_list.append(self.enemy_sprite)
         self.scene['enemy_list'].append(self.enemy_sprite)
         torso = (f"./assets/dude.png")
