@@ -46,10 +46,10 @@ class MyGame(arcade.Window):
 
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
-            "walls": {"use_spatial_hash": True}
+            "walls": {"use_spatial_hash": True},
+            "enemy_spawn": {"custom_class": Enemy, "custom_class_args": {}}
         }
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
-        
+        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING, layer_options=layer_options)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -57,10 +57,10 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-        enemy = (f"./assets/faceling.png")
-        self.enemy_sprite = Enemy(enemy, CHARACTER_SCALING)
-        self.enemy_list.append(self.enemy_sprite)
-        self.scene['enemy_list'].append(self.enemy_sprite)
+
+        for spawn_point in self.scene['enemy_spawn']:
+            self.scene['enemy_list'].append(Enemy(spawn_point))
+
         torso = (f"./assets/dude.png")
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
@@ -216,7 +216,6 @@ class MyGame(arcade.Window):
 
         self.enemy_physics_engine.update()
         self.enemy_physics_engine_secrets.update()
-        self.torso_physics_engine.update()
         
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y

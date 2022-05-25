@@ -57,7 +57,6 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-        self.set_hit_box((-20, -20), (-20, 20), (20, -20), (20, 20))
 
         # test to see if the player is walking or standing still
         if not (self.change_x or self.change_y):
