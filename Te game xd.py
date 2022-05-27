@@ -110,7 +110,7 @@ class MyGame(arcade.Window):
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
         
         self.camera.use()
-        for enemy in self.enemy_list:
+        for enemy in self.scene['enemy_list']:
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
 
                 color = arcade.color.RED
