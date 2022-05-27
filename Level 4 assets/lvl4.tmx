@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="110">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="112">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -253,8 +253,14 @@
     <property name="type" value="faceling"/>
    </properties>
   </object>
+  <object id="110" gid="276" x="7680" y="10560" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="111" gid="276" x="6104" y="12464" width="320" height="320"/>
  </objectgroup>
- <layer id="2" name="floor" width="50" height="50">
+ <layer id="2" name="floor" width="50" height="50" visible="0">
   <data encoding="csv">
 25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
 25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
