@@ -6,7 +6,7 @@ import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
-from EnemyFactroy import enemy_factory
+from EnemyFactory import enemy_factory
 
 #-=loading our texture pair=-
 def load_texture_pair(filename):
@@ -71,7 +71,7 @@ class MyGame(arcade.Window):
         self.scene['player_list'].append(self.player_sprite)
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['enemy_list']])
         self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["walls"])
         self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["secrets"])
         
