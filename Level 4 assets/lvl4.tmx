@@ -5,26 +5,6 @@
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
  <tileset firstgid="145" source="props.tsx"/>
  <tileset firstgid="245" source="../Level 2 assets/concreet.tsx"/>
- <objectgroup id="4" name="spawn">
-  <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
- </objectgroup>
- <objectgroup id="10" name="enemy_spawn">
-  <object id="108" gid="276" x="7680" y="12480" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="113" gid="276" x="7680" y="10560" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
- </objectgroup>
  <objectgroup id="3" name="lights">
   <object id="69" gid="70" x="7680" y="9600" width="320" height="320">
    <properties>
@@ -261,7 +241,27 @@
    </properties>
   </object>
  </objectgroup>
- <layer id="2" name="floor" width="50" height="50">
+ <objectgroup id="4" name="spawn">
+  <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
+ </objectgroup>
+ <objectgroup id="10" name="enemy_spawn">
+  <object id="108" gid="276" x="7680" y="12480" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="113" gid="276" x="7680" y="10560" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="2" name="floor" width="50" height="50" visible="0">
   <data encoding="csv">
 25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
 25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
