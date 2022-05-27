@@ -43,7 +43,6 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True}

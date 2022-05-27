@@ -24,7 +24,8 @@ class PlayerCharacter(arcade.Sprite):
                 self.walk_textures.append(texture)
 
         self.texture = self.idle_texture_pair[0]
-
+        set_hit_box = [[-125, -125], [125, -125], [125, 125], [-125, 125]]
+        self.hit_box = set_hit_box
     def update_animation(self, delta_time: float = 1 / 60):
 
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -57,7 +58,6 @@ class PlayerCharacter(arcade.Sprite):
     def update(self, dt):
         self.center_x += self.change_x
         self.center_y += self.change_y
-        
 
         # test to see if the player is walking or standing still
         if not (self.change_x or self.change_y):
