@@ -247,7 +247,7 @@
  <objectgroup id="10" name="enemy_spawn">
   <object id="108" gid="276" x="7680" y="12480" width="320" height="320">
    <properties>
-    <property name="type" value="faceling"/>
+    <property name="type" value="wretch"/>
    </properties>
   </object>
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
