@@ -3,12 +3,7 @@ import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
 import random
-from PlayerCharacter import PlayerCharacter
-from constants import *
-from Enemy import Enemy
-from EnemyFactroy import enemy_factory
 
-<<<<<<< HEAD
 #-=defining our values=-
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
@@ -23,8 +18,6 @@ TILE_SCALING = 0.4
 SPRINT_SPEED = 2
 SPRITE_SPEED = 3
 
-=======
->>>>>>> 6aed7ed6f0c0b78f8ed0f833fbe5ca97c06a399f
 #-=loading our texture pair=-
 def load_texture_pair(filename):
     return [
@@ -32,7 +25,6 @@ def load_texture_pair(filename):
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
-<<<<<<< HEAD
 #-=our player class, everything relating to the player will go here=-
 class PlayerCharacter(arcade.Sprite):
 
@@ -126,23 +118,18 @@ class Faceling(arcade.Sprite):
             self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
     
 
-class Win(arcade.Sprite):
-    def __init__(self, x, y):
-        super().__init__("the door.png")
-        self.center_x = 2464
-        self.center_y = 1056
 
-=======
->>>>>>> 6aed7ed6f0c0b78f8ed0f833fbe5ca97c06a399f
+
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title,)
         
         self.player_list = None
-        self.enemy_list = None
+        self.faceling_list = None
         self.torso_list = None
         self.torso_sprite = None
+        self.faceling_sprite = None
         self.cursor_list = None
         self.left_pressed = False
         self.right_pressed = False
@@ -156,35 +143,31 @@ class MyGame(arcade.Window):
         self.camera = None
         self.HUD_camera = None
         self.sprint_bar = None
-        self.win_list = None
         
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
 
     def setup(self):
-        layer_options = {
-            "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
-            "walls": {"use_spatial_hash": True},
-        }
-<<<<<<< HEAD
-        tile_map = arcade.load_tilemap("Level 1 assets\lvl1.tmx", TILE_SCALING,layer_options=layer_options)
-        
-=======
 
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING, layer_options=layer_options)
->>>>>>> 6aed7ed6f0c0b78f8ed0f833fbe5ca97c06a399f
+        layer_options = {
+            "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
+        }
+        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
+        
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
-        self.enemy_list = arcade.SpriteList()
+        self.faceling_list = arcade.SpriteList()
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
-        self.scene.add_sprite_list('enemy_list')
+        self.scene.add_sprite_list('faceling_list')
         self.cursor_list = arcade.SpriteList()
-
-        for spawn_point in self.scene['enemy_spawn']:
-            self.scene['enemy_list'].append(enemy_factory(spawn_point))
-
+        faceling = (f"./assets/faceling.png")
+        self.faceling_sprite = Faceling(faceling, CHARACTER_SCALING)
+        self.faceling_sprite.center_x = 512
+        self.faceling_sprite.center_y = 512
+        self.faceling_list.append(self.faceling_sprite)
+        self.scene['faceling_list'].append(self.faceling_sprite)
         torso = (f"./assets/dude.png")
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene['torso_list'].append(self.torso_sprite)
@@ -197,10 +180,8 @@ class MyGame(arcade.Window):
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
-        self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["walls"])
-        self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["secrets"])
+        self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
         
-        self.win_list = arcade.SpriteList()
 
         self.camera = arcade.Camera(self.width, self.height)
         self.HUD_camera = arcade.Camera(self.width, self.height)
@@ -229,31 +210,12 @@ class MyGame(arcade.Window):
         
         self.HUD_camera.use()
         self.cursor_list.draw()
-        self.win_list.draw()
 
         sprint_bar_color = arcade.color.BABY_BLUE
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
         
-<<<<<<< HEAD
-=======
-        self.camera.use()
-        for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
-
-                color = arcade.color.RED
-            else:
-                color = arcade.color.WHITE
-            arcade.draw_line(self.player_sprite.center_x,
-                                self.player_sprite.center_y,
-                                enemy.center_x,
-                                enemy.center_y,
-                                color,
-                                2)
-
-
->>>>>>> 6aed7ed6f0c0b78f8ed0f833fbe5ca97c06a399f
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -336,14 +298,16 @@ class MyGame(arcade.Window):
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
+        self.faceling_sprite.update()
+        for faceling_sprite in self.faceling_list:
+            faceling_sprite.follow_sprite(self.player_sprite)
         self.player_sprite.update(delta_time)
 
 
         self.cursor_sprite.center_x = self._mouse_x 
         self.cursor_sprite.center_y = self._mouse_y
 
-        self.enemy_physics_engine.update()
-        self.enemy_physics_engine_secrets.update()
+        self.faceling_physics_engine.update()
         
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
@@ -355,15 +319,15 @@ class MyGame(arcade.Window):
         self.torso_sprite.angle = math.degrees(angle) - 90
  
 
-        for enemy in self.scene['enemy_list']:
-            start_x = enemy.center_x
-            start_y = enemy.center_y
+        for enemy in self.faceling_list:
+            start_x = self.faceling_sprite.center_x
+            start_y = self.faceling_sprite.center_y
             dest_x = self.torso_sprite.center_x
             dest_y = self.torso_sprite.center_y
             x_diff = dest_x - start_x
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
-            enemy.angle = math.degrees(angle) - 90
+            self.faceling_sprite.angle = math.degrees(angle) - 90
         
         self.player_light.position = self.torso_sprite.position
 
