@@ -6,7 +6,7 @@ import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
-from EnemyFactroy import enemy_factory
+from EnemyFactory import enemy_factory
 
 #-=loading our texture pair=-
 def load_texture_pair(filename):
