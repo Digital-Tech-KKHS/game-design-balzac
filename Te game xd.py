@@ -37,7 +37,7 @@ class MyGame(arcade.Window):
         self.camera = None
         self.HUD_camera = None
         self.sprint_bar = None
-        
+        enemy_physics_engine = 0
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -71,9 +71,11 @@ class MyGame(arcade.Window):
         self.scene['player_list'].append(self.player_sprite)
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['enemy_list']])
-        self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["walls"])
-        self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["secrets"])
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        for enemy in self.scene["enemy_list"]:
+            self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["walls"])
+            self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["secrets"])
+        
         
 
         self.camera = arcade.Camera(self.width, self.height)
@@ -108,23 +110,7 @@ class MyGame(arcade.Window):
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
-        
-        self.camera.use()
-        for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
-
-                color = arcade.color.RED
-            else:
-                color = arcade.color.WHITE
-            arcade.draw_line(self.player_sprite.center_x,
-                                self.player_sprite.center_y,
-                                enemy.center_x,
-                                enemy.center_y,
-                                color,
-                                2)
-
-
-
+    
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
@@ -211,7 +197,10 @@ class MyGame(arcade.Window):
 
         self.cursor_sprite.center_x = self._mouse_x 
         self.cursor_sprite.center_y = self._mouse_y
-
+        for enemy in self.scene["enemy_list"]:
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
+                enemy.follow_sprite(self.player_sprite)
+    
         self.enemy_physics_engine.update()
         self.enemy_physics_engine_secrets.update()
         
