@@ -118,6 +118,11 @@ class Faceling(arcade.Sprite):
             self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
     
 
+class Win(arcade.Sprite):
+    def __init__(self, x, y):
+        super().__init__("the door.png")
+        self.center_x = 2464
+        self.center_y = 1056
 
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
@@ -142,6 +147,7 @@ class MyGame(arcade.Window):
         self.camera = None
         self.HUD_camera = None
         self.sprint_bar = None
+        self.win_list = None
         
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -152,7 +158,7 @@ class MyGame(arcade.Window):
         layer_options = {
             "spawn": {"custom_class":PlayerCharacter, "custom_class_args": {}}
         }
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING,layer_options=layer_options)
+        tile_map = arcade.load_tilemap("Level 1 assets\lvl1.tmx", TILE_SCALING,layer_options=layer_options)
         
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
@@ -181,6 +187,7 @@ class MyGame(arcade.Window):
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.faceling_physics_engine = arcade.PhysicsEngineSimple(self.faceling_sprite, walls=self.scene["walls"])
         
+        self.win_list = arcade.SpriteList()
 
         self.camera = arcade.Camera(self.width, self.height)
         self.HUD_camera = arcade.Camera(self.width, self.height)
@@ -209,6 +216,7 @@ class MyGame(arcade.Window):
         
         self.HUD_camera.use()
         self.cursor_list.draw()
+        self.win_list.draw()
 
         sprint_bar_color = arcade.color.BABY_BLUE
         if self.player_sprite.resting:
