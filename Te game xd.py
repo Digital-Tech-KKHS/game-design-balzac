@@ -72,9 +72,10 @@ class MyGame(arcade.Window):
         self.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
-            self.enemy_physics_engine = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["walls"])
-            self.enemy_physics_engine_secrets = arcade.PhysicsEngineSimple(self.scene["enemy_list"][0], walls=self.scene["secrets"])
+            engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"], self.scene["secrets"]])
+            self.enemy_physics_engines.append(engine)
         
         
 
@@ -201,8 +202,9 @@ class MyGame(arcade.Window):
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
                 enemy.follow_sprite(self.player_sprite)
     
-        self.enemy_physics_engine.update()
-        self.enemy_physics_engine_secrets.update()
+        for engine in self.enemy_physics_engines:
+            engine.update()
+        
         
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
