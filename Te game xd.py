@@ -198,9 +198,6 @@ class MyGame(arcade.Window):
 
         self.cursor_sprite.center_x = self._mouse_x 
         self.cursor_sprite.center_y = self._mouse_y
-        for enemy in self.scene["enemy_list"]:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
-                enemy.follow_sprite(self.player_sprite)
     
         for engine in self.enemy_physics_engines:
             engine.update()
@@ -217,14 +214,22 @@ class MyGame(arcade.Window):
  
 
         for enemy in self.scene['enemy_list']:
-            start_x = enemy.center_x
-            start_y = enemy.center_y
-            dest_x = self.torso_sprite.center_x
-            dest_y = self.torso_sprite.center_y
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-            enemy.angle = math.degrees(angle) - 90
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
+                enemy.follow_sprite(self.player_sprite)
+                start_x = enemy.center_x
+                start_y = enemy.center_y
+                dest_x = self.torso_sprite.center_x
+                dest_y = self.torso_sprite.center_y
+                x_diff = dest_x - start_x
+                y_diff = dest_y - start_y
+                angle = math.atan2(y_diff, x_diff)
+                enemy.angle = math.degrees(angle) - 90
+                enemy.change_x = math.cos(angle) * SPRITE_SPEED
+                enemy.change_y = math.sin(angle) * SPRITE_SPEED
+            else:
+                enemy.change_x = 0
+                enemy.change_y = 0
+                enemy.random_look()
         
         self.player_light.position = self.torso_sprite.position
 
