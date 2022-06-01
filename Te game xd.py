@@ -48,7 +48,7 @@ class MyGame(arcade.Window):
             "walls": {"use_spatial_hash": True},
         }
 
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING, layer_options=layer_options)
+        tile_map = arcade.load_tilemap("Level 1 assets\lvl1.tmx", TILE_SCALING, layer_options=layer_options)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -77,7 +77,8 @@ class MyGame(arcade.Window):
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"], self.scene["secrets"]])
             self.enemy_physics_engines.append(engine)
         
-        
+        for sprite in self.scene['exit']:
+           
 
         self.camera = arcade.Camera(self.width, self.height)
         self.HUD_camera = arcade.Camera(self.width, self.height)
