@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="114">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="12" nextobjectid="126">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -260,6 +260,41 @@
     <property name="type" value="faceling"/>
    </properties>
   </object>
+  <object id="119" gid="276" x="6080" y="10560" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="120" gid="276" x="6080" y="8320" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="121" gid="276" x="7680" y="8320" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="122" gid="276" x="7680" y="7360" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="123" gid="276" x="8960" y="9600" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="124" gid="276" x="10240" y="9600" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="125" gid="276" x="11200" y="9600" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="2" name="floor" width="50" height="50">
   <data encoding="csv">
@@ -371,6 +406,12 @@
  </layer>
  <objectgroup id="6" name="Interactables">
   <object id="55" gid="71" x="11200" y="3840" width="320" height="320" rotation="-90"/>
+ </objectgroup>
+ <objectgroup id="11" name="exit">
+  <object id="115" gid="196" x="960" y="5120" width="320" height="320"/>
+  <object id="116" gid="197" x="1280" y="5120" width="320" height="320"/>
+  <object id="117" gid="206" x="960" y="5440" width="320" height="320"/>
+  <object id="118" gid="207" x="1280" y="5440" width="320" height="320"/>
  </objectgroup>
  <layer id="5" name="secrets" width="50" height="50">
   <data encoding="csv">
