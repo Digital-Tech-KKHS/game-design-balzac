@@ -230,7 +230,7 @@ class MyGame(arcade.Window):
             else:
                 enemy.change_x = 0
                 enemy.change_y = 0
-                enemy.random_look()
+                enemy.random_move()
         
         self.player_light.position = self.torso_sprite.position
 

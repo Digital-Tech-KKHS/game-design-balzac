@@ -245,11 +245,6 @@
   <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
  </objectgroup>
  <objectgroup id="10" name="enemy_spawn">
-  <object id="108" gid="276" x="7680" y="12480" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
@@ -261,36 +256,6 @@
    </properties>
   </object>
   <object id="119" gid="276" x="6080" y="10560" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="120" gid="276" x="6080" y="8320" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="121" gid="276" x="7680" y="8320" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="122" gid="276" x="7680" y="7360" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="123" gid="276" x="8960" y="9600" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="124" gid="276" x="10240" y="9600" width="320" height="320">
-   <properties>
-    <property name="type" value="faceling"/>
-   </properties>
-  </object>
-  <object id="125" gid="276" x="11200" y="9600" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
