@@ -245,14 +245,6 @@
   <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
  </objectgroup>
  <objectgroup id="10" name="enemy_spawn">
-<<<<<<< HEAD
-  <object id="108" gid="276" x="7680" y="12480" width="320" height="320">
-   <properties>
-    <property name="type" value="wretch"/>
-   </properties>
-  </object>
-=======
->>>>>>> 0b4a6d8e32aae98c727ea21709bbd0341e708d55
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
    <properties>
     <property name="type" value="wretch"/>
