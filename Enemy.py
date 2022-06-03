@@ -9,7 +9,7 @@ class Enemy(arcade.Sprite):
         super().__init__(img, CHARACTER_SCALING)
         self.center_x = x
         self.center_y = y
-        self.destination_look = random.randrange(360)
+        self.destination_look = 0
         self.turn_threshold = 0.1
 
 
@@ -27,7 +27,7 @@ class Enemy(arcade.Sprite):
 
     def random_look(self):
         if abs(self.angle - self.destination_look) < self.turn_threshold:
-            self.destination_look = random.randrange(360)
+            self.destination_look = +- random.randrange(360)
         self.angle = arcade.utils.lerp(self.angle, self.destination_look, 0.1)
 
     def random_move(self):
