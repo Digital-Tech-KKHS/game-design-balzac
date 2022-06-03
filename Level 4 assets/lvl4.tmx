@@ -255,7 +255,7 @@
 >>>>>>> 0b4a6d8e32aae98c727ea21709bbd0341e708d55
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
    <properties>
-    <property name="type" value="faceling"/>
+    <property name="type" value="wretch"/>
    </properties>
   </object>
   <object id="113" gid="276" x="7680" y="10560" width="320" height="320">
