@@ -77,10 +77,11 @@ class MyGame(arcade.Window):
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"], self.scene["secrets"]])
             self.enemy_physics_engines.append(engine)
         
-        
+        for sprite in self.scene['exit']:
+           
 
-        self.camera = arcade.Camera(self.width, self.height)
-        self.HUD_camera = arcade.Camera(self.width, self.height)
+            self.camera = arcade.Camera(self.width, self.height)
+            self.HUD_camera = arcade.Camera(self.width, self.height)
 
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
@@ -229,7 +230,7 @@ class MyGame(arcade.Window):
             else:
                 enemy.change_x = 0
                 enemy.change_y = 0
-                enemy.random_look()
+                enemy.random_move()
         
         self.player_light.position = self.torso_sprite.position
 
