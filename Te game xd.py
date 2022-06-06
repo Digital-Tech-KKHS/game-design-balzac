@@ -38,6 +38,7 @@ class MyGame(arcade.Window):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
+        self.level = 1
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -48,7 +49,7 @@ class MyGame(arcade.Window):
             "walls": {"use_spatial_hash": True},
         }
 
-        tile_map = arcade.load_tilemap("Level 4 assets\lvl4.tmx", TILE_SCALING, layer_options=layer_options)
+        tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -57,6 +58,8 @@ class MyGame(arcade.Window):
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
 
+       
+       
         for spawn_point in self.scene['enemy_spawn']:
             self.scene['enemy_list'].append(enemy_factory(spawn_point))
 
@@ -203,7 +206,10 @@ class MyGame(arcade.Window):
         for engine in self.enemy_physics_engines:
             engine.update()
         
-        
+        if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
+            self.level += 1
+            self.setup()
+
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self._mouse_x
