@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="16" nextobjectid="715">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="16" nextobjectid="716">
  <tileset firstgid="1" source="Wall.tsx"/>
  <tileset firstgid="37" source="props.tsx"/>
+ <tileset firstgid="137" source="../Level 2 assets/concreet.tsx"/>
  <objectgroup id="9" name="lights">
   <object id="45" gid="22" x="22400" y="16000" width="320" height="320">
    <properties>
@@ -3460,7 +3461,13 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="13" name="enemy_spawn"/>
+ <objectgroup id="13" name="enemy_spawn">
+  <object id="715" gid="168" x="23360" y="17600" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="10" name="spawn">
   <object id="708" gid="28" x="24000" y="16000" width="320" height="320">
    <properties>
