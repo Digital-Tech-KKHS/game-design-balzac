@@ -11,10 +11,6 @@ class Wretch(arcade.Sprite):
         self.center_y = y
         self.destination_look = 0
         self.turn_threshold = 0.1
-<<<<<<< HEAD
-
-=======
->>>>>>> 2cc44ceb155eb99f769e411a782c130ee547f92b
 
     def follow_sprite(self, player_sprite):
         if self.center_y < player_sprite.center_y:
@@ -26,14 +22,9 @@ class Wretch(arcade.Sprite):
             self.center_x += min(SPRITE_SPEED,player_sprite.center_x - self.center_x)
         elif self.center_x > player_sprite.center_x:
             self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
-<<<<<<< HEAD
 
 
     def random_look(self):
-=======
-    def random_look(self):
-
->>>>>>> 2cc44ceb155eb99f769e411a782c130ee547f92b
         if abs(self.angle - self.destination_look) < self.turn_threshold:
             self.destination_look = +- random.randrange(360)
         self.angle = arcade.utils.lerp(self.angle, self.destination_look, 0.1)
@@ -42,9 +33,6 @@ class Wretch(arcade.Sprite):
         self.random_look()
         self.center_x += 2 * math.cos(math.radians(self.angle + 90))
         self.center_y += 2 * math.sin(math.radians(self.angle + 90))
-<<<<<<< HEAD
 
             
         
-=======
->>>>>>> 2cc44ceb155eb99f769e411a782c130ee547f92b
