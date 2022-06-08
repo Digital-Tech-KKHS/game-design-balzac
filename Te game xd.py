@@ -19,7 +19,9 @@ class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
         super().__init__(width, height, title,)
-        
+
+        self.obj_alpha = 0
+        self.text_alpha = 255
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -111,11 +113,18 @@ class MyGame(arcade.Window):
         self.HUD_camera.use()
         self.cursor_list.draw()
 
+        
+
         sprint_bar_color = arcade.color.BABY_BLUE
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
-    
+        
+        self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.01))
+        self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
+        arcade.draw_text(f"Level {self.level-1} : 'Lobby'", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 125, color=(255, 255, 255, self.text_alpha), font_size=26, anchor_x="center")
+        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1280, SCREEN_HEIGHT - 900, color=(255, 255, 255, self.obj_alpha), font_size=20)
+
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
@@ -208,6 +217,7 @@ class MyGame(arcade.Window):
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1
+            self.text_alpha = 255
             self.setup()
 
         start_x = self.torso_sprite.center_x
