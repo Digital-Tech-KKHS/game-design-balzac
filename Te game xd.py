@@ -40,7 +40,8 @@ class MyGame(arcade.Window):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
+        self.subtitle = "'The Lobby'"
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -49,6 +50,8 @@ class MyGame(arcade.Window):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
+            "enemy_spawn": {"use_spatial_hash": True},
+            "floor": {"use_spatial_hash": True},
         }
 
         tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
@@ -120,11 +123,21 @@ class MyGame(arcade.Window):
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
         
-        self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.01))
-        self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
-        arcade.draw_text(f"Level {self.level-1} : 'Lobby'", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 125, color=(255, 255, 255, self.text_alpha), font_size=26, anchor_x="center")
-        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, color=(255, 255, 255, self.obj_alpha), font_size=20)
+        
 
+        self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
+        self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
+        arcade.draw_text(f"Level {self.level-1} : {self.subtitle}", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 125, color=(255, 255, 255, self.text_alpha), font_size=36, anchor_x="center", font_name = 'Kenney Pixel')
+        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, color=(255, 255, 255, self.obj_alpha), font_size=28, font_name = 'Kenney Pixel')
+        if self.level == 2:
+            self.subtitle = "'Habitable Zone'"
+        if self.level ==3:
+            self.subtitle = "'Pipe Dreams'"
+        if self.level == 4:
+            self.subtitle = "'Electrical Station'"
+
+
+    
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
@@ -214,6 +227,9 @@ class MyGame(arcade.Window):
     
         for engine in self.enemy_physics_engines:
             engine.update()
+        
+        if arcade.check_for_collision_with_list(self.player_sprite, self.enemy_list, method=1):
+            self.level = 9
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1

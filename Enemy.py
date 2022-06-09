@@ -5,7 +5,7 @@ from constants import *
 
 class Enemy(arcade.Sprite):
     def __init__(self, x, y):
-        img = (f"./assets/faceling.png")
+        img = (f"./assets/nerd.png")
         super().__init__(img, CHARACTER_SCALING)
         self.center_x = x
         self.center_y = y
