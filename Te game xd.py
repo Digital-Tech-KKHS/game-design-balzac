@@ -123,7 +123,7 @@ class MyGame(arcade.Window):
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.01))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         arcade.draw_text(f"Level {self.level-1} : 'Lobby'", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 125, color=(255, 255, 255, self.text_alpha), font_size=26, anchor_x="center")
-        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1280, SCREEN_HEIGHT - 900, color=(255, 255, 255, self.obj_alpha), font_size=20)
+        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, color=(255, 255, 255, self.obj_alpha), font_size=20)
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
