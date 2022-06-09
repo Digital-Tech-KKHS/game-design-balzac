@@ -240,7 +240,7 @@
     <property name="radius" type="int" value="700"/>
    </properties>
   </object>
-  <object id="126" gid="70" x="960" y="8320" width="320" height="320">
+  <object id="126" gid="70" x="14716" y="14564" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff7affff"/>
     <property name="radius" type="int" value="700"/>
@@ -385,10 +385,10 @@
   <object id="55" gid="71" x="11200" y="3840" width="320" height="320" rotation="-90"/>
  </objectgroup>
  <objectgroup id="11" name="exit">
-  <object id="115" gid="196" x="804" y="8156" width="320" height="320"/>
-  <object id="116" gid="197" x="1124" y="8156" width="320" height="320"/>
-  <object id="117" gid="206" x="804" y="8476" width="320" height="320"/>
-  <object id="118" gid="207" x="1124" y="8476" width="320" height="320"/>
+  <object id="115" gid="196" x="14560" y="14400" width="320" height="320"/>
+  <object id="116" gid="197" x="14880" y="14400" width="320" height="320"/>
+  <object id="117" gid="206" x="14560" y="14720" width="320" height="320"/>
+  <object id="118" gid="207" x="14880" y="14720" width="320" height="320"/>
  </objectgroup>
  <layer id="5" name="secrets" width="50" height="50">
   <data encoding="csv">
