@@ -217,7 +217,7 @@ class MyGame(arcade.Window):
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
-        self.torso_sprite.angle = math.degrees(angle) - 90
+        self.torso_sprite.angle = math.degrees(angle) -90
  
 
         for enemy in self.scene['enemy_list']:
