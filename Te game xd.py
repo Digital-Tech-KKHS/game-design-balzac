@@ -15,6 +15,24 @@ def load_texture_pair(filename):
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
+class LoseView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.text = "Game Over"
+        self.background = None
+
+    def on_show_view(self):
+        self.background = arcade.load_texture("assets\SPOOKY GAME OVER.png")
+        self.game_view = MyGame()
+        self.game_view.setup()
+
+    def on_draw(self):
+        self.clear()
+        arcade.draw_lrwh_rectangle_textured(0, 0,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.background)
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+
 class MyGame(arcade.Window):
     def __init__(self, width, height, title):
 
@@ -230,6 +248,7 @@ class MyGame(arcade.Window):
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
             print('ourch')
+            self.window.show_view(self.lose_view)
             #self.level = 9
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
