@@ -3144,7 +3144,6 @@
 </data>
  </layer>
  <objectgroup id="5" name="spawn">
-  <object id="1087" gid="32" x="35840" y="35200" width="320" height="320"/>
   <object id="1089" gid="70" x="7680" y="33920" width="320" height="320"/>
  </objectgroup>
  <layer id="1" name="floor" width="150" height="150">
