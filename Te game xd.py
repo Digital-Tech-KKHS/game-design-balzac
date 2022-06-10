@@ -228,8 +228,9 @@ class MyGame(arcade.Window):
         for engine in self.enemy_physics_engines:
             engine.update()
         
-        if arcade.check_for_collision_with_list(self.player_sprite, self.enemy_list, method=1):
-            self.level = 9
+        if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
+            print('ourch')
+            #self.level = 9
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1
