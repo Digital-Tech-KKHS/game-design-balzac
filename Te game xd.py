@@ -37,8 +37,8 @@ class MenuView(arcade.View):
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
-        self.text = "Loading..."
         self.window.show_view(self.game_view)
+        self.text = "Loading..."
 
 
 class MyGame(arcade.View):
@@ -66,7 +66,7 @@ class MyGame(arcade.View):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -75,6 +75,8 @@ class MyGame(arcade.View):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
+            "floor": {"use_spatial_hash": True},
+            "lights": {"use_spatial_hash": True},
         }
 
         tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
