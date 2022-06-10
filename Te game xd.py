@@ -2,6 +2,8 @@
 import arcade
 import math
 from arcade.experimental.lights import Light, LightLayer
+from arcade.experimental.crt_filter import CRTFilter
+from pyglet.math import Vec2
 import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
@@ -20,6 +22,15 @@ class MyGame(arcade.Window):
 
         super().__init__(width, height, title,)
 
+        self.crt_filter = CRTFilter(SCREEN_WIDTH, SCREEN_HEIGHT,
+                                    resolution_down_scale=4.0,
+                                    hard_scan=-8.0,
+                                    hard_pix=-3.0,
+                                    display_warp = Vec2(1.0 / 32.0, 1.0 / 24.0),
+                                    mask_dark=0.5,
+                                    mask_light=1.5)
+
+        self.filter_on = True
         self.obj_alpha = 0
         self.text_alpha = 255
         self.player_list = None
@@ -100,20 +111,18 @@ class MyGame(arcade.Window):
 
         
     def on_draw(self):
-        
         self.clear()
 
         self.camera.use()
         with self.light_layer:
-            self.clear()
+            self.crt_filter.use()
+            self.crt_filter.clear()
             self.scene.draw()
-        
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        self.crt_filter.draw()
         
         self.HUD_camera.use()
         self.cursor_list.draw()
-
-        
 
         sprint_bar_color = arcade.color.BABY_BLUE
         if self.player_sprite.resting:
@@ -227,8 +236,8 @@ class MyGame(arcade.Window):
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
-        self.torso_sprite.angle = math.degrees(angle) -90
- 
+        self.torso_sprite.angle = int(arcade.utils.lerp(self.torso_sprite.angle, math.degrees(angle) -90, 0.1))
+    	
 
         for enemy in self.scene['enemy_list']:
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
