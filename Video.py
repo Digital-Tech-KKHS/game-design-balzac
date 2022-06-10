@@ -1,11 +1,13 @@
 """
 Experimental video player using pyglet.
+
 This requires that you have ffmpeg installed
 and you might need to tell pyglet where it's located.
 """
 # import sys
 import pyglet
 import arcade
+pyglet.options['search_local_libs'] = True
 
 
 class VideoPlayer(arcade.Window):
@@ -15,7 +17,7 @@ class VideoPlayer(arcade.Window):
 
         self.player = pyglet.media.Player()
         # self.player.queue(pyglet.media.load("C:/Users/efors/Desktop/file_example_MP4_480_1_5MG.mp4"))
-        self.player.queue(pyglet.media.load("//dataserver2/Hrobinson$/game-design-balzac/assets/mainmenuRAW.mp4"))
+        self.player.queue(pyglet.media.load("assets\mainmenuRAW.mp4"))
         self.player.play()
 
     def on_draw(self):

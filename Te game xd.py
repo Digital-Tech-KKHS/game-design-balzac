@@ -15,6 +15,31 @@ def load_texture_pair(filename):
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
+    
+
+class MenuView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.text = "Click anywhere to start"
+        self.background = None
+
+    def on_show_view(self):
+        self.background = arcade.load_texture("assets\creature.png")
+        self.game_view = MyGame()
+        self.game_view.setup()
+
+    def on_draw(self):
+        self.clear()
+        arcade.draw_lrwh_rectangle_textured(0, 0,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.background)
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        
+
+    def on_mouse_press(self, _x,  _y, _button, _modifiers):
+        self.text = "Loading..."
+        self.window.show_view(self.game_view)
+
 class LoseView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -33,10 +58,10 @@ class LoseView(arcade.View):
                                             self.background)
         arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
 
-class MyGame(arcade.Window):
-    def __init__(self, width, height, title):
+class MyGame(arcade.View):
+    def __init__(self):
 
-        super().__init__(width, height, title,)
+        super().__init__()
 
         self.obj_alpha = 0
         self.text_alpha = 255
@@ -95,7 +120,7 @@ class MyGame(arcade.Window):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.set_mouse_visible(False)
+        self.window.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.enemy_physics_engines = []
@@ -106,8 +131,8 @@ class MyGame(arcade.Window):
         for sprite in self.scene['exit']:
            
 
-            self.camera = arcade.Camera(self.width, self.height)
-            self.HUD_camera = arcade.Camera(self.width, self.height)
+            self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
+            self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         for sprite in self.scene['lights']:
             light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
@@ -240,16 +265,16 @@ class MyGame(arcade.Window):
         self.player_sprite.update(delta_time)
 
 
-        self.cursor_sprite.center_x = self._mouse_x 
-        self.cursor_sprite.center_y = self._mouse_y
+        self.cursor_sprite.center_x = self.window._mouse_x 
+        self.cursor_sprite.center_y = self.window._mouse_y
     
         for engine in self.enemy_physics_engines:
             engine.update()
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
             print('ourch')
-            self.window.show_view(self.lose_view)
-            #self.level = 9
+
+            window.show_view(lose_view)
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1
@@ -258,8 +283,8 @@ class MyGame(arcade.Window):
 
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
-        dest_x = self.camera.position.x + self._mouse_x
-        dest_y = self.camera.position.y + self._mouse_y
+        dest_x = self.camera.position.x + self.window._mouse_x
+        dest_y = self.camera.position.y + self.window._mouse_y
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
@@ -290,8 +315,10 @@ class MyGame(arcade.Window):
 
 def main():
 
-    window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    window.setup()
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    menu_view = MenuView()
+    lose_view = LoseView()
+    window.show_view(menu_view)
     arcade.run()
 
 
