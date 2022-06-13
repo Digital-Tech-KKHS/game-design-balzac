@@ -7,8 +7,7 @@ from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
 from EnemyFactory import enemy_factory
-
-#-=loading our texture pair=-
+#loading our texture pair
 def load_texture_pair(filename):
     return [
         arcade.load_texture(filename),
@@ -91,7 +90,6 @@ class MyGame(arcade.View):
         enemy_physics_engine = 0
         self.level = 4
         self.subtitle = "'The Lobby'"
-
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -189,7 +187,7 @@ class MyGame(arcade.View):
         )
         
         arcade.draw_text(
-            'Objective - Escape', 
+            'Objective - Find a way out.', 
             SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
             color=(255, 255, 255, self.obj_alpha),
             font_size=28, 
