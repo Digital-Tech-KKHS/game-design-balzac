@@ -39,6 +39,28 @@ class MenuView(arcade.View):
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
         self.window.show_view(self.game_view)
 
+class LoseView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.text = "Game Over"
+        self.background = None
+
+    def on_show_view(self):
+        self.background = arcade.load_texture("assets\SPOOKY GAME OVER.png")
+        self.game_view = MyGame()
+        self.game_view.setup()
+
+    def on_draw(self):
+        self.clear()
+        arcade.draw_lrwh_rectangle_textured(0, 0,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.background)
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        
+
+    def on_mouse_press(self, _x,  _y, _button, _modifiers):
+        self.window.show_view(self.game_view)
+
 
 class MyGame(arcade.View):
     def __init__(self):
@@ -67,6 +89,7 @@ class MyGame(arcade.View):
         enemy_physics_engine = 0
         self.level = 4
 
+        self.subtitle = None
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
 
@@ -168,7 +191,8 @@ class MyGame(arcade.View):
             font_name = 'Kenney Pixel'
         )
 
-
+        if self.level == 1:
+            self.subtitle = "'The Lobby'"
         if self.level == 2:
             self.subtitle = "'Habitable Zone'"
         if self.level ==3:
@@ -312,8 +336,9 @@ class MyGame(arcade.View):
 def main():
 
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    menu_view = MenuView()
-    window.show_view(menu_view)
+    window.menu_view = MenuView()
+    window.lose_view = LoseView()
+    window.show_view(window.menu_view)
     arcade.run()
 
 
