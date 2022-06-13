@@ -62,7 +62,7 @@ class LoseView(arcade.View):
     
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
         self.window.show_view(self.game_view)
-        self.text = "Loading..."
+        #self.text = "Loading..."
 
 class MyGame(arcade.View):
     def __init__(self):
@@ -100,8 +100,6 @@ class MyGame(arcade.View):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
-
-
             "floor": {"use_spatial_hash": True},
             "lights": {"use_spatial_hash": True},
         }
@@ -179,8 +177,25 @@ class MyGame(arcade.View):
 
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
-        arcade.draw_text(f"Level {self.level-1} : {self.subtitle}", SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 125, color=(255, 255, 255, self.text_alpha), font_size=36, anchor_x="center", font_name = 'Kenney Pixel')
-        arcade.draw_text('Objective - Escape', SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, color=(255, 255, 255, self.obj_alpha), font_size=28, font_name = 'Kenney Pixel')
+        
+        arcade.draw_text(
+            f"Level {self.level-1} : {self.subtitle}",
+            SCREEN_WIDTH/2,
+            SCREEN_HEIGHT/2 + 125,
+            color=(255, 255, 255, self.text_alpha), 
+            font_size=36,
+             anchor_x="center",
+              font_name = 'Kenney Pixel'
+        )
+        
+        arcade.draw_text(
+            'Objective - Escape', 
+            SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
+            color=(255, 255, 255, self.obj_alpha),
+            font_size=28, 
+            font_name = 'Kenney Pixel'
+        )
+
         if self.level == 2:
             self.subtitle = "'Habitable Zone'"
         if self.level ==3:
@@ -281,7 +296,7 @@ class MyGame(arcade.View):
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
             print('ourch')
 
-            window.show_view(lose_view)
+            self.window.show_view(self.window.lose_view)
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1
@@ -323,10 +338,10 @@ class MyGame(arcade.View):
 def main():
 
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    menu_view = MenuView()
-    lose_view = LoseView()
+    window.menu_view = MenuView()
+    window.lose_view = LoseView()
 
-    window.show_view(menu_view)
+    window.show_view(window.menu_view)
     arcade.run()
 
 
