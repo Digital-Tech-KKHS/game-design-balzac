@@ -1,11 +1,13 @@
 """
 Experimental video player using pyglet.
+
 This requires that you have ffmpeg installed
 and you might need to tell pyglet where it's located.
 """
 # import sys
 import pyglet
 import arcade
+pyglet.options['search_local_libs'] = True
 
 
 class VideoPlayer(arcade.Window):
