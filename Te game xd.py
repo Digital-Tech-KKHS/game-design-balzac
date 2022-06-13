@@ -24,7 +24,7 @@ class MenuView(arcade.View):
         self.background = None
 
     def on_show_view(self):
-        self.background = arcade.load_texture("assets\creature.png")
+        self.background = arcade.load_texture("assets\menu.png")
         self.game_view = MyGame()
         self.game_view.setup()
 
@@ -38,7 +38,6 @@ class MenuView(arcade.View):
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
         self.window.show_view(self.game_view)
-        self.text = "Loading..."
 
 
 class MyGame(arcade.View):
@@ -66,7 +65,7 @@ class MyGame(arcade.View):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
