@@ -23,7 +23,7 @@ class MenuView(arcade.View):
         self.background = None
 
     def on_show_view(self):
-        self.background = arcade.load_texture("assets\menu.png")
+        self.background = arcade.load_texture("assets\creature.png")
         self.game_view = MyGame()
         self.game_view.setup()
 
@@ -36,32 +36,7 @@ class MenuView(arcade.View):
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
-        self.window.show_view(self.game_view)
-
-class LoseView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.text = "Game Over"
-        self.background = None
-
-    def on_show_view(self):
-        self.background = arcade.load_texture("assets\SPOOKY GAME OVER.png")
-        self.game_view = MyGame()
-        self.game_view.setup()
-
-    def on_draw(self):
-        self.clear()
-        arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            SCREEN_WIDTH, SCREEN_HEIGHT,
-                                            self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
-        
-
-    def on_mouse_press(self, _x,  _y, _button, _modifiers):
-<<<<<<< HEAD
         self.text = "Loading..."
-=======
->>>>>>> 797f1a6dc4cbdb2f1b52ee38202b529c23c1019f
         self.window.show_view(self.game_view)
 
 class LoseView(arcade.View):
@@ -83,10 +58,11 @@ class LoseView(arcade.View):
                                             self.background)
         arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
 
-    
+
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
         self.window.show_view(self.game_view)
         #self.text = "Loading..."
+
 
 class MyGame(arcade.View):
     def __init__(self):
@@ -114,12 +90,8 @@ class MyGame(arcade.View):
         self.sprint_bar = None
         enemy_physics_engine = 0
         self.level = 4
-<<<<<<< HEAD
         self.subtitle = "'The Lobby'"
 
-=======
-        self.subtitle = None
->>>>>>> 797f1a6dc4cbdb2f1b52ee38202b529c23c1019f
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
 
@@ -200,39 +172,7 @@ class MyGame(arcade.View):
             sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
         arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
         
-<<<<<<< HEAD
         
-=======
-        self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
-        self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
-        
-        arcade.draw_text(
-            f"Level {self.level-1} : {self.subtitle}",
-            SCREEN_WIDTH/2,
-            SCREEN_HEIGHT/2 + 125,
-            color=(255, 255, 255, self.text_alpha), 
-            font_size=36,
-             anchor_x="center",
-              font_name = 'Kenney Pixel'
-        )
-        
-        arcade.draw_text(
-            'Objective - Escape', 
-            SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
-            color=(255, 255, 255, self.obj_alpha),
-            font_size=28, 
-            font_name = 'Kenney Pixel'
-        )
-
-        if self.level == 1:
-            self.subtitle = "'The Lobby'"
-        if self.level == 2:
-            self.subtitle = "'Habitable Zone'"
-        if self.level ==3:
-            self.subtitle = "'Pipe Dreams'"
-        if self.level == 4:
-            self.subtitle = "'Electrical Station'"
->>>>>>> 797f1a6dc4cbdb2f1b52ee38202b529c23c1019f
 
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
@@ -354,13 +294,8 @@ class MyGame(arcade.View):
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
             print('ourch')
-<<<<<<< HEAD
 
             self.window.show_view(self.window.lose_view)
-=======
-            self.window.show_view(self.window.lose_view)
-
->>>>>>> 797f1a6dc4cbdb2f1b52ee38202b529c23c1019f
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
             self.level += 1
@@ -404,10 +339,7 @@ def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     window.menu_view = MenuView()
     window.lose_view = LoseView()
-<<<<<<< HEAD
 
-=======
->>>>>>> 797f1a6dc4cbdb2f1b52ee38202b529c23c1019f
     window.show_view(window.menu_view)
     arcade.run()
 
