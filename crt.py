@@ -51,7 +51,7 @@ class MyGame(arcade.Window):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
-        self.level = 3
+        self.level = 1
 
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 

@@ -33,7 +33,7 @@ class MenuView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, arcade.color.WHITE, font_size=30, font_name = 'Kenney Pixel', anchor_x="center")
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
@@ -62,6 +62,8 @@ class LoseView(arcade.View):
         self.window.show_view(self.game_view)
 
 
+    
+
 class MyGame(arcade.View):
     def __init__(self):
 
@@ -89,8 +91,9 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
         self.subtitle = None
+        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
 
@@ -111,6 +114,8 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
+        if self.level == 1:
+            arcade.play_sound(self.lvl1mus, 0.2, looping=True)
         self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
         self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
         for spawn_point in self.scene['enemy_spawn']:
