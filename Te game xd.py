@@ -96,9 +96,9 @@ class MyGame(arcade.View):
     def setup(self):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
-            "walls": {"use_spatial_hash": True},
-            "floor": {"use_spatial_hash": True},
-            "lights": {"use_spatial_hash": True},
+            "walls": {"use_spatial_hash": True,},
+            "floor": {"use_spatial_hash": True,},
+            "lights": {"use_spatial_hash": True,},
         }
 
         tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
@@ -239,6 +239,7 @@ class MyGame(arcade.View):
         elif key == arcade.key.D:
             self.right_pressed = True
         
+        
         # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
         
@@ -263,6 +264,12 @@ class MyGame(arcade.View):
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
+    
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
+        for obj in objects:
+            # obj.interact()
+            print('a')
     
     def center_camera_to_player(self):
 
@@ -335,7 +342,7 @@ class MyGame(arcade.View):
 
 def main():
 
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE) 
     window.menu_view = MenuView()
     window.lose_view = LoseView()
     window.show_view(window.menu_view)
