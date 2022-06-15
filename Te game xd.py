@@ -88,6 +88,8 @@ class MyGame(arcade.View):
         self.camera = None
         self.HUD_camera = None
         self.sprint_bar = None
+        self.sprintbarback = None
+        self.sprintbarfore = None
         enemy_physics_engine = 0
         self.level = 1
         self.subtitle = None
@@ -100,6 +102,7 @@ class MyGame(arcade.View):
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
             "floor": {"use_spatial_hash": True},
+            "details": {"use_spatial_hash": True},
             "lights": {"use_spatial_hash": True},
         }
 
@@ -111,11 +114,10 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-
         if self.level == 1:
             arcade.play_sound(self.lvl1mus, 0.2, looping=True)
-       
-       
+        self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
+        self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
         for spawn_point in self.scene['enemy_spawn']:
             self.scene['enemy_list'].append(enemy_factory(spawn_point))
 
@@ -167,12 +169,12 @@ class MyGame(arcade.View):
         self.HUD_camera.use()
         self.cursor_list.draw()
 
-        
-
-        sprint_bar_color = arcade.color.BABY_BLUE
+        sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
-            sprint_bar_color = arcade.color.LIGHT_RED_OCHRE
-        arcade.draw_lrtb_rectangle_filled(0, 20, 100+ (SCREEN_HEIGHT-600) *self.player_sprite.stamina/100, 0, sprint_bar_color)
+            sprint_bar_color = arcade.color_from_hex_string("#703832")
+        arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
+        arcade.draw_lrtb_rectangle_filled(10, 30, 100 + (SCREEN_HEIGHT-700) *self.player_sprite.stamina/100, 10, sprint_bar_color)
+        arcade.draw_lrwh_rectangle_textured(6, 6, 26, 357, self.sprintbarfore)
         
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
