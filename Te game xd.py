@@ -7,7 +7,8 @@ from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
 from EnemyFactory import enemy_factory
-#loading our texture pair
+
+#-=loading our texture pair=-
 def load_texture_pair(filename):
     return [
         arcade.load_texture(filename),
@@ -23,7 +24,7 @@ class MenuView(arcade.View):
         self.background = None
 
     def on_show_view(self):
-        self.background = arcade.load_texture("assets\creature.png")
+        self.background = arcade.load_texture("assets\menu.png")
         self.game_view = MyGame()
         self.game_view.setup()
 
@@ -32,11 +33,10 @@ class MenuView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, arcade.color.WHITE, font_size=30, font_name = 'Kenney Pixel', anchor_x="center")
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
-        self.text = "Loading..."
         self.window.show_view(self.game_view)
 
 class LoseView(arcade.View):
@@ -50,18 +50,19 @@ class LoseView(arcade.View):
         self.game_view = MyGame()
         self.game_view.setup()
 
-
     def on_draw(self):
         self.clear()
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
         arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        
 
-    
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
         self.window.show_view(self.game_view)
-        #self.text = "Loading..."
+
+
+    
 
 class MyGame(arcade.View):
     def __init__(self):
@@ -88,9 +89,9 @@ class MyGame(arcade.View):
         self.HUD_camera = None
         self.sprint_bar = None
         enemy_physics_engine = 0
-        self.level = 4
-        self.subtitle = "'The Lobby'"
-
+        self.level = 1
+        self.subtitle = None
+        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
 
@@ -111,6 +112,8 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
 
+        if self.level == 1:
+            arcade.play_sound(self.lvl1mus, 0.2, looping=True)
        
        
         for spawn_point in self.scene['enemy_spawn']:
@@ -185,19 +188,22 @@ class MyGame(arcade.View):
         )
         
         arcade.draw_text(
-            'Objective - Find a way out.', 
+            'Objective - Escape', 
             SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
             color=(255, 255, 255, self.obj_alpha),
             font_size=28, 
             font_name = 'Kenney Pixel'
         )
 
+        if self.level == 1:
+            self.subtitle = "'The Lobby'"
         if self.level == 2:
             self.subtitle = "'Habitable Zone'"
         if self.level ==3:
             self.subtitle = "'Pipe Dreams'"
         if self.level == 4:
             self.subtitle = "'Electrical Station'"
+
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
