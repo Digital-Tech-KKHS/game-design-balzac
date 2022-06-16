@@ -91,7 +91,8 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
+
         self.subtitle = None
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -245,6 +246,7 @@ class MyGame(arcade.View):
         elif key == arcade.key.D:
             self.right_pressed = True
         
+        
         # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
         
@@ -269,6 +271,13 @@ class MyGame(arcade.View):
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
 
         self.process_keychange()
+    
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
+        for obj in objects:
+            # obj.interact()
+            print('a')
+            
     
     def center_camera_to_player(self):
 
@@ -341,7 +350,7 @@ class MyGame(arcade.View):
 
 def main():
 
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE) 
     window.menu_view = MenuView()
     window.lose_view = LoseView()
     window.show_view(window.menu_view)
