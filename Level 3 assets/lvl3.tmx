@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="20" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="9" nextobjectid="31">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="20" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="9" nextobjectid="33">
  <tileset firstgid="1" source="level 3 tileset.tsx"/>
  <tileset firstgid="17" source="../Level 4 assets/props.tsx"/>
  <tileset firstgid="117" source="../Level 2 assets/concreet.tsx"/>
  <tileset firstgid="159" source="../Level 1 assets/Wall.tsx"/>
+ <tileset firstgid="195" source="../Level 1 assets/props.tsx"/>
  <objectgroup id="7" name="lights">
   <object id="7" gid="180" x="2880" y="31360" width="320" height="320">
    <properties>
@@ -107,6 +108,15 @@
     <property name="radius" type="int" value="700"/>
    </properties>
   </object>
+  <object id="31" gid="180" x="2560" y="3008" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff00b9b9"/>
+    <property name="radius" type="int" value="700"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="exit">
+  <object id="32" gid="148" x="2558.18" y="3008.48" width="320" height="320"/>
  </objectgroup>
  <layer id="3" name="floor" width="20" height="100">
   <data encoding="csv">
@@ -212,12 +222,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="exit">
-  <object id="1" gid="68" x="2392" y="2852" width="320" height="320"/>
-  <object id="2" gid="69" x="2712" y="2852" width="320" height="320"/>
-  <object id="3" gid="78" x="2392" y="3172" width="320" height="320"/>
-  <object id="4" gid="79" x="2712" y="3172" width="320" height="320"/>
- </objectgroup>
  <objectgroup id="5" name="enemy_spawn">
   <object id="5" gid="148" x="2560" y="31360" width="320" height="320">
    <properties>
@@ -436,7 +440,7 @@
 148,148,148,148,148,148,148,148,148,148,148,148,148,148,148,148,148,148,148,148
 </data>
  </layer>
- <layer id="8" name="secrets" width="20" height="100">
+ <layer id="8" name="secrets" width="20" height="100" offsetx="160.606" offsety="-39.3939">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -446,8 +450,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,246,247,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,256,257,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
