@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="12" nextobjectid="139">
+=======
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="12" nextobjectid="140">
+>>>>>>> afc87c330535c427f8690f5eaef201b538d59690
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -249,6 +253,12 @@
   <object id="127" gid="70" x="15360" y="2880" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff3f3f3f"/>
+    <property name="radius" type="int" value="700"/>
+   </properties>
+  </object>
+  <object id="139" gid="70" x="14724" y="14568" width="320" height="320">
+   <properties>
+    <property name="color" type="color" value="#ff00b8b8"/>
     <property name="radius" type="int" value="700"/>
    </properties>
   </object>
