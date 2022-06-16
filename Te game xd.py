@@ -270,6 +270,7 @@ class MyGame(arcade.View):
         for obj in objects:
             # obj.interact()
             print('a')
+            
     
     def center_camera_to_player(self):
 
