@@ -127,11 +127,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-<<<<<<< HEAD
-        self.level = 4
-=======
         self.level = 1
->>>>>>> a7c32775fc3b58e3a6dedf6566267f9827671265
 
         self.subtitle = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
