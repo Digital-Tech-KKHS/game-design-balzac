@@ -1,6 +1,7 @@
 
 import arcade
 import math
+import arcade.gui
 from arcade.experimental.lights import Light, LightLayer
 import random
 from PlayerCharacter import PlayerCharacter
@@ -16,12 +17,47 @@ def load_texture_pair(filename):
     ]
 
     
+class QuitButton(arcade.gui.UIFlatButton):
+    def on_click(self, event: arcade.gui.UIOnClickEvent):
+        arcade.exit()
+
 
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.text = "Click anywhere to start"
         self.background = None
+        self.text = "Level.Null()"
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+        self.v_box = arcade.gui.UIBoxLayout()
+        start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
+        self.v_box.add(start_button.with_space_around(bottom=20))
+        settings_button = arcade.gui.UIFlatButton(text="Settings", width=150)
+        self.v_box.add(settings_button.with_space_around(bottom=20))
+        quit_button = QuitButton(text="Quit", width=150)
+        self.v_box.add(quit_button)
+        start_button.on_click = self.on_click_start
+
+        @settings_button.event("on_click")
+        def on_click_settings(event):
+            print("Settings:", event)
+
+        # Create a widget to hold the v_box widget, that will center the buttons
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                allign_x=SCREEN_WIDTH/2,
+                allign_y=SCREEN_HEIGHT/2 - 400,
+                child=self.v_box)
+        )
+
+    def setup(self):
+        self.window.set_mouse_visible(True)
+
+    def on_click_start(self, event):
+        print("Start:", event)
+        self.window.show_view(self.game_view)
+
+    
 
     def on_show_view(self):
         self.background = arcade.load_texture("assets\menu.png")
@@ -30,14 +66,14 @@ class MenuView(arcade.View):
 
     def on_draw(self):
         self.clear()
+        
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, arcade.color.WHITE, font_size=30, font_name = 'Kenney Pixel', anchor_x="center")
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 150, arcade.color.WHITE, font_size=56, font_name = 'Kenney Pixel', anchor_x="center")
+        self.manager.draw()
+    
         
-
-    def on_mouse_press(self, _x,  _y, _button, _modifiers):
-        self.window.show_view(self.game_view)
 
 class LoseView(arcade.View):
     def __init__(self):
@@ -94,6 +130,7 @@ class MyGame(arcade.View):
         self.level = 1
 
         self.subtitle = None
+        self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
@@ -131,7 +168,6 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.window.set_mouse_visible(False)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.enemy_physics_engines = []
@@ -327,8 +363,9 @@ class MyGame(arcade.View):
  
 
         for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"]):
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], max_distance=350):
                 enemy.follow_sprite(self.player_sprite)
+                #arcade.play_sound(self.facesound, volume=0.2)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x

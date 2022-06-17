@@ -15,3 +15,5 @@ def enemy_factory(spawn_sprite: arcade.Sprite):
         return Wretch(spawn_sprite.center_x, spawn_sprite.center_y)
     else:
         raise NotImplemented("Tiled enemy sprite currently has a enemy type that does not exist yet")
+
+    
