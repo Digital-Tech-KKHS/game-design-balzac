@@ -124,6 +124,7 @@ class MyGame(arcade.View):
         enemy_physics_engine = 0
         self.level = 4
 
+
         self.subtitle = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
@@ -358,9 +359,9 @@ class MyGame(arcade.View):
  
 
         for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], max_distance=350):
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 enemy.follow_sprite(self.player_sprite)
-                #arcade.play_sound(self.facesound, volume=0.2)
+                arcade.play_sound(self.facesound, volume=0.2)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
