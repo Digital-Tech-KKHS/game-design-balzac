@@ -3,11 +3,13 @@ import arcade
 import math
 import arcade.gui
 from arcade.experimental.lights import Light, LightLayer
+from arcade.experimental.crt_filter import CRTFilter
 import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
 from EnemyFactory import enemy_factory
+from pyglet.math import Vec2
 
 #-=loading our texture pair=-
 def load_texture_pair(filename):
@@ -99,6 +101,15 @@ class MyGame(arcade.View):
     def __init__(self):
 
         super().__init__()
+        self.crt_filter = CRTFilter(SCREEN_WIDTH, SCREEN_HEIGHT,
+                                    resolution_down_scale=6.0,
+                                    hard_scan=-8.0,
+                                    hard_pix=-3.0,
+                                    display_warp = Vec2(1.0 / 32.0, 1.0 / 24.0),
+                                    mask_dark=0.5,
+                                    mask_light=1.5)
+
+        self.filter_on = True
 
         self.obj_alpha = 0
         self.text_alpha = 255
@@ -122,7 +133,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 3
 
         self.subtitle = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
@@ -188,15 +199,15 @@ class MyGame(arcade.View):
 
         
     def on_draw(self):
-        
-        self.clear()
-
-        self.camera.use()
         with self.light_layer:
-            self.clear()
             self.scene.draw()
         
+        self.crt_filter.use()
+        self.crt_filter.clear()
         self.light_layer.draw(ambient_color=AMBIENT_COLOR)
+        self.camera.use()
+        self.clear()
+        self.crt_filter.draw()
         
         self.HUD_camera.use()
         self.cursor_list.draw()

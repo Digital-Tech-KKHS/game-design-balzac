@@ -1,4 +1,7 @@
-
+from pathlib import Path
+from pyglet.math import Vec2
+import arcade
+from arcade.experimental import Shadertoy
 import arcade
 import math
 import arcade.gui
@@ -99,7 +102,10 @@ class MyGame(arcade.View):
     def __init__(self):
 
         super().__init__()
-
+        self.shadertoy = None
+        self.channel0 = None
+        self.channel1 = None
+        self.load_shader()
         self.obj_alpha = 0
         self.text_alpha = 255
         self.player_list = None
@@ -129,7 +135,26 @@ class MyGame(arcade.View):
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
+    def load_shader(self):
+        # Where is the shader file? Must be specified as a path.
+        shader_file_path = Path("shadeer.glsl")
+        window_size = [SCREEN_WIDTH,SCREEN_HEIGHT]
 
+        # Create the shader toy
+        self.shadertoy = Shadertoy.create_from_file(window_size, shader_file_path)
+
+        # Create the channels 0 and 1 frame buffers.
+        # Make the buffer the size of the window, with 4 channels (RGBA)
+        self.channel0 = self.shadertoy.ctx.framebuffer(
+            color_attachments=[self.shadertoy.ctx.texture(window_size, components=4)]
+        )
+        self.channel1 = self.shadertoy.ctx.framebuffer(
+            color_attachments=[self.shadertoy.ctx.texture(window_size, components=4)]
+        )
+
+        # Assign the frame buffers to the channels
+        self.shadertoy.channel_0 = self.channel0.color_attachments[0]
+        self.shadertoy.channel_1 = self.channel1.color_attachments[0]
     def setup(self):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
@@ -139,7 +164,7 @@ class MyGame(arcade.View):
             "lights": {"use_spatial_hash": True},
         }
 
-        tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
+        tile_map = arcade.load_tilemap(f"Level {self.level} assets\maptest.tmx", TILE_SCALING, layer_options=layer_options)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -185,19 +210,25 @@ class MyGame(arcade.View):
         color = arcade.color_from_hex_string("#363636")
         self.player_light = Light(self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode)
         self.light_layer.add(self.player_light)
-
+        
         
     def on_draw(self):
         
         self.clear()
-
         self.camera.use()
+        self.channel0.use()
+        self.channel0.clear()
+        self.scene['walls'].draw()
         with self.light_layer:
             self.clear()
             self.scene.draw()
-        
-        self.light_layer.draw(ambient_color=AMBIENT_COLOR)
-        
+
+        self.light_layer.draw()
+        p = (self.player_sprite.position[0] - self.camera.position[0],
+             self.player_sprite.position[1] - self.camera.position[1])
+        self.shadertoy.program['lightPosition'] = p
+        self.shadertoy.program['lightSize'] = 3000
+        self.shadertoy.render()
         self.HUD_camera.use()
         self.cursor_list.draw()
 
@@ -324,7 +355,6 @@ class MyGame(arcade.View):
 
     def on_update(self, delta_time):
         self.center_camera_to_player()
-
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
