@@ -3839,6 +3839,7 @@
    <properties>
     <property name="itemid" value="jcbody"/>
     <property name="oninteract" value="body"/>
+    <property name="text" value="Oh, Thats a dead body"/>
    </properties>
   </object>
  </objectgroup>
