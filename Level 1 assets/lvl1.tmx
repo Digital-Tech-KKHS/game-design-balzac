@@ -3838,6 +3838,7 @@
   <object id="736" gid="81" x="14000.6" y="22690.3" width="320" height="320" rotation="90">
    <properties>
     <property name="itemid" value="jcbody"/>
+    <property name="oninteract" value="body"/>
    </properties>
   </object>
  </objectgroup>
