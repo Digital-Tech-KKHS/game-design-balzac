@@ -1,9 +1,15 @@
 import arcade
 
 class Interactable(arcade.Sprite):
-    def __init__(self, name) -> None:
-        self.name = name
 
     def interact(self):
-        print(f"You just interacted with {self.name}")
+        getattr(self, self.properties["oninteract"], self.not_implimented)()
 
+    def body(self):
+        print("ewww you touched a ded dude")
+
+    def not_implimented(self):
+        raise NotImplemented("object does not have oninteract in Tiled, check if spelled correctly.")
+
+
+    
