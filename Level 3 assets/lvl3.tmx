@@ -225,6 +225,7 @@
  <objectgroup id="5" name="enemy_spawn">
   <object id="5" gid="148" x="2560" y="31360" width="320" height="320">
    <properties>
+    <property name="fov" type="int" value="350"/>
     <property name="type" value="wretch"/>
    </properties>
   </object>

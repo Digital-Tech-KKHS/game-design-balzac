@@ -32,15 +32,10 @@ class MenuView(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout()
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
-        settings_button = arcade.gui.UIFlatButton(text="Settings", width=150)
-        self.v_box.add(settings_button.with_space_around(bottom=20))
         quit_button = QuitButton(text="Quit", width=150)
         self.v_box.add(quit_button)
         start_button.on_click = self.on_click_start
 
-        @settings_button.event("on_click")
-        def on_click_settings(event):
-            print("Settings:", event)
 
         # Create a widget to hold the v_box widget, that will center the buttons
         self.manager.add(
@@ -363,9 +358,9 @@ class MyGame(arcade.View):
  
 
         for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], max_distance=350):
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 enemy.follow_sprite(self.player_sprite)
-                #arcade.play_sound(self.facesound, volume=0.2)
+                arcade.play_sound(self.facesound, volume=0.2)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
