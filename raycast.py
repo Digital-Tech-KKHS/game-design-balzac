@@ -164,7 +164,7 @@ class MyGame(arcade.View):
             "lights": {"use_spatial_hash": True},
         }
 
-        tile_map = arcade.load_tilemap(f"Level {self.level} assets\maptest.tmx", TILE_SCALING, layer_options=layer_options)
+        tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
