@@ -22,11 +22,6 @@ def load_texture_pair(filename):
     ]
 
     
-class QuitButton(arcade.gui.UIFlatButton):
-    def on_click(self, event: arcade.gui.UIOnClickEvent):
-        arcade.exit()
-
-
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -37,10 +32,10 @@ class MenuView(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout()
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
-        quit_button = QuitButton(text="Quit", width=150)
-        self.v_box.add(quit_button)
+        #quit_button = arcade.gui.UIFlatButton(text="Quit", width=150)
+        #self.v_box.add(quit_button)
         start_button.on_click = self.on_click_start
-
+        #quit_button.on_click = self.on_click_quit
 
         # Create a widget to hold the v_box widget, that will center the buttons
         self.manager.add(
@@ -56,8 +51,10 @@ class MenuView(arcade.View):
     def on_click_start(self, event):
         print("Start:", event)
         self.window.show_view(self.game_view)
-
+        
     
+    #def on_click_quit(self, event):
+        #arcade.exit()
 
     def on_show_view(self):
         self.background = arcade.load_texture("assets\menu.png")
@@ -130,13 +127,8 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-<<<<<<< HEAD
         self.level = 1
-=======
-        self.level = 4
-
->>>>>>> e966d1c23b8b0ca82a0363573c1e515f37dbc17c
-
+        self.facesoundvol = 0.2
         self.subtitle = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
@@ -397,7 +389,7 @@ class MyGame(arcade.View):
         for enemy in self.scene['enemy_list']:
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 enemy.follow_sprite(self.player_sprite)
-                arcade.play_sound(self.facesound, volume=0.2)
+                #arcade.play_sound(self.facesound, self.facesoundvol)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
