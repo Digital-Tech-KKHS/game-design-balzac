@@ -1,5 +1,4 @@
 import arcade
-from constants import *
 
 class Interactable(arcade.Sprite):
 
@@ -17,7 +16,7 @@ class Interactable(arcade.Sprite):
 
     def draw(self):
         super().draw()
-        if getattr(self, 'show_text', False) is True:
+        if getattr(self, 'show_text', False):
                 arcade.draw_text(
                 self.properties["text"], 
                 self.center_x, self.center_y + 100, 
