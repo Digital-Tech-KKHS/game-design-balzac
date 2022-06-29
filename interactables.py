@@ -1,4 +1,5 @@
 import arcade
+from constants import *
 
 class Interactable(arcade.Sprite):
 
@@ -10,6 +11,20 @@ class Interactable(arcade.Sprite):
 
     def not_implimented(self):
         raise NotImplemented("object does not have oninteract in Tiled, check if spelled correctly.")
+
+    def draw_text(self):
+        self.show_text = True
+
+    def draw(self):
+        super().draw()
+        if getattr(self, 'show_text', False) is True:
+                arcade.draw_text(
+                self.properties["text"], 
+                self.center_x, self.center_y + 100, 
+                color=(255, 255, 255, 255),
+                font_size=28, 
+                font_name = 'Kenney Pixel'
+            )
 
 
     
