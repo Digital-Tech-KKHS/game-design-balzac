@@ -107,6 +107,7 @@ class MyGame(arcade.View):
         self.load_shader()
         self.obj_alpha = 0
         self.text_alpha = 255
+        self.esc_alpha = 255
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -130,6 +131,7 @@ class MyGame(arcade.View):
         self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
+        self.escpressed = False
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -241,7 +243,8 @@ class MyGame(arcade.View):
         
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
-        
+        self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
+
         arcade.draw_text(
             f"Level {self.level-1} : {self.subtitle}",
             SCREEN_WIDTH/2,
@@ -253,11 +256,21 @@ class MyGame(arcade.View):
         )
         
         arcade.draw_text(
-            'Objective - Escape', 
+            'Objective - Find an exit', 
             SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
             color=(255, 255, 255, self.obj_alpha),
             font_size=28, 
             font_name = 'Kenney Pixel'
+        )
+        if self.escpressed == True:
+            arcade.draw_text(
+                "There is no escape.",
+                SCREEN_WIDTH , SCREEN_HEIGHT - 30, 
+                color=(255, 255, 255, self.esc_alpha),
+                font_size=28,
+                anchor_x="right", 
+                font_name = 'Kenney Pixel'
+            
         )
 
         if self.level == 1:
@@ -308,7 +321,10 @@ class MyGame(arcade.View):
             self.left_pressed = True
         elif key == arcade.key.D:
             self.right_pressed = True
-        
+
+        if key == arcade.key.ESCAPE:
+            self.esc_alpha = 255
+            self.escpressed = True
         
         # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
@@ -329,6 +345,9 @@ class MyGame(arcade.View):
             self.left_pressed = False
         elif key == arcade.key.D:
             self.right_pressed = False
+
+        #if key == arcade.key.ESCAPE:
+            #self.escpressed = False
         
         # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
