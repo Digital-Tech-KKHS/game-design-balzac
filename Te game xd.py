@@ -1,4 +1,5 @@
 
+from code import interact
 from pathlib import Path
 from pyglet.math import Vec2
 import arcade
@@ -21,12 +22,6 @@ def load_texture_pair(filename):
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
-    
-class QuitButton(arcade.gui.UIFlatButton):
-    def on_click(self, event: arcade.gui.UIOnClickEvent):
-        arcade.exit()
-
-
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -37,8 +32,6 @@ class MenuView(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout()
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
-        quit_button = QuitButton(text="Quit", width=150)
-        self.v_box.add(quit_button)
         start_button.on_click = self.on_click_start
 
 
@@ -254,7 +247,17 @@ class MyGame(arcade.View):
              anchor_x="center",
               font_name = 'Kenney Pixel'
         )
-        
+        for obj in self.scene['Interactables']:
+            if getattr(interact, 'show_text', obj.show_text):
+                arcade.draw_text(
+                obj.properties["text"], 
+                SCREEN_WIDTH/2,
+                SCREEN_HEIGHT/2 + 100, 
+                color=(255, 255, 255, self.text_alpha),
+                font_size=28, 
+                font_name = 'Kenney Pixel'
+            )
+
         arcade.draw_text(
             'Objective - Escape', 
             SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
