@@ -132,7 +132,10 @@ class MyGame(arcade.View):
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
+<<<<<<< HEAD
         
+=======
+>>>>>>> e614d8ccceae33c8c2e0013888b4cdfb962e0ad2
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -359,8 +362,9 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
-            
-    
+        for obj in objects:
+            obj.interact()
+
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
