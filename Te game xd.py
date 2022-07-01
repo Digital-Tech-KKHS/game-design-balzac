@@ -1,4 +1,5 @@
 
+from code import interact
 from pathlib import Path
 from pyglet.math import Vec2
 import arcade
@@ -32,8 +33,6 @@ class MenuView(arcade.View):
         self.v_box = arcade.gui.UIBoxLayout()
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
-        #quit_button = arcade.gui.UIFlatButton(text="Quit", width=150)
-        #self.v_box.add(quit_button)
         start_button.on_click = self.on_click_start
         #quit_button.on_click = self.on_click_quit
 
@@ -108,6 +107,7 @@ class MyGame(arcade.View):
         self.obj_alpha = 0
         self.text_alpha = 255
         self.esc_alpha = 255
+        self.box_alpha = 255
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -128,14 +128,10 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-<<<<<<< HEAD
-        
-=======
->>>>>>> e614d8ccceae33c8c2e0013888b4cdfb962e0ad2
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -250,6 +246,7 @@ class MyGame(arcade.View):
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
+        self.box_alpha = int(arcade.utils.lerp(self.box_alpha, 0, 0.01))
 
         arcade.draw_text(
             f"Level {self.level-1} : {self.subtitle}",
@@ -260,7 +257,17 @@ class MyGame(arcade.View):
              anchor_x="center",
               font_name = 'Kenney Pixel'
         )
-        
+        for obj in self.scene['Interactables']:
+            if getattr(interact, 'show_text', obj.show_text):
+                arcade.draw_text(
+                obj.properties["text"], 
+                SCREEN_WIDTH/2,
+                SCREEN_HEIGHT/2 + 100, 
+                color=(255, 255, 255, self.box_alpha),
+                font_size=28, 
+                font_name = 'Kenney Pixel'
+            )
+
         arcade.draw_text(
             'Objective - Find an exit', 
             SCREEN_WIDTH - 1270, SCREEN_HEIGHT - 30, 
@@ -362,6 +369,7 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
+        self.box_alpha = 255
         for obj in objects:
             obj.interact()
 
