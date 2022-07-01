@@ -132,6 +132,7 @@ class MyGame(arcade.View):
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
+        
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -178,6 +179,7 @@ class MyGame(arcade.View):
             arcade.play_sound(self.lvl1mus, 0.2, looping=True)
         self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
         self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
+        self.static = arcade.load_animated_gif("assets/static.gif")
         for spawn_point in self.scene['enemy_spawn']:
             self.scene['enemy_list'].append(enemy_factory(spawn_point))
 
@@ -224,7 +226,6 @@ class MyGame(arcade.View):
         with self.light_layer:
             self.clear()
             self.scene.draw()
-
         self.light_layer.draw()
         p = (self.player_sprite.position[0] - self.camera.position[0],
              self.player_sprite.position[1] - self.camera.position[1])
@@ -233,10 +234,12 @@ class MyGame(arcade.View):
         self.shadertoy.render()
         self.HUD_camera.use()
         self.cursor_list.draw()
+        #self.static.draw()
 
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
+        #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
         arcade.draw_lrtb_rectangle_filled(10, 30, 100 + (SCREEN_HEIGHT-700) *self.player_sprite.stamina/100, 10, sprint_bar_color)
         arcade.draw_lrwh_rectangle_textured(6, 6, 26, 357, self.sprintbarfore)
@@ -378,7 +381,7 @@ class MyGame(arcade.View):
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
         self.player_sprite.update(delta_time)
-
+        self.static.update()
 
         self.cursor_sprite.center_x = self.window._mouse_x 
         self.cursor_sprite.center_y = self.window._mouse_y
