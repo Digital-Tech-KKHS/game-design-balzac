@@ -386,7 +386,7 @@
   <object id="55" gid="71" x="11200" y="3840" width="320" height="320" rotation="-90">
    <properties>
     <property name="oninteract" value="draw_text"/>
-    <property name="text" value="Big booty bitches"/>
+    <property name="text" value="A"/>
    </properties>
   </object>
   <object id="138" gid="185" x="7238.67" y="8968" width="122.667" height="122.667">
