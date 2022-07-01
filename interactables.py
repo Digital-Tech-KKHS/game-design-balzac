@@ -1,6 +1,9 @@
 import arcade
 
 class Interactable(arcade.Sprite):
+    def __init__(self, **kwargs):
+        self.show_text = False
+        super().__init__(**kwargs)
 
     def interact(self):
         getattr(self, self.properties["oninteract"], self.not_implimented)()
@@ -13,17 +16,10 @@ class Interactable(arcade.Sprite):
 
     def draw_text(self):
         self.show_text = True
+        print('d')
 
-    def draw(self):
-        super().draw()
-        if getattr(self, 'show_text', False):
-                arcade.draw_text(
-                self.properties["text"], 
-                self.center_x, self.center_y + 100, 
-                color=(255, 255, 255, 255),
-                font_size=28, 
-                font_name = 'Kenney Pixel'
-            )
+        
+
 
 
     
