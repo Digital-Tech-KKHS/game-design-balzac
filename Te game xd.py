@@ -359,8 +359,9 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
-            
-    
+        for obj in objects:
+            obj.interact()
+
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
