@@ -107,7 +107,7 @@ class MyGame(arcade.View):
         self.obj_alpha = 0
         self.text_alpha = 255
         self.esc_alpha = 255
-        self.box_alpha = 255
+        self.box_alpha = 0
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -128,11 +128,11 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        
+        self.box_text = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -258,16 +258,16 @@ class MyGame(arcade.View):
              anchor_x="center",
               font_name = 'Kenney Pixel'
         )
-        for obj in self.scene['Interactables']:
-            if getattr(interact, 'show_text', obj.show_text):
-                arcade.draw_text(
-                obj.properties["text"], 
-                SCREEN_WIDTH/2,
-                SCREEN_HEIGHT/2 + 100, 
-                color=(255, 255, 255, self.box_alpha),
-                font_size=28, 
-                font_name = 'Kenney Pixel'
-            )
+        arcade.draw_text(
+            self.box_text, 
+            SCREEN_WIDTH/2,
+            SCREEN_HEIGHT/2 + 100, 
+            color=(255, 255, 255, self.box_alpha),
+            font_size=28, 
+            font_name = 'Kenney Pixel'
+        )
+
+            
 
         arcade.draw_text(
             'Objective - Find an exit', 
@@ -370,9 +370,14 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
-        self.box_alpha = 255
+
         for obj in objects:
+            self.box_alpha = 255
             obj.interact()
+            try:
+                self.box_text = obj.properties['text']
+            except KeyError:
+                pass
 
     def center_camera_to_player(self):
 
