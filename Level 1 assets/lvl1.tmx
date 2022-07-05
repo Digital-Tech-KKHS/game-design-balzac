@@ -3252,7 +3252,7 @@
   <object id="741" gid="67" x="15360" y="27520" width="320" height="320">
    <properties>
     <property name="oninteract" value="draw_text"/>
-    <property name="text" value="it is a piece of paper which has been worn out.\n it reads, p-op-e -re w-st fro- -er-"/>
+    <property name="text" value="it is a piece of paper which has been worn out. i can barely understand what it says, it reads, people are west from here"/>
    </properties>
   </object>
  </objectgroup>
