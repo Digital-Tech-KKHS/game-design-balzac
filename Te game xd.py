@@ -44,12 +44,10 @@ class MenuView(arcade.View):
                 child=self.v_box)
         )
 
-    def setup(self):
-        self.window.set_mouse_visible(True)
-
     def on_click_start(self, event):
         print("Start:", event)
         self.window.show_view(self.game_view)
+        self.window.set_mouse_visible(False)
         
     
     #def on_click_quit(self, event):
@@ -62,7 +60,6 @@ class MenuView(arcade.View):
 
     def on_draw(self):
         self.clear()
-        
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
@@ -87,7 +84,7 @@ class LoseView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=40, anchor_x="center", font_name="Kenney Pixel" )
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
@@ -132,7 +129,7 @@ class MyGame(arcade.View):
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        self.box_text = None
+        self.box_text = ""
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -158,6 +155,7 @@ class MyGame(arcade.View):
         self.shadertoy.channel_1 = self.channel1.color_attachments[0]
 
     def setup(self):
+        
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
@@ -285,7 +283,7 @@ class MyGame(arcade.View):
                 anchor_x="right", 
                 font_name = 'Kenney Pixel'
             
-        )
+            )
 
         if self.level == 1:
             self.subtitle = "'The Lobby'"
