@@ -13,7 +13,6 @@ from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
 from EnemyFactory import enemy_factory
-from interactables import Interactable
 
 #-=loading our texture pair=-
 def load_texture_pair(filename):
@@ -125,11 +124,10 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        self.box_text = ""
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -162,7 +160,6 @@ class MyGame(arcade.View):
             "floor": {"use_spatial_hash": True},
             "details": {"use_spatial_hash": True},
             "lights": {"use_spatial_hash": True},
-            "Interactables": {"custom_class": Interactable},
         }
 
         tile_map = arcade.load_tilemap(f"Level {self.level} assets\lvl{self.level}.tmx", TILE_SCALING, layer_options=layer_options)
@@ -245,7 +242,6 @@ class MyGame(arcade.View):
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
-        self.box_alpha = int(arcade.utils.lerp(self.box_alpha, 0, 0.01))
 
         arcade.draw_text(
             f"Level {self.level-1} : {self.subtitle}",
@@ -256,16 +252,6 @@ class MyGame(arcade.View):
              anchor_x="center",
               font_name = 'Kenney Pixel'
         )
-        arcade.draw_text(
-            self.box_text, 
-            SCREEN_WIDTH/2,
-            SCREEN_HEIGHT/2 + 100, 
-            color=(255, 255, 255, self.box_alpha),
-            font_size=28, 
-            font_name = 'Kenney Pixel'
-        )
-
-            
 
         arcade.draw_text(
             'Objective - Find an exit', 
@@ -367,15 +353,24 @@ class MyGame(arcade.View):
         self.process_keychange()
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
+        self.handle_interact()
 
-        for obj in objects:
-            self.box_alpha = 255
-            obj.interact()
-            try:
-                self.box_text = obj.properties['text']
-            except KeyError:
-                pass
+    def handle_interact(self):
+        objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
+        
+        for interactable in objects:
+            getattr(self, interactable.properties['oninteract'])(interactable)
+
+    def toggle_switch(self, interactable):
+        switches = (l for l in self.scene['Interactables'] if l.properties['type'] == 'switch')
+        toggled = not interactable.properties['toggled']
+        for switch in switches:
+            switch.properties['toggled'] = toggled
+            if toggled:
+                switch.texture = arcade.load_texture(f'assets\creature.png')
+            else:
+                switch.texture = arcade.load_texture(f'assets\Skinny.png')
+
 
     def center_camera_to_player(self):
 
