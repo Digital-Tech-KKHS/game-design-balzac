@@ -1,12 +1,15 @@
 
 from code import interact
 from pathlib import Path
+from tkinter import ANCHOR
 from pyglet.math import Vec2
 import arcade
 from arcade.experimental import Shadertoy
 import arcade
 import math
 import arcade.gui
+from arcade.gui import UIManager
+from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
 import random
 from PlayerCharacter import PlayerCharacter
@@ -87,7 +90,7 @@ class LoseView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
                                             self.background)
-        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=40, anchor_x="center", font_name="Kenney Pixel" )
+        arcade.draw_text(self.text, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.WHITE, font_size=30, anchor_x="center")
         
 
     def on_mouse_press(self, _x,  _y, _button, _modifiers):
@@ -98,8 +101,25 @@ class LoseView(arcade.View):
 
 class MyGame(arcade.View):
     def __init__(self):
-
+        
         super().__init__()
+        self.manager = UIManager()
+        self.manager.enable()
+        bg_tex = arcade.load_texture(":resources:gui_basic_assets/window/grey_panel.png")
+        text_area = UITextArea(x=SCREEN_WIDTH/2-200,
+                               y=50,
+                               width=400,
+                               height=100,
+                               text='lmao',
+                               text_color=(0, 0, 0, 255))
+        self.manager.add(
+            UITexturePane(
+                text_area.with_space_around(right=20),
+                tex=bg_tex,
+                padding=(10, 10, 10, 10)
+            )
+        )
+            
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -128,11 +148,11 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        self.box_text = None
+        self.box_text = ""
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -235,7 +255,7 @@ class MyGame(arcade.View):
         self.HUD_camera.use()
         self.cursor_list.draw()
         #self.static.draw()
-
+        self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
@@ -276,6 +296,7 @@ class MyGame(arcade.View):
             font_size=28, 
             font_name = 'Kenney Pixel'
         )
+        
         if self.escpressed == True:
             arcade.draw_text(
                 "There is no escape.",
@@ -284,8 +305,7 @@ class MyGame(arcade.View):
                 font_size=28,
                 anchor_x="right", 
                 font_name = 'Kenney Pixel'
-            
-        )
+            )
 
         if self.level == 1:
             self.subtitle = "'The Lobby'"
