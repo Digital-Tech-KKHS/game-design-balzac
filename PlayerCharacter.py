@@ -72,9 +72,11 @@ class PlayerCharacter(arcade.Sprite):
             self.resting = False
 
         # make sure stamina bar has some width
-        if self.stamina <= 1/20:
+        if self.stamina <= 1:
             self.resting = True
             self.sprinting = False
+            
+
 
         self.update_animation()
 
