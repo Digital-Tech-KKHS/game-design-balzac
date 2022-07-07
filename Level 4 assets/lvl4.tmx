@@ -442,11 +442,14 @@
    <properties>
     <property name="oninteract" value="draw_text"/>
     <property name="text" value="A"/>
+    <property name="type" value="comp"/>
    </properties>
   </object>
-  <object id="138" gid="185" x="7238.67" y="8968" width="122.667" height="122.667">
+  <object id="138" gid="185" x="7040" y="9600" width="122.667" height="122.667">
    <properties>
-    <property name="type" value="key4"/>
+    <property name="oninteract" value="toggle_switch"/>
+    <property name="toggled" type="bool" value="false"/>
+    <property name="type" value="switch"/>
    </properties>
   </object>
  </objectgroup>
