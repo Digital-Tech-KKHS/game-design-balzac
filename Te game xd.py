@@ -1,12 +1,15 @@
 
 from code import interact
 from pathlib import Path
+from tkinter import ANCHOR
 from pyglet.math import Vec2
 import arcade
 from arcade.experimental import Shadertoy
 import arcade
 import math
 import arcade.gui
+from arcade.gui import UIManager
+from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
 import random
 from PlayerCharacter import PlayerCharacter
@@ -94,8 +97,25 @@ class LoseView(arcade.View):
 
 class MyGame(arcade.View):
     def __init__(self):
-
+        
         super().__init__()
+        self.manager = UIManager()
+        self.manager.enable()
+        bg_tex = arcade.load_texture(":resources:gui_basic_assets/window/grey_panel.png")
+        text_area = UITextArea(x=SCREEN_WIDTH/2-200,
+                               y=50,
+                               width=400,
+                               height=100,
+                               text='lmao',
+                               text_color=(0, 0, 0, 255))
+        self.manager.add(
+            UITexturePane(
+                text_area.with_space_around(right=20),
+                tex=bg_tex,
+                padding=(10, 10, 10, 10)
+            )
+        )
+            
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -230,13 +250,13 @@ class MyGame(arcade.View):
         self.HUD_camera.use()
         self.cursor_list.draw()
         #self.static.draw()
-
+        self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
             #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
-        arcade.draw_lrtb_rectangle_filled(10, 30, 100 + (SCREEN_HEIGHT-700) *self.player_sprite.stamina/100, 10, sprint_bar_color)
+        arcade.draw_lrtb_rectangle_filled(10, 30, (SCREEN_HEIGHT-610) *self.player_sprite.stamina/100 +11, 10, sprint_bar_color)
         arcade.draw_lrwh_rectangle_textured(6, 6, 26, 357, self.sprintbarfore)
         
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
@@ -260,6 +280,7 @@ class MyGame(arcade.View):
             font_size=28, 
             font_name = 'Kenney Pixel'
         )
+        
         if self.escpressed == True:
             arcade.draw_text(
                 "There is no escape.",
@@ -268,7 +289,6 @@ class MyGame(arcade.View):
                 font_size=28,
                 anchor_x="right", 
                 font_name = 'Kenney Pixel'
-            
             )
 
         if self.level == 1:
