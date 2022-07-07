@@ -248,7 +248,6 @@ class MyGame(arcade.View):
         self.shadertoy.program['lightSize'] = 3000
         self.shadertoy.render()
         self.HUD_camera.use()
-        self.cursor_list.draw()
         #self.static.draw()
         self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
@@ -302,6 +301,7 @@ class MyGame(arcade.View):
 
 
 
+        self.cursor_list.draw()
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
