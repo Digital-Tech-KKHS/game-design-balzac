@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="12" nextobjectid="149">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="12" nextobjectid="152">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -445,7 +445,7 @@
     <property name="type" value="comp"/>
    </properties>
   </object>
-  <object id="138" gid="185" x="7040" y="9600" width="122.667" height="122.667">
+  <object id="150" gid="341" x="2240" y="5760" width="320" height="320">
    <properties>
     <property name="oninteract" value="toggle_switch"/>
     <property name="toggled" type="bool" value="false"/>
