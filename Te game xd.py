@@ -253,12 +253,12 @@ class MyGame(arcade.View):
         self.shadertoy.program['lightSize'] = 3000
         self.shadertoy.render()
         self.HUD_camera.use()
-        self.cursor_list.draw()
         #self.static.draw()
         self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
+        self.cursor_list.draw()
             #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
         arcade.draw_lrtb_rectangle_filled(10, 30, 100 + (SCREEN_HEIGHT-700) *self.player_sprite.stamina/100, 10, sprint_bar_color)
