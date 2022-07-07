@@ -144,10 +144,11 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
+        arcade.enable_timings()
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -253,6 +254,8 @@ class MyGame(arcade.View):
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
+        fps = arcade.get_fps(60)
+        arcade.draw_text(str(fps), 100, 100)
         self.cursor_list.draw()
             #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
@@ -406,7 +409,7 @@ class MyGame(arcade.View):
 
     def on_update(self, delta_time):
         self.center_camera_to_player()
-
+        
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
