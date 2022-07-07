@@ -387,9 +387,9 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties['toggled'] = toggled
             if toggled:
-                switch.texture = arcade.load_texture(f'assets\creature.png')
+                switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
-                switch.texture = arcade.load_texture(f'assets\Skinny.png')
+                switch.texture = arcade.load_texture(f'assets\leverup.png')
 
 
     def center_camera_to_player(self):
