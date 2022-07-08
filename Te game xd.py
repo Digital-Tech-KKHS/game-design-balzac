@@ -212,7 +212,7 @@ class MyGame(arcade.View):
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
-            engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"], self.scene["secrets"]])
+            engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
             self.enemy_physics_engines.append(engine)
         
         for sprite in self.scene['exit']:
