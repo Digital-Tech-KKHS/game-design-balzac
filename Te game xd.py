@@ -144,7 +144,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -177,6 +177,7 @@ class MyGame(arcade.View):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
+            "doors": {"use_spatial_hash": True},
             "floor": {"use_spatial_hash": True},
             "details": {"use_spatial_hash": True},
             "lights": {"use_spatial_hash": True},
