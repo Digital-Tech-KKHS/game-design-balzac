@@ -499,7 +499,7 @@
     <property name="type" value="comp"/>
    </properties>
   </object>
-  <object id="138" gid="185" x="7040" y="9600" width="122.667" height="122.667">
+  <object id="150" gid="341" x="2240" y="5760" width="320" height="320">
    <properties>
     <property name="oninteract" value="toggle_switch"/>
     <property name="toggled" type="bool" value="false"/>

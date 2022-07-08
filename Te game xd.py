@@ -210,7 +210,7 @@ class MyGame(arcade.View):
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"]])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -250,6 +250,7 @@ class MyGame(arcade.View):
         self.shadertoy.program['lightSize'] = 3000
         self.shadertoy.render()
         self.HUD_camera.use()
+        self.cursor_list.draw()
         #self.static.draw()
         self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
@@ -306,7 +307,6 @@ class MyGame(arcade.View):
 
 
 
-        self.cursor_list.draw()
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
         
@@ -395,6 +395,7 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
+
 
 
     def center_camera_to_player(self):
