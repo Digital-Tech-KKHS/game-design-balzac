@@ -106,7 +106,7 @@ class MyGame(arcade.View):
                                y=50,
                                width=400,
                                height=100,
-                               text='lmao',
+                               text= 'a',
                                text_color=(0, 0, 0, 255))
         self.manager.add(
             UITexturePane(
@@ -395,6 +395,7 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
+    def draw_text(self, interactable):
 
 
 
