@@ -143,7 +143,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -186,6 +186,7 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+        self.door_list = arcade.SpriteList()
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -208,7 +209,7 @@ class MyGame(arcade.View):
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"]])
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['doors']])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -393,9 +394,20 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
+
+        for door in self.scene['doors']:
+                door.properties['toggled'] = toggled
+                if toggled:
+                    door.texture = arcade.load_texture(f'Level 4 assets\dooropen.png')
+                    self.door_list.clear()
+                    # remove all doors from self.door_list
+                else:
+                    door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
+                    self.door_list = arcade.SpriteList()
+                    # add all doors to self.door_list
+
     def draw_text(self, interactable):
         self.box_text = str(interactable.properties['text'])
-
 
     def center_camera_to_player(self):
 
