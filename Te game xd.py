@@ -106,7 +106,7 @@ class MyGame(arcade.View):
                                y=50,
                                width=400,
                                height=100,
-                               text='lmao',
+                               text= self.draw_text('box_text'),
                                text_color=(0, 0, 0, 255))
         self.manager.add(
             UITexturePane(
@@ -115,7 +115,6 @@ class MyGame(arcade.View):
                 padding=(10, 10, 10, 10)
             )
         )
-            
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -144,11 +143,14 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
+<<<<<<< HEAD
         self.level = 2
+=======
+        self.level = 4
+>>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        arcade.enable_timings()
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -188,7 +190,11 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+<<<<<<< HEAD
         self.door_list = self.scene['doors']
+=======
+        self.door_list = arcade.SpriteList()
+>>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -211,7 +217,11 @@ class MyGame(arcade.View):
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+<<<<<<< HEAD
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
+=======
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['doors']])
+>>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -403,9 +413,21 @@ class MyGame(arcade.View):
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
                 if toggled:
+<<<<<<< HEAD
                     self.scene['doors'].clear()
     
+=======
+                    door.texture = arcade.load_texture(f'Level 4 assets\dooropen.png')
+                    self.door_list.clear()
+                    # remove all doors from self.door_list
+                else:
+                    door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
+                    self.door_list = arcade.SpriteList()
+                    # add all doors to self.door_list
+>>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
 
+    def draw_text(self, interactable):
+        self.box_text = str(interactable.properties['text'])
 
     def center_camera_to_player(self):
 
