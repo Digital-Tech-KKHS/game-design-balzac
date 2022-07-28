@@ -424,7 +424,10 @@ class MyGame(arcade.View):
                     door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
                     self.door_list = arcade.SpriteList()
                     # add all doors to self.door_list
+<<<<<<< HEAD
 >>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
+=======
+>>>>>>> 21b902baa16a86fa071419f04223538d1b4b7f6b
 
     def draw_text(self, interactable):
         self.box_text = str(interactable.properties['text'])
