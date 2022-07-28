@@ -106,7 +106,7 @@ class MyGame(arcade.View):
                                y=50,
                                width=400,
                                height=100,
-                               text='lmao',
+                               text= self.draw_text('box_text'),
                                text_color=(0, 0, 0, 255))
         self.manager.add(
             UITexturePane(
@@ -115,7 +115,6 @@ class MyGame(arcade.View):
                 padding=(10, 10, 10, 10)
             )
         )
-            
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -148,7 +147,6 @@ class MyGame(arcade.View):
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        arcade.enable_timings()
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -407,8 +405,9 @@ class MyGame(arcade.View):
                     door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
                     self.door_list = arcade.SpriteList()
                     # add all doors to self.door_list
-    
 
+    def draw_text(self, interactable):
+        self.box_text = str(interactable.properties['text'])
 
     def center_camera_to_player(self):
 
