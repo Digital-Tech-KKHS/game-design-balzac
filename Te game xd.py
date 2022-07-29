@@ -222,9 +222,8 @@ class MyGame(arcade.View):
             self.lights_on = False
         else:
             self.lights_on = True
-
+            
         if self.lights_on == True:
-            print('you turned on the lights!')
             for sprite in self.scene['lights']:
                 light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
                 self.light_layer.add(light)
@@ -395,7 +394,10 @@ class MyGame(arcade.View):
             switch.properties['toggled'] = toggled
             if toggled:
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
-                self.lights_on = True
+                for sprite in self.scene['lights']:
+                    light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                    self.light_layer.add(light)
+                    
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
 
