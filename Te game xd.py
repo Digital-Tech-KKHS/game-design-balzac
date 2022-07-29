@@ -1,10 +1,4 @@
-
-from code import interact
-from msilib.schema import Feature
 from pathlib import Path
-from tkinter import ANCHOR
-from turtle import onclick
-from pyglet.math import Vec2
 import arcade
 from arcade.experimental import Shadertoy
 import arcade
@@ -229,13 +223,11 @@ class MyGame(arcade.View):
         else:
             self.lights_on = True
 
-        if self.lights_on == True
+        if self.lights_on == True:
+            print('you turned on the lights!')
             for sprite in self.scene['lights']:
                 light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
                 self.light_layer.add(light)
-
-        if self.level == 2:
-            self.light_layer.clear(light)
 
         radius = 300
         mode = 'soft'
@@ -267,8 +259,6 @@ class MyGame(arcade.View):
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
-        fps = arcade.get_fps(60)
-        arcade.draw_text(str(fps), 100, 100)
         self.cursor_list.draw()
             #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
@@ -405,6 +395,7 @@ class MyGame(arcade.View):
             switch.properties['toggled'] = toggled
             if toggled:
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
+                self.lights_on = True
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
 
