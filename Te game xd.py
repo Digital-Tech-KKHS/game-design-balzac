@@ -189,7 +189,7 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
-        self.door_list = arcade.SpriteList()
+        self.door_list = self.scene['doors']
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -212,7 +212,7 @@ class MyGame(arcade.View):
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['doors']])
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -229,11 +229,13 @@ class MyGame(arcade.View):
         else:
             self.lights_on = True
 
-        if self.lights_on == True:
-            print('lights are on')
+        if self.lights_on == True
             for sprite in self.scene['lights']:
                 light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
                 self.light_layer.add(light)
+
+        if self.level == 2:
+            self.light_layer.clear(light)
 
         radius = 300
         mode = 'soft'
@@ -409,13 +411,7 @@ class MyGame(arcade.View):
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
                 if toggled:
-                    door.texture = arcade.load_texture(f'Level 4 assets\dooropen.png')
-                    self.door_list.clear()
-                    # remove all doors from self.door_list
-                else:
-                    door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
-                    self.door_list = arcade.SpriteList()
-                    # add all doors to self.door_list
+                    self.scene['doors'].clear()
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']

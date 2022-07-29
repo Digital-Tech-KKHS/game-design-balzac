@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-down" width="150" height="150" tilewidth="320" tileheight="320" infinite="0" nextlayerid="10" nextobjectid="1097">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-down" width="150" height="150" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="1098">
  <tileset firstgid="1" source="concreet.tsx"/>
  <tileset firstgid="43" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="79" source="arrows.tsx"/>
  <tileset firstgid="91" source="../Level 1 assets/props.tsx"/>
+ <tileset firstgid="191" source="../Level 4 assets/props.tsx"/>
  <objectgroup id="3" name="lights">
   <object id="181" gid="64" x="2560" y="46720" width="320" height="320">
    <properties>
@@ -3771,4 +3772,13 @@
 19,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,4,20,19,4,4,4,4,4,4,4,4,20
 </data>
  </layer>
+ <objectgroup id="10" name="Interactables">
+  <object id="1097" gid="245" x="8298.67" y="34440.7" width="320" height="320">
+   <properties>
+    <property name="oninteract" value="toggle_switch"/>
+    <property name="toggled" type="bool" value="false"/>
+    <property name="type" value="switch"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
