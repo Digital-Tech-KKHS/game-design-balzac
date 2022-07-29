@@ -1,17 +1,13 @@
 
-from code import interact
 from pathlib import Path
-from tkinter import ANCHOR
-from pyglet.math import Vec2
 import arcade
 from arcade.experimental import Shadertoy
 import arcade
 import math
 import arcade.gui
 from arcade.gui import UIManager
-from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
+from arcade.gui.widgets import UITextArea, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
-import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
@@ -101,16 +97,16 @@ class MyGame(arcade.View):
         super().__init__()
         self.manager = UIManager()
         self.manager.enable()
-        bg_tex = arcade.load_texture(":resources:gui_basic_assets/window/grey_panel.png")
-        text_area = UITextArea(x=SCREEN_WIDTH/2-200,
-                               y=50,
-                               width=400,
-                               height=100,
-                               text= self.draw_text('box_text'),
-                               text_color=(0, 0, 0, 255))
+        bg_tex = arcade.load_texture("assets/txtbox.png")
+        self.text_area = UITextArea(x=SCREEN_WIDTH/2-315,
+                               y=25,
+                               width=600,
+                               height=200,
+                               text= '',
+                               text_color=(255, 255, 255, 255))
         self.manager.add(
             UITexturePane(
-                text_area.with_space_around(right=20),
+                self.text_area.with_space_around(right=20),
                 tex=bg_tex,
                 padding=(10, 10, 10, 10)
             )
@@ -123,6 +119,7 @@ class MyGame(arcade.View):
         self.text_alpha = 255
         self.esc_alpha = 255
         self.box_alpha = 0
+        self.lights_on = None
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -143,11 +140,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-<<<<<<< HEAD
         self.level = 2
-=======
-        self.level = 4
->>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -190,11 +183,9 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
-<<<<<<< HEAD
         self.door_list = self.scene['doors']
-=======
         self.door_list = arcade.SpriteList()
->>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
+        self.door_list = self.scene['doors']
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -216,12 +207,8 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-<<<<<<< HEAD
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT) 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
-=======
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.scene['doors']])
->>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -232,13 +219,16 @@ class MyGame(arcade.View):
 
             self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
             self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
-
-        for sprite in self.scene['lights']:
-            light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
-            self.light_layer.add(light)
-
+    
         if self.level == 2:
-            self.light_layer.clear(light)
+            self.lights_on = False
+        else:
+            self.lights_on = True
+
+        if self.lights_on == True:
+            for sprite in self.scene['lights']:
+                light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                self.light_layer.add(light)
 
         radius = 300
         mode = 'soft'
@@ -393,6 +383,7 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         self.handle_interact()
+            
 
     def handle_interact(self):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
@@ -413,25 +404,15 @@ class MyGame(arcade.View):
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
                 if toggled:
-<<<<<<< HEAD
                     self.scene['doors'].clear()
-    
-=======
-                    door.texture = arcade.load_texture(f'Level 4 assets\dooropen.png')
-                    self.door_list.clear()
-                    # remove all doors from self.door_list
-                else:
-                    door.texture = arcade.load_texture(f'Level 4 assets\doorclosed.png')
-                    self.door_list = arcade.SpriteList()
-                    # add all doors to self.door_list
-<<<<<<< HEAD
->>>>>>> 6887f981fac232990bde9440e39184004f2cabcb
-=======
->>>>>>> 21b902baa16a86fa071419f04223538d1b4b7f6b
+
+        for light in self.scene['lights']:
+            light.properties['toggled'] = toggled
+            if toggled:
+                self.lights_on = True
 
     def draw_text(self, interactable):
-        self.box_text = str(interactable.properties['text'])
-
+        self.text_area.text = interactable.properties['text']
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
