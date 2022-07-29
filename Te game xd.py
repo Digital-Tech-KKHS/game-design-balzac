@@ -183,8 +183,11 @@ class MyGame(arcade.View):
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.door_list = self.scene['doors']
+<<<<<<< HEAD
         self.door_list = arcade.SpriteList()
         self.door_list = self.scene['doors']
+=======
+>>>>>>> d8229d1c092f5e9048c43efa57aeee8226c7a85e
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -206,7 +209,11 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
+<<<<<<< HEAD
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT) 
+=======
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+>>>>>>> d8229d1c092f5e9048c43efa57aeee8226c7a85e
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
@@ -224,8 +231,12 @@ class MyGame(arcade.View):
         else:
             self.lights_on = True
 
+<<<<<<< HEAD
         if self.lights_on == True:
             print('you turned on the lights!')
+=======
+        if self.lights_on == True
+>>>>>>> d8229d1c092f5e9048c43efa57aeee8226c7a85e
             for sprite in self.scene['lights']:
                 light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
                 self.light_layer.add(light)
@@ -404,11 +415,14 @@ class MyGame(arcade.View):
                 door.properties['toggled'] = toggled
                 if toggled:
                     self.scene['doors'].clear()
+<<<<<<< HEAD
 
         for light in self.scene['lights']:
             light.properties['toggled'] = toggled
             if toggled:
                 self.lights_on = True
+=======
+>>>>>>> d8229d1c092f5e9048c43efa57aeee8226c7a85e
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
