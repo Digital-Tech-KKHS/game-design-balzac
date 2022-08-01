@@ -5,9 +5,8 @@ import arcade
 import math
 import arcade.gui
 from arcade.gui import UIManager
-from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
+from arcade.gui.widgets import UITextArea, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
-import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
@@ -184,6 +183,8 @@ class MyGame(arcade.View):
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.door_list = self.scene['doors']
+        self.door_list = arcade.SpriteList()
+        self.door_list = self.scene['doors']
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -205,7 +206,7 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT) 
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
@@ -394,7 +395,7 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties['toggled'] = toggled
             if toggled:
-                switch.texture = arcade.load_texture(f'assets\leverdown.png')        
+                switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
         if toggled and self.level == 2:
@@ -403,13 +404,18 @@ class MyGame(arcade.View):
                 self.light_layer.add(light)
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
-        
-                
-
+       
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
                 if toggled:
                     self.scene['doors'].clear()
+
+        for light in self.scene['lights']:
+            light.properties['toggled'] = toggled
+            if toggled:
+                self.light_layer.add(light)
+            else:
+                self.light_layer.clear(light)
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
