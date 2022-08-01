@@ -1,16 +1,13 @@
-
-from code import interact
 from pathlib import Path
-from tkinter import ANCHOR
-from pyglet.math import Vec2
 import arcade
 from arcade.experimental import Shadertoy
 import arcade
 import math
 import arcade.gui
 from arcade.gui import UIManager
-from arcade.gui.widgets import UITextArea, UITexturePane
+from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
+import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
@@ -35,8 +32,6 @@ class MenuView(arcade.View):
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
         start_button.on_click = self.on_click_start
-        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
-        
         #quit_button.on_click = self.on_click_quit
 
         # Create a widget to hold the v_box widget, that will center the buttons
@@ -51,7 +46,7 @@ class MenuView(arcade.View):
         print("Start:", event)
         self.window.show_view(self.game_view)
         self.window.set_mouse_visible(False)
-        arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+        
     
     #def on_click_quit(self, event):
         #arcade.exit()
@@ -102,21 +97,20 @@ class MyGame(arcade.View):
         super().__init__()
         self.manager = UIManager()
         self.manager.enable()
-        bg_tex = arcade.load_texture(":resources:gui_basic_assets/window/grey_panel.png")
-        text_area = UITextArea(x=SCREEN_WIDTH/2-200,
-                               y=50,
-                               width=400,
-                               height=100,
-                               text= "txtbox",
-                               text_color=(0, 0, 0, 255))
+        bg_tex = arcade.load_texture("assets/txtbox.png")
+        self.text_area = UITextArea(x=SCREEN_WIDTH/2-315,
+                               y=25,
+                               width=600,
+                               height=200,
+                               text= '',
+                               text_color=(255, 255, 255, 255))
         self.manager.add(
             UITexturePane(
-                text_area.with_space_around(right=20),
+                self.text_area.with_space_around(right=20),
                 tex=bg_tex,
                 padding=(10, 10, 10, 10)
             )
         )
-            
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -125,6 +119,7 @@ class MyGame(arcade.View):
         self.text_alpha = 255
         self.esc_alpha = 255
         self.box_alpha = 0
+        self.lights_on = None
         self.player_list = None
         self.enemy_list = None
         self.torso_list = None
@@ -150,7 +145,7 @@ class MyGame(arcade.View):
         self.subtitle = None
         self.escpressed = False
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
-        
+        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
     def load_shader(self):
         # Where is the shader file? Must be specified as a path.
@@ -178,6 +173,7 @@ class MyGame(arcade.View):
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}}, 
             "walls": {"use_spatial_hash": True},
+            "doors": {"use_spatial_hash": True},
             "floor": {"use_spatial_hash": True},
             "details": {"use_spatial_hash": True},
             "lights": {"use_spatial_hash": True},
@@ -187,16 +183,13 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
-
         self.door_list = self.scene['doors']
-        self.door_list = arcade.SpriteList()
-        self.door_list = self.scene['doors']
-        
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-            
+        if self.level == 1:
+            arcade.play_sound(self.lvl1mus, 0.2, looping=True)
         self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
         self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
         self.static = arcade.load_animated_gif("assets/static.gif")
@@ -212,7 +205,7 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT) 
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
@@ -224,10 +217,16 @@ class MyGame(arcade.View):
 
             self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
             self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
-
-        for sprite in self.scene['lights']:
-            light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
-            self.light_layer.add(light)
+    
+        if self.level == 2:
+            self.lights_on = False
+        else:
+            self.lights_on = True
+            
+        if self.lights_on == True:
+            for sprite in self.scene['lights']:
+                light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                self.light_layer.add(light)
 
         radius = 300
         mode = 'soft'
@@ -253,6 +252,7 @@ class MyGame(arcade.View):
         self.shadertoy.program['lightSize'] = 3000
         self.shadertoy.render()
         self.HUD_camera.use()
+        self.cursor_list.draw()
         #self.static.draw()
         self.manager.draw()
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
@@ -380,6 +380,7 @@ class MyGame(arcade.View):
     
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         self.handle_interact()
+            
 
     def handle_interact(self):
         objects = arcade.check_for_collision_with_list(self.player_sprite, self.scene['Interactables'])
@@ -393,7 +394,7 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties['toggled'] = toggled
             if toggled:
-                switch.texture = arcade.load_texture(f'assets\leverdown.png')
+                switch.texture = arcade.load_texture(f'assets\leverdown.png')        
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
         if toggled and self.level == 2:
@@ -402,22 +403,16 @@ class MyGame(arcade.View):
                 self.light_layer.add(light)
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
-       
+        
+                
+
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
                 if toggled:
                     self.scene['doors'].clear()
 
-        for light in self.scene['lights']:
-            light.properties['toggled'] = toggled
-            if toggled:
-                self.light_layer.add(light)
-            else:
-                self.light_layer.clear(light)
-
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
-
     def center_camera_to_player(self):
 
         screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
@@ -445,6 +440,9 @@ class MyGame(arcade.View):
         for engine in self.enemy_physics_engines:
             engine.update()
         
+        if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
+            print('ourch')
+            self.window.show_view(self.window.lose_view)
 
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
@@ -463,9 +461,9 @@ class MyGame(arcade.View):
  
 
         for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], SCREEN_HEIGHT ):
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 enemy.follow_sprite(self.player_sprite)
-                self.playing_sound = arcade.play_sound(self.facesound, self.facesoundvol)
+                #arcade.play_sound(self.facesound, self.facesoundvol)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
@@ -480,12 +478,6 @@ class MyGame(arcade.View):
                 enemy.change_x = 0
                 enemy.change_y = 0
                 enemy.random_move()
-        
-        if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
-            print('ourch')
-            self.facesoundvol = 0 
-
-            self.window.show_view(self.window.lose_view)
         
         self.player_light.position = self.torso_sprite.position
 
