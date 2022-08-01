@@ -3,8 +3,6 @@ from arcade import load_texture
 from arcade.gui import UIManager
 from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
 
-from constants import SCREEN_WIDTH
-
 LOREM_IPSUM = (
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget pellentesque velit. "
     "Nam eu rhoncus nulla. Fusce ornare libero eget ex vulputate, vitae mattis orci eleifend. "
@@ -31,8 +29,8 @@ class MyWindow(arcade.Window):
         arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
         bg_tex = load_texture(":resources:gui_basic_assets/window/grey_panel.png")
-        text_area = UITextArea(x=SCREEN_WIDTH/2,
-                               y=100,
+        text_area = UITextArea(x=100,
+                               y=200,
                                width=200,
                                height=300,
                                text=LOREM_IPSUM,

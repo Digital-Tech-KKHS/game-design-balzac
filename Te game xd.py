@@ -36,6 +36,8 @@ class MenuView(arcade.View):
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
         start_button.on_click = self.on_click_start
+        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
+        
         #quit_button.on_click = self.on_click_quit
 
         # Create a widget to hold the v_box widget, that will center the buttons
@@ -50,7 +52,7 @@ class MenuView(arcade.View):
         print("Start:", event)
         self.window.show_view(self.game_view)
         self.window.set_mouse_visible(False)
-        
+        arcade.play_sound(self.lvl1mus, 0.2, looping=True)
     
     #def on_click_quit(self, event):
         #arcade.exit()
@@ -106,7 +108,7 @@ class MyGame(arcade.View):
                                y=50,
                                width=400,
                                height=100,
-                               text='lmao',
+                               text= "txtbox",
                                text_color=(0, 0, 0, 255))
         self.manager.add(
             UITexturePane(
@@ -148,9 +150,8 @@ class MyGame(arcade.View):
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
-        arcade.enable_timings()
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
-        self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
+        
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
     def load_shader(self):
         # Where is the shader file? Must be specified as a path.
@@ -191,8 +192,7 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-        if self.level == 1:
-            arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+            
         self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
         self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
         self.static = arcade.load_animated_gif("assets/static.gif")
@@ -254,8 +254,6 @@ class MyGame(arcade.View):
         sprint_bar_color = arcade.color_from_hex_string("#bdbdbd")
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
-        fps = arcade.get_fps(60)
-        arcade.draw_text(str(fps), 100, 100)
         self.cursor_list.draw()
             #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
@@ -422,9 +420,6 @@ class MyGame(arcade.View):
         for engine in self.enemy_physics_engines:
             engine.update()
         
-        if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
-            print('ourch')
-            self.window.show_view(self.window.lose_view)
 
         
         if arcade.check_for_collision_with_list(self.player_sprite, self.scene["exit"], method=1):
@@ -443,9 +438,9 @@ class MyGame(arcade.View):
  
 
         for enemy in self.scene['enemy_list']:
-            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
+            if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], SCREEN_HEIGHT ):
                 enemy.follow_sprite(self.player_sprite)
-                #arcade.play_sound(self.facesound, self.facesoundvol)
+                self.playing_sound = arcade.play_sound(self.facesound, self.facesoundvol)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
@@ -460,6 +455,12 @@ class MyGame(arcade.View):
                 enemy.change_x = 0
                 enemy.change_y = 0
                 enemy.random_move()
+        
+        if arcade.check_for_collision_with_list(self.player_sprite, self.scene['enemy_list']):
+            print('ourch')
+            self.facesoundvol = 0 
+
+            self.window.show_view(self.window.lose_view)
         
         self.player_light.position = self.torso_sprite.position
 
