@@ -9,9 +9,8 @@ import arcade
 import math
 import arcade.gui
 from arcade.gui import UIManager
-from arcade.gui.widgets import UITextArea, UIInputText, UITexturePane
+from arcade.gui.widgets import UITextArea, UITexturePane
 from arcade.experimental.lights import Light, LightLayer
-import random
 from PlayerCharacter import PlayerCharacter
 from constants import *
 from Enemy import Enemy
@@ -146,7 +145,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 2
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -188,6 +187,11 @@ class MyGame(arcade.View):
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+
+        self.door_list = self.scene['doors']
+        self.door_list = arcade.SpriteList()
+        self.door_list = self.scene['doors']
+        
         self.scene.add_sprite_list('player_list')
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
@@ -208,8 +212,8 @@ class MyGame(arcade.View):
         self.cursor_list.append(self.cursor_sprite)
         self.player_sprite = self.scene['spawn'][0]
         self.scene['player_list'].append(self.player_sprite)
-        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=self.scene["walls"])
+        self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT) 
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, walls=[self.scene["walls"], self.door_list])
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(enemy, walls=[self.scene["walls"]])
@@ -345,15 +349,16 @@ class MyGame(arcade.View):
             self.esc_alpha = 255
             self.escpressed = True
         
-        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
-        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
-        
-        self.process_keychange()
         if key == arcade.key.SPACE:
             if self.player_light in self.light_layer:
                 self.light_layer.remove(self.player_light)
             else:
                 self.light_layer.add(self.player_light)
+
+        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
+        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
+        
+        self.process_keychange()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W:
@@ -388,10 +393,30 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties['toggled'] = toggled
             if toggled:
-                switch.texture = arcade.load_texture(f'assets\creature.png')
+                switch.texture = arcade.load_texture(f'assets\leverdown.png')
             else:
-                switch.texture = arcade.load_texture(f'assets\Skinny.png')
+                switch.texture = arcade.load_texture(f'assets\leverup.png')
+        if toggled and self.level == 2:
+            for sprite in self.scene['lights']:
+                light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                self.light_layer.add(light)
+                self.light_layer.remove(self.player_light)
+                self.light_layer.add(self.player_light)
+       
+        for door in self.scene['doors']:
+                door.properties['toggled'] = toggled
+                if toggled:
+                    self.scene['doors'].clear()
 
+        for light in self.scene['lights']:
+            light.properties['toggled'] = toggled
+            if toggled:
+                self.light_layer.add(light)
+            else:
+                self.light_layer.clear(light)
+
+    def draw_text(self, interactable):
+        self.text_area.text = interactable.properties['text']
 
     def center_camera_to_player(self):
 
