@@ -140,7 +140,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 2
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -349,15 +349,16 @@ class MyGame(arcade.View):
             self.esc_alpha = 255
             self.escpressed = True
         
-        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
-        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
-        
-        self.process_keychange()
         if key == arcade.key.SPACE:
             if self.player_light in self.light_layer:
                 self.light_layer.remove(self.player_light)
             else:
                 self.light_layer.add(self.player_light)
+
+        # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers 
+        self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
+        
+        self.process_keychange()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W:
@@ -393,13 +394,17 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties['toggled'] = toggled
             if toggled:
-                switch.texture = arcade.load_texture(f'assets\leverdown.png')
-                for sprite in self.scene['lights']:
-                    light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
-                    self.light_layer.add(light)
-                    
+                switch.texture = arcade.load_texture(f'assets\leverdown.png')        
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
+        if toggled and self.level == 2:
+            for sprite in self.scene['lights']:
+                light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                self.light_layer.add(light)
+                self.light_layer.remove(self.player_light)
+                self.light_layer.add(self.player_light)
+        
+                
 
         for door in self.scene['doors']:
                 door.properties['toggled'] = toggled
