@@ -2910,7 +2910,7 @@
   <object id="737" gid="168" x="16640" y="27520" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
-    <property name="vision" type="int" value="350"/>
+    <property name="vision" type="int" value="700"/>
    </properties>
   </object>
   <object id="739" gid="168" x="8000" y="23040" width="320" height="320">
