@@ -315,7 +315,7 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="spawn">
-  <object id="66" gid="76" x="12800" y="1600" width="320" height="320"/>
+  <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
  </objectgroup>
  <objectgroup id="10" name="enemy_spawn">
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">

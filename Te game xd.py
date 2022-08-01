@@ -118,6 +118,7 @@ class MyGame(arcade.View):
         self.text_alpha = 255
         self.esc_alpha = 255
         self.box_alpha = 0
+        self.sanity_alpha = 0
         self.lights_on = None
         self.player_list = None
         self.enemy_list = None
@@ -139,10 +140,11 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 2
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
+        self.sanity = None
         self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
@@ -223,9 +225,8 @@ class MyGame(arcade.View):
             self.lights_on = False
         else:
             self.lights_on = True
-
+            
         if self.lights_on == True:
-            print('you turned on the lights!')
             for sprite in self.scene['lights']:
                 light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
                 self.light_layer.add(light)
@@ -261,14 +262,16 @@ class MyGame(arcade.View):
         if self.player_sprite.resting:
             sprint_bar_color = arcade.color_from_hex_string("#703832")
         self.cursor_list.draw()
-            #arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.static)
         arcade.draw_lrwh_rectangle_textured(6, 6, 28, 357, self.sprintbarback)
         arcade.draw_lrtb_rectangle_filled(10, 30, (SCREEN_HEIGHT-610) *self.player_sprite.stamina/100 +11, 10, sprint_bar_color)
         arcade.draw_lrwh_rectangle_textured(6, 6, 26, 357, self.sprintbarfore)
+        if self.sanity == True:
+            arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.sanity, alpha=(self.sanity_alpha))
         
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
+        self.sanity_alpha = int(arcade.utils.lerp(self.sanity_alpha, 255, 0.005))
 
         arcade.draw_text(
             f"Level {self.level-1} : {self.subtitle}",
@@ -396,6 +399,10 @@ class MyGame(arcade.View):
             switch.properties['toggled'] = toggled
             if toggled:
                 switch.texture = arcade.load_texture(f'assets\leverdown.png')
+                for sprite in self.scene['lights']:
+                    light = Light(sprite.center_x , sprite.center_y , sprite.properties['radius'], color=sprite.properties['color'][:3], mode='soft')
+                    self.light_layer.add(light)
+                    
             else:
                 switch.texture = arcade.load_texture(f'assets\leverup.png')
 
@@ -464,6 +471,7 @@ class MyGame(arcade.View):
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 enemy.follow_sprite(self.player_sprite)
                 #arcade.play_sound(self.facesound, self.facesoundvol)
+                self.sanity = True
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
@@ -475,6 +483,7 @@ class MyGame(arcade.View):
                 enemy.change_x = math.cos(angle) * SPRITE_SPEED
                 enemy.change_y = math.sin(angle) * SPRITE_SPEED
             else:
+                self.sanity = False
                 enemy.change_x = 0
                 enemy.change_y = 0
                 enemy.random_move()
