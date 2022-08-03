@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="155">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="156">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -315,7 +315,7 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="spawn">
-  <object id="66" gid="76" x="12800" y="1600" width="320" height="320"/>
+  <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
  </objectgroup>
  <objectgroup id="10" name="enemy_spawn">
   <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
@@ -324,6 +324,11 @@
    </properties>
   </object>
   <object id="136" gid="276" x="5120" y="12480" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="155" gid="276" x="7680" y="6400" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
