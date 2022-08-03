@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="155">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="156">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -324,6 +324,11 @@
    </properties>
   </object>
   <object id="136" gid="276" x="5120" y="12480" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="155" gid="276" x="7680" y="6400" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
