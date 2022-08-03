@@ -217,8 +217,6 @@ class MyGame(arcade.View):
             self.enemy_physics_engines.append(engine)
         
         for sprite in self.scene['exit']:
-           
-
             self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
             self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
     
