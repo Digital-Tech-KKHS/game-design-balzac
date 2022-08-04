@@ -412,6 +412,8 @@ class MyGame(arcade.View):
                 if toggled:
                     self.scene['doors'].clear()
 
+        self.text_area.text = "The power is back on, maybe the gates have been opened."
+
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
