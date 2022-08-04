@@ -140,7 +140,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 2
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -264,7 +264,7 @@ class MyGame(arcade.View):
         arcade.draw_lrtb_rectangle_filled(10, 30, (SCREEN_HEIGHT-610) *self.player_sprite.stamina/100 +11, 10, sprint_bar_color)
         arcade.draw_lrwh_rectangle_textured(6, 6, 26, 357, self.sprintbarfore)
         if self.sanity:
-            arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.sanity_img, alpha=75)
+            arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.sanity_img, alpha=150)
             
         
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
@@ -412,12 +412,6 @@ class MyGame(arcade.View):
                 if toggled:
                     self.scene['doors'].clear()
 
-        for light in self.scene['lights']:
-            light.properties['toggled'] = toggled
-            if toggled:
-                self.light_layer.add(light)
-            else:
-                self.light_layer.clear(light)
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
@@ -472,7 +466,6 @@ class MyGame(arcade.View):
             if arcade.has_line_of_sight(self.player_sprite.position , enemy.position , self.scene["walls"], 350):
                 self.sanity = True
                 enemy.follow_sprite(self.player_sprite)
-                #arcade.play_sound(self.facesound, self.facesoundvol)
                 start_x = enemy.center_x
                 start_y = enemy.center_y
                 dest_x = self.torso_sprite.center_x
