@@ -140,7 +140,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 2
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -412,7 +412,8 @@ class MyGame(arcade.View):
                 if toggled:
                     self.scene['doors'].clear()
 
-        self.text_area.text = "The power is back on, maybe the gates have been opened."
+        if self.level == 2:
+            self.text_area.text = "The power is back on, maybe the gates have been opened."
 
 
     def draw_text(self, interactable):
