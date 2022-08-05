@@ -3712,7 +3712,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="spawn">
-  <object id="1089" gid="70" x="23104" y="12224" width="320" height="320"/>
+  <object id="1089" gid="70" x="9280" y="34240" width="320" height="320"/>
  </objectgroup>
  <layer id="1" name="floor" width="150" height="150">
   <data encoding="csv">

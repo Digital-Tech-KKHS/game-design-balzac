@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="156">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="15" nextobjectid="159">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -318,19 +318,34 @@
   <object id="66" gid="76" x="7680" y="9600" width="320" height="320"/>
  </objectgroup>
  <objectgroup id="10" name="enemy_spawn">
-  <object id="112" gid="276" x="6080" y="12480" width="320" height="320">
+  <object id="112" gid="276" x="3200" y="7680" width="320" height="320">
    <properties>
     <property name="type" value="wretch"/>
    </properties>
   </object>
-  <object id="136" gid="276" x="5120" y="12480" width="320" height="320">
+  <object id="136" gid="276" x="5120" y="14720" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
   </object>
-  <object id="155" gid="276" x="7680" y="6400" width="320" height="320">
+  <object id="155" gid="276" x="7680" y="5440" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="156" gid="276" x="960" y="7040" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="157" gid="276" x="960" y="14720" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
+   </properties>
+  </object>
+  <object id="158" gid="276" x="14720" y="8640" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
    </properties>
   </object>
  </objectgroup>
@@ -503,8 +518,7 @@
   <object id="55" gid="71" x="11200" y="3840" width="320" height="320" rotation="-90">
    <properties>
     <property name="oninteract" value="draw_text"/>
-    <property name="text" value="A"/>
-    <property name="type" value="comp"/>
+    <property name="text" value="Huh, a computer, There's text on the screen that says, &quot;THERE IS NO WAY OUT&quot;"/>
    </properties>
   </object>
   <object id="150" gid="341" x="2240" y="5760" width="320" height="320">
