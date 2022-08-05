@@ -146,8 +146,9 @@ class MyGame(arcade.View):
         self.escpressed = False
         self.sanity = False
         self.sanity_img = None
-        self.facesound = arcade.load_sound("assets\sounds\gacelingsound.mp3")
         self.lvl1mus = arcade.load_sound("assets\sounds\Level.Null.mp3")
+        self.lvl3mus = arcade.load_sound("assets\sounds\scary.mp3")
+        self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
     def load_shader(self):
         # Where is the shader file? Must be specified as a path.
@@ -192,8 +193,13 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list('torso_list')
         self.scene.add_sprite_list('enemy_list')
         self.cursor_list = arcade.SpriteList()
-        if self.level == 1:
-            arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+        if self.level == 3:
+            arcade.stop_sound(self.music)
+            self.music = arcade.play_sound(self.lvl3mus, 0.2, looping=True)
+        else:
+            arcade.stop_sound(self.music)
+            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+
         self.sprintbarback = arcade.load_texture('assets/sprintbarback.png')
         self.sprintbarfore = arcade.load_texture('assets/sprintbarfore.png')
         self.sanity_img = arcade.load_texture('assets/sanity.png')
@@ -414,7 +420,6 @@ class MyGame(arcade.View):
 
         if self.level == 2:
             self.text_area.text = "The power is back on, maybe the gates have been opened."
-
 
     def draw_text(self, interactable):
         self.text_area.text = interactable.properties['text']
