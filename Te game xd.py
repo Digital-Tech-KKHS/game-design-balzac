@@ -218,7 +218,7 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list("torso_list")
         self.scene.add_sprite_list("enemy_list")
         self.cursor_list = arcade.SpriteList()
-
+        
         self.sprintbarback = arcade.load_texture("assets/sprintbarback.png")
         self.sprintbarfore = arcade.load_texture("assets/sprintbarfore.png")
         self.sanity_img = arcade.load_texture("assets/sanity.png")
@@ -285,7 +285,7 @@ class MyGame(arcade.View):
             self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
         )
         self.light_layer.add(self.player_light)
-
+        
     def on_draw(self):
 
         self.clear()
@@ -514,9 +514,6 @@ class MyGame(arcade.View):
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
 
-        if self.player_sprite.change_y or self.player_sprite.change_x != 0:
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
-
         for engine in self.enemy_physics_engines:
             engine.update()
 
@@ -533,7 +530,9 @@ class MyGame(arcade.View):
             self.level += 1
             self.text_alpha = 255
             self.setup()
-
+        if self.player_sprite.change_y or self.player_sprite.change_x != 0:
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
+            print('step')
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
