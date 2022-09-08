@@ -153,7 +153,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 5
+        self.level = 4
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
