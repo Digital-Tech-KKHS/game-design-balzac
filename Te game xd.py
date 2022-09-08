@@ -163,7 +163,7 @@ class MyGame(arcade.View):
         self.lvl1mus = arcade.load_sound("assets/sounds/Level.Null.mp3")
         self.lvl3mus = arcade.load_sound("assets/sounds/scary.mp3")
         self.humsound = arcade.load_sound("assets/sounds/light hum.mp3")
-        self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
+        self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True,)
         self.lighthum = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
         self.footstepsound = arcade.load_sound(
             "assets/sounds/bary_footstep_carpet1.mp3"
@@ -251,7 +251,7 @@ class MyGame(arcade.View):
 
         if self.level == 1:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.1, looping=True)
             self.lighthum = arcade.play_sound(self.humsound, 1, looping=True)
         elif self.level == 2:
             arcade.stop_sound(self.music)
@@ -277,7 +277,6 @@ class MyGame(arcade.View):
                     mode="soft",
                 )
                 self.light_layer.add(light)
-
         radius = 300
         mode = "soft"
         color = arcade.color_from_hex_string("#363636")
@@ -285,7 +284,9 @@ class MyGame(arcade.View):
             self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
         )
         self.light_layer.add(self.player_light)
-        
+        if self.level == 5:
+            if self.player_light in self.light_layer:
+                self.light_layer.remove(self.player_light)
     def on_draw(self):
 
         self.clear()
@@ -465,13 +466,16 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties["toggled"] = toggled
             if toggled:
+                print("click")
                 switch.texture = arcade.load_texture(f"assets\leverdown.png")
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
+
         for door in self.scene["doors"]:
             door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
+
         if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
@@ -485,10 +489,13 @@ class MyGame(arcade.View):
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
 
-
         if self.level == 2:
             self.text_area.text = (
                 "The power is back on, maybe the gates have been opened."
+            )
+        if self.level == 4:
+            self.text_area.text = (
+                "I think the gates might have opened."
             )
 
     def draw_text(self, interactable):
@@ -532,7 +539,6 @@ class MyGame(arcade.View):
             self.setup()
         if self.player_sprite.change_y or self.player_sprite.change_x != 0:
             self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
-            print('step')
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
