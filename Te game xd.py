@@ -277,7 +277,6 @@ class MyGame(arcade.View):
                     mode="soft",
                 )
                 self.light_layer.add(light)
-
         radius = 300
         mode = "soft"
         color = arcade.color_from_hex_string("#363636")
@@ -285,7 +284,9 @@ class MyGame(arcade.View):
             self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
         )
         self.light_layer.add(self.player_light)
-        
+        if self.level == 5:
+            if self.player_light in self.light_layer:
+                self.light_layer.remove(self.player_light)
     def on_draw(self):
 
         self.clear()
@@ -378,6 +379,8 @@ class MyGame(arcade.View):
             self.subtitle = "'Pipe Dreams'"
         if self.level == 4:
             self.subtitle = "'Electrical Station'"
+        if self.level == 5:
+            self.subtitle = "'Silent Sounds'"
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -480,15 +483,12 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f"assets\leverdown.png")
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
-        
-        
-        if toggled and self.level == 4:
-            
-            for door in self.scene["doors"]:
-                door.properties["toggled"] = toggled
+
+        for door in self.scene["doors"]:
+            door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
-        
+
         if toggled and self.level == 2:
             
             for door in self.scene["doors"]:
@@ -507,8 +507,6 @@ class MyGame(arcade.View):
                 self.light_layer.add(light)
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
-
-        
 
         if self.level == 2:
             self.text_area.text = (
