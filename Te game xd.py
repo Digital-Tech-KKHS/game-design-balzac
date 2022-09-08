@@ -153,7 +153,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 1
+        self.level = 5
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -277,7 +277,6 @@ class MyGame(arcade.View):
                     mode="soft",
                 )
                 self.light_layer.add(light)
-
         radius = 300
         mode = "soft"
         color = arcade.color_from_hex_string("#363636")
@@ -285,7 +284,9 @@ class MyGame(arcade.View):
             self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
         )
         self.light_layer.add(self.player_light)
-        
+        if self.level == 5:
+            if self.player_light in self.light_layer:
+                self.light_layer.remove(self.player_light)
     def on_draw(self):
 
         self.clear()
