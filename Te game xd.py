@@ -469,22 +469,13 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f"assets\leverdown.png")
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
-        
-        
-        if toggled and self.level == 4:
-            
-            for door in self.scene["doors"]:
-                door.properties["toggled"] = toggled
-            if toggled:
-                self.scene["doors"].clear()
-        
-        if toggled and self.level == 2:
-            
-            for door in self.scene["doors"]:
-                door.properties["toggled"] = toggled
+
+        for door in self.scene["doors"]:
+            door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
 
+        if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
                     sprite.center_x,
@@ -496,8 +487,6 @@ class MyGame(arcade.View):
                 self.light_layer.add(light)
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
-
-        
 
         if self.level == 2:
             self.text_area.text = (
