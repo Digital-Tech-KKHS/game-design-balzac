@@ -488,6 +488,7 @@ class MyGame(arcade.View):
             door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
+<<<<<<< HEAD
 
         if toggled and self.level == 2:
             
@@ -495,7 +496,10 @@ class MyGame(arcade.View):
                 door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
+=======
+>>>>>>> b9b9069378c7bef9838c252f491e2607a35c45ff
 
+        if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
                     sprite.center_x,
