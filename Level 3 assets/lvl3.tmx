@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="20" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="10" nextobjectid="33">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="20" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="11" nextobjectid="34">
  <tileset firstgid="1" source="level 3 tileset.tsx"/>
  <tileset firstgid="17" source="../Level 4 assets/props.tsx"/>
  <tileset firstgid="117" source="../Level 2 assets/concreet.tsx"/>
@@ -649,4 +649,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="10" name="Interactables">
+  <object id="33" gid="249" x="2880" y="20480" width="320" height="320">
+   <properties>
+    <property name="oninteract" value="toggle_switch"/>
+    <property name="toggled" type="bool" value="false"/>
+    <property name="type" value="switch"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
