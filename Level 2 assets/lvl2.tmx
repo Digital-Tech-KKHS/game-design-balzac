@@ -4338,7 +4338,7 @@
    <properties>
     <property name="oninteract" value="toggle_switch"/>
     <property name="toggled" type="bool" value="false"/>
-    <property name="type" value="switch"/>
+    <property name="type" value="lever"/>
    </properties>
   </object>
  </objectgroup>
