@@ -469,7 +469,22 @@ class MyGame(arcade.View):
                 switch.texture = arcade.load_texture(f"assets\leverdown.png")
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
+        
+        
+        if toggled and self.level == 4:
+            
+            for door in self.scene["doors"]:
+                door.properties["toggled"] = toggled
+            if toggled:
+                self.scene["doors"].clear()
+        
         if toggled and self.level == 2:
+            
+            for door in self.scene["doors"]:
+                door.properties["toggled"] = toggled
+            if toggled:
+                self.scene["doors"].clear()
+
             for sprite in self.scene["lights"]:
                 light = Light(
                     sprite.center_x,
@@ -481,16 +496,16 @@ class MyGame(arcade.View):
                 self.light_layer.add(light)
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
-        
 
-        for door in self.scene["doors"]:
-            door.properties["toggled"] = toggled
-            if toggled:
-                self.scene["doors"].clear()
+        
 
         if self.level == 2:
             self.text_area.text = (
                 "The power is back on, maybe the gates have been opened."
+            )
+        if self.level == 4:
+            self.text_area.text = (
+                "I think the gates might have opened."
             )
 
     def draw_text(self, interactable):
