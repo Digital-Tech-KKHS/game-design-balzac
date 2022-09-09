@@ -165,6 +165,7 @@ class MyGame(arcade.View):
         self.humsound = arcade.load_sound("assets/sounds/light hum.mp3")
         self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True,)
         self.lighthum = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
+        self.wavesound = arcade.load_sound("assets\sounds\waves.mp3")
         self.footstepsound = arcade.load_sound(
             "assets/sounds/bary_footstep_carpet1.mp3"
         )
@@ -261,6 +262,9 @@ class MyGame(arcade.View):
             arcade.stop_sound(self.music)
             self.music = arcade.play_sound(self.lvl3mus, 0.2, looping=True)
             self.lighthum = arcade.play_sound(self.humsound, 1, looping=True)
+        elif self.level == 5:
+            arcade.stop_sound(self.music)
+            self.music = arcade.play_sound(self.wavesound, 0.2, looping=True)
 
         if self.level == 2:
             self.lights_on = False
@@ -488,14 +492,7 @@ class MyGame(arcade.View):
             door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
-
-        if toggled and self.level == 2:
             
-            for door in self.scene["doors"]:
-                door.properties["toggled"] = toggled
-            if toggled:
-                self.scene["doors"].clear()
-
         if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
@@ -562,7 +559,7 @@ class MyGame(arcade.View):
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
-        dest_y = self.camera.position.y + self.window._mouse_y
+        dest_y = self.camera.position.y + self.window._mouse_y 
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
