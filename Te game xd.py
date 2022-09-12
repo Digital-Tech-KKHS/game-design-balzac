@@ -157,7 +157,7 @@ class MyGame(arcade.View):
         self.sprintbarback = None
         self.sprintbarfore = None
         enemy_physics_engine = 0
-        self.level = 4
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -261,8 +261,8 @@ class MyGame(arcade.View):
         #loads music for individual levels.
         if self.level == 1:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl1mus, 0.1, looping=True)
-            self.lighthum = arcade.play_sound(self.humsound, 1, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
+            self.lighthum = arcade.play_sound(self.humsound, 0.7, looping=True)
         elif self.level == 2:
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
@@ -565,7 +565,7 @@ class MyGame(arcade.View):
             self.text_alpha = 255
             self.setup()
         if self.player_sprite.change_y or self.player_sprite.change_x != 1:
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
+            self.footstep = arcade.play_sound(self.footstepsound, 0, looping=False)
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
