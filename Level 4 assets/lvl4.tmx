@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="16" nextobjectid="160">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="320" tileheight="320" infinite="0" nextlayerid="16" nextobjectid="160">
  <tileset firstgid="1" source="lvl4Wall.tsx"/>
  <tileset firstgid="49" source="../Level 1 assets/Wall.tsx"/>
  <tileset firstgid="85" source="this kinda sucks but its for the circle.tsx"/>
@@ -523,10 +523,6 @@
    </properties>
   </object>
  </objectgroup>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
  <layer id="15" name="doors" width="50" height="50">
   <properties>
    <property name="toggled" type="bool" value="false"/>
@@ -584,14 +580,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
->>>>>>> b9b9069378c7bef9838c252f491e2607a35c45ff
  <objectgroup id="11" name="exit">
   <object id="115" gid="196" x="14560" y="14400" width="320" height="320"/>
   <object id="116" gid="197" x="14880" y="14400" width="320" height="320"/>
   <object id="117" gid="206" x="14560" y="14720" width="320" height="320"/>
   <object id="118" gid="207" x="14880" y="14720" width="320" height="320"/>
  </objectgroup>
->>>>>>> a0a124314ae72a55a3d374c62b47c4852930a90c
  <layer id="5" name="secrets" width="50" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
