@@ -330,16 +330,27 @@ class MyGame(arcade.View):
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
 
-        arcade.draw_text(
-            f"Level {self.level-1} : {self.subtitle}",
-            SCREEN_WIDTH / 2,
-            SCREEN_HEIGHT / 2 + 125,
-            color=(255, 255, 255, self.text_alpha),
-            font_size=36,
-            anchor_x="center",
-            font_name="Kenney Pixel",
-        )
-
+        
+        
+        if self.level == 5:
+            arcade.draw_text(
+                f"Level 100 : {self.subtitle}",
+                SCREEN_WIDTH / 2,
+                SCREEN_HEIGHT / 2 + 125,
+                color=(255, 255, 255, self.text_alpha),
+                font_size=36,
+                anchor_x="center",
+                font_name="Kenney Pixel",
+            )
+        else:    
+            arcade.draw_text(
+                f"Level {self.level-1} : {self.subtitle}",
+                SCREEN_WIDTH / 2,
+                SCREEN_HEIGHT / 2 + 125,
+                color=(255, 255, 255, self.text_alpha),
+                font_size=36,
+                anchor_x="center",
+                font_name="Kenney Pixel",)
         arcade.draw_text(
             "Objective - Find an exit",
             SCREEN_WIDTH - 1270,
@@ -368,6 +379,8 @@ class MyGame(arcade.View):
             self.subtitle = "'Pipe Dreams'"
         if self.level == 4:
             self.subtitle = "'Electrical Station'"
+        if self.level == 5:
+            self.subtitle = "'Silent Sounds'"
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
