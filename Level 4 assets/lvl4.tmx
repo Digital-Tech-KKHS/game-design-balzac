@@ -515,7 +515,7 @@
 </data>
  </layer>
  <objectgroup id="6" name="Interactables">
-  <object id="159" gid="199" x="6720" y="9920" width="320" height="320">
+  <object id="159" gid="199" x="1907.37" y="5760.32" width="320" height="320">
    <properties>
     <property name="oninteract" value="toggle_switch"/>
     <property name="toggled" type="bool" value="false"/>
@@ -523,6 +523,8 @@
    </properties>
   </object>
  </objectgroup>
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 =======
  <layer id="15" name="doors" width="50" height="50">
@@ -589,6 +591,7 @@
   <object id="117" gid="206" x="14560" y="14720" width="320" height="320"/>
   <object id="118" gid="207" x="14880" y="14720" width="320" height="320"/>
  </objectgroup>
+>>>>>>> a0a124314ae72a55a3d374c62b47c4852930a90c
  <layer id="5" name="secrets" width="50" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
