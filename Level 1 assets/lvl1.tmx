@@ -4,7 +4,6 @@
  <tileset firstgid="37" source="props.tsx"/>
  <tileset firstgid="137" source="../Level 2 assets/concreet.tsx"/>
  <tileset firstgid="179" source="../Level 4 assets/props.tsx"/>
- <tileset firstgid="279" source="C:/Users/abraychamptaloup/game-design-balzac/Level 1 assets/Wall.tsx"/>
  <objectgroup id="9" name="lights">
   <object id="45" gid="22" x="22400" y="16000" width="320" height="320">
    <properties>
