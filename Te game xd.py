@@ -156,7 +156,7 @@ class MyGame(arcade.View):
         self.sprint_bar = None
         self.sprintbarback = None
         self.sprintbarfore = None
-        self.level = 4
+        self.level = 5
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -164,7 +164,8 @@ class MyGame(arcade.View):
         self.sanity_img = None
         self.lighthum = None
         self.lvl1mus = arcade.load_sound("assets/sounds/Level.Null.mp3")
-        self.lvl3mus = arcade.load_sound("assets/sounds/scary.mp3")
+        self.lvl2mus = arcade.load_sound("assets/sounds/scary.mp3")
+        self.lvl5mus = arcade.load_sound("assets/sounds/fin.mp3")
         self.humsound = arcade.load_sound("assets/sounds/light hum.mp3")
         self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
         self.lighthum = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
@@ -265,14 +266,16 @@ class MyGame(arcade.View):
         elif self.level == 2:
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
-            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+            self.music = arcade.play_sound(self.lvl2mus, 0.2, looping=True)
         elif self.level == 3:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl3mus, 0.2, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
             self.lighthum = arcade.play_sound(self.humsound, 1, looping=True)
         elif self.level == 5:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.wavesound, 0.2, looping=True)
+            arcade.stop_sound(self.lighthum)
+            self.music = arcade.play_sound(self.lvl5mus, 0.2, looping=True)
+            self.lighthum = arcade.play_sound(self.wavesound, 0.2, looping=True)
 
         #Turns lights off for level 2, since the player must turn the power on.
         if self.level == 2:
