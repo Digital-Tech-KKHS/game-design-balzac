@@ -3,9 +3,10 @@ import math
 import random
 from constants import *
 
+
 class Skin(arcade.Sprite):
     def __init__(self, x, y):
-        img = (f"assets/Skinny.png")
+        img = ("assets/Skinny.png")
         super().__init__(img, CHARACTER_SCALING)
         self.center_x = x
         self.center_y = y
@@ -19,10 +20,9 @@ class Skin(arcade.Sprite):
             self.center_y -= min(SPRITE_SPEED, self.center_y - player_sprite.center_y)
 
         if self.center_x < player_sprite.center_x:
-            self.center_x += min(SPRITE_SPEED,player_sprite.center_x - self.center_x)
+            self.center_x += min(SPRITE_SPEED, player_sprite.center_x - self.center_x)
         elif self.center_x > player_sprite.center_x:
             self.center_x -= min(SPRITE_SPEED, self.center_x - player_sprite.center_x)
-
 
     def random_look(self):
         if abs(self.angle - self.destination_look) < self.turn_threshold:
