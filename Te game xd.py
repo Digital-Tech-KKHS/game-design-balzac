@@ -156,7 +156,7 @@ class MyGame(arcade.View):
         self.sprint_bar = None
         self.sprintbarback = None
         self.sprintbarfore = None
-        self.level = 1
+        self.level = 5
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -164,9 +164,10 @@ class MyGame(arcade.View):
         self.sanity_img = None
         self.lighthum = None
         self.lvl1mus = arcade.load_sound("assets/sounds/Level.Null.mp3")
-        self.lvl3mus = arcade.load_sound("assets/sounds/scary.mp3")
+        self.lvl2mus = arcade.load_sound("assets/sounds/scary.mp3")
+        self.lvl5mus = arcade.load_sound("assets/sounds/fin.mp3")
         self.humsound = arcade.load_sound("assets/sounds/light hum.mp3")
-        self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True,)
+        self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
         self.lighthum = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
         self.wavesound = arcade.load_sound("assets\sounds\waves.mp3")
         self.footstepsound = arcade.load_sound(
@@ -226,7 +227,7 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list("torso_list")
         self.scene.add_sprite_list("enemy_list")
         self.cursor_list = arcade.SpriteList()
-        
+
         self.sprintbarback = arcade.load_texture("assets/sprintbarback.png")
         self.sprintbarfore = arcade.load_texture("assets/sprintbarfore.png")
         self.sanity_img = arcade.load_texture("assets/sanity.png")
@@ -260,19 +261,21 @@ class MyGame(arcade.View):
         #loads music for individual levels.
         if self.level == 1:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
             self.lighthum = arcade.play_sound(self.humsound, 0.7, looping=True)
         elif self.level == 2:
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
-            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+            self.music = arcade.play_sound(self.lvl2mus, 0.2, looping=True)
         elif self.level == 3:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl3mus, 0.2, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
             self.lighthum = arcade.play_sound(self.humsound, 1, looping=True)
         elif self.level == 5:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.wavesound, 0.2, looping=True)
+            arcade.stop_sound(self.lighthum)
+            self.music = arcade.play_sound(self.lvl5mus, 0.2, looping=True)
+            self.lighthum = arcade.play_sound(self.wavesound, 0.2, looping=True)
 
         #Turns lights off for level 2, since the player must turn the power on.
         if self.level == 2:
@@ -290,6 +293,7 @@ class MyGame(arcade.View):
                     mode="soft",
                 )
                 self.light_layer.add(light)
+
         radius = 300
         mode = "soft"
         color = arcade.color_from_hex_string("#363636")
@@ -297,9 +301,7 @@ class MyGame(arcade.View):
             self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
         )
         self.light_layer.add(self.player_light)
-        if self.level == 5:
-            if self.player_light in self.light_layer:
-                self.light_layer.remove(self.player_light)
+
     def on_draw(self):
 
         self.clear()
@@ -343,27 +345,16 @@ class MyGame(arcade.View):
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
 
-        
-        
-        if self.level == 5:
-            arcade.draw_text(
-                f"Level 100 : {self.subtitle}",
-                SCREEN_WIDTH / 2,
-                SCREEN_HEIGHT / 2 + 125,
-                color=(255, 255, 255, self.text_alpha),
-                font_size=36,
-                anchor_x="center",
-                font_name="Kenney Pixel",
-            )
-        else:    
-            arcade.draw_text(
-                f"Level {self.level-1} : {self.subtitle}",
-                SCREEN_WIDTH / 2,
-                SCREEN_HEIGHT / 2 + 125,
-                color=(255, 255, 255, self.text_alpha),
-                font_size=36,
-                anchor_x="center",
-                font_name="Kenney Pixel",)
+        arcade.draw_text(
+            f"Level {self.level-1} : {self.subtitle}",
+            SCREEN_WIDTH / 2,
+            SCREEN_HEIGHT / 2 + 125,
+            color=(255, 255, 255, self.text_alpha),
+            font_size=36,
+            anchor_x="center",
+            font_name="Kenney Pixel",
+        )
+
         arcade.draw_text(
             "Objective - Find an exit",
             SCREEN_WIDTH - 1270,
@@ -392,8 +383,6 @@ class MyGame(arcade.View):
             self.subtitle = "'Pipe Dreams'"
         if self.level == 4:
             self.subtitle = "'Electrical Station'"
-        if self.level == 5:
-            self.subtitle = "'Silent Sounds'"
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -492,7 +481,6 @@ class MyGame(arcade.View):
         for switch in switches:
             switch.properties["toggled"] = toggled
             if toggled:
-                print("click")
                 switch.texture = arcade.load_texture(f"assets\leverdown.png")
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
@@ -514,13 +502,14 @@ class MyGame(arcade.View):
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
 
+        for door in self.scene["doors"]:
+            door.properties["toggled"] = toggled
+            if toggled:
+                self.scene["doors"].clear()
+
         if self.level == 2:
             self.text_area.text = (
                 "The power is back on, maybe the gates have been opened."
-            )
-        if self.level == 4:
-            self.text_area.text = (
-                "I think the gates might have opened."
             )
 
     def draw_text(self, interactable):
@@ -545,6 +534,10 @@ class MyGame(arcade.View):
         self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
+
+        if self.player_sprite.change_y or self.player_sprite.change_x != 0:
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
+
 
         for engine in self.enemy_physics_engines:
             engine.update()
