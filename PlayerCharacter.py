@@ -1,18 +1,18 @@
 import arcade
 from constants import *
 
+# -=our player class, everything relating to the player will go here=-
 
-#-=our player class, everything relating to the player will go here=-
 class PlayerCharacter(arcade.Sprite):
 
-    """ Player Sprite"""
+    """Player Sprite"""
 
     def __init__(self, **kwargs):
         super().__init__()
         self.character_face_direction = RIGHT_FACING
         self.cur_texture = 0
         self.scale = CHARACTER_SCALING
-        self.idle_texture_pair = arcade.load_texture_pair(f"./legs/idle.png")
+        self.idle_texture_pair = arcade.load_texture_pair("./legs/idle.png")
         self.stamina = 100
         self.sprinting = False
         self.resting = False
@@ -26,7 +26,7 @@ class PlayerCharacter(arcade.Sprite):
         self.texture = self.idle_texture_pair[0]
         set_hit_box = [[-125, -125], [125, -125], [125, 125], [-125, 125]]
         self.hit_box = set_hit_box
-    def update_animation(self, delta_time: float = 1 / 60):
+    def update_animation( self, delta_time : float = 1 / 60):
 
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
@@ -36,8 +36,6 @@ class PlayerCharacter(arcade.Sprite):
             self.character_face_direction = RIGHT_FACING
         if self.change_y != 0 and self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
-
-
 
         elif self.change_x == 0:
             self.texture = self.idle_texture_pair[self.character_face_direction]
@@ -75,11 +73,8 @@ class PlayerCharacter(arcade.Sprite):
         if self.stamina <= 1:
             self.resting = True
             self.sprinting = False
-            
-
 
         self.update_animation()
-
 
     def on_draw(self):
         return

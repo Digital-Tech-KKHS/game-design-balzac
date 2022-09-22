@@ -217,12 +217,6 @@
     <property name="radius" type="int" value="700"/>
    </properties>
   </object>
-  <object id="104" gid="70" x="10880" y="3840" width="320" height="320">
-   <properties>
-    <property name="color" type="color" value="#ff359f9f"/>
-    <property name="radius" type="int" value="100"/>
-   </properties>
-  </object>
   <object id="105" gid="70" x="9600" y="12160" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff3f3f3f"/>
