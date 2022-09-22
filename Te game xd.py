@@ -156,8 +156,7 @@ class MyGame(arcade.View):
         self.sprint_bar = None
         self.sprintbarback = None
         self.sprintbarfore = None
-        enemy_physics_engine = 0
-        self.level = 3
+        self.level = 1
         self.facesoundvol = 0.2
         self.subtitle = None
         self.escpressed = False
@@ -502,7 +501,6 @@ class MyGame(arcade.View):
             door.properties["toggled"] = toggled
             if toggled:
                 self.scene["doors"].clear()
-            
         if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
@@ -564,8 +562,6 @@ class MyGame(arcade.View):
             self.level += 1
             self.text_alpha = 255
             self.setup()
-        if self.player_sprite.change_y or self.player_sprite.change_x != 1:
-            self.footstep = arcade.play_sound(self.footstepsound, 0, looping=False)
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
