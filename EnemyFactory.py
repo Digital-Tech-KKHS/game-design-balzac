@@ -1,9 +1,9 @@
 from msilib.schema import Error
 import arcade
-from constants import *
 from Enemy import Enemy
 from Wretch import Wretch
 from Skin import Skin
+
 
 def enemy_factory(spawn_sprite: arcade.Sprite):
     try:
@@ -17,6 +17,4 @@ def enemy_factory(spawn_sprite: arcade.Sprite):
     elif spawn_sprite.properties['type'] == 'skin':
         return Skin(spawn_sprite.center_x, spawn_sprite.center_y)
     else:
-        raise NotImplemented("Tiled enemy sprite currently has a enemy type that does not exist yet")
-
-    
+        raise NotImplementedError("Tiled enemy sprite currently has a enemy type that does not exist yet")
