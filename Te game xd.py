@@ -135,6 +135,7 @@ class MyGame(arcade.View):
         self.text_alpha = 255
         self.esc_alpha = 255
         self.box_alpha = 0
+        self.levelnum = 0
         self.sanity_alpha = 0
         self.lights_on = None
         self.player_list = None
@@ -346,7 +347,7 @@ class MyGame(arcade.View):
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
 
         arcade.draw_text(
-            f"Level {self.level-1} : {self.subtitle}",
+            f"Level {self.levelnum} : {self.subtitle}",
             SCREEN_WIDTH / 2,
             SCREEN_HEIGHT / 2 + 125,
             color=(255, 255, 255, self.text_alpha),
@@ -376,13 +377,20 @@ class MyGame(arcade.View):
             )
 
         if self.level == 1:
+            self.levelnum = 0
             self.subtitle = "'The Lobby'"
         if self.level == 2:
+            self.levelnum = 1
             self.subtitle = "'Habitable Zone'"
         if self.level == 3:
+            self.levelnum = 2
             self.subtitle = "'Pipe Dreams'"
         if self.level == 4:
+            self.levelnum = 3
             self.subtitle = "'Electrical Station'"
+        if self.level == 5:
+            self.levelnum = 100
+            self.subtitle = "'Silent Waves'"
 
     def on_resize(self, width, height):
         self.light_layer.resize(width, height)
@@ -528,6 +536,7 @@ class MyGame(arcade.View):
     def on_update(self, delta_time):
         self.center_camera_to_player()
 
+        #joins the torso to the legs and maps cursor coords to mouse
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
@@ -537,7 +546,6 @@ class MyGame(arcade.View):
 
         if self.player_sprite.change_y or self.player_sprite.change_x != 0:
             self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
-
 
         for engine in self.enemy_physics_engines:
             engine.update()
