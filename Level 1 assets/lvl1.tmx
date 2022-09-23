@@ -2923,7 +2923,7 @@
   </object>
  </objectgroup>
  <objectgroup id="10" name="spawn">
-  <object id="708" gid="28" x="24000" y="16960" width="320" height="320">
+  <object id="708" gid="28" x="24168" y="16600" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff555555"/>
    </properties>
