@@ -554,9 +554,6 @@ class MyGame(arcade.View):
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
 
-        # if self.player_sprite.change_y or self.player_sprite.change_x != 0:
-        #     self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
-
         for engine in self.enemy_physics_engines:
             engine.update()
 
