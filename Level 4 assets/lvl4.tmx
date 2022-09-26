@@ -517,8 +517,6 @@
    </properties>
   </object>
  </objectgroup>
-<<<<<<< HEAD
-=======
  <layer id="15" name="doors" width="50" height="50">
   <properties>
    <property name="toggled" type="bool" value="false"/>
@@ -576,7 +574,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
->>>>>>> 289e1a4d1f56f469f4aed3b5d93022c0055f4ef3
  <objectgroup id="11" name="exit">
   <object id="115" gid="196" x="14560" y="14400" width="320" height="320"/>
   <object id="116" gid="197" x="14880" y="14400" width="320" height="320"/>
