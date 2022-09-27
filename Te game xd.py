@@ -304,7 +304,7 @@ class MyGame(arcade.View):
         self.light_layer.add(self.player_light)
 
     def on_draw(self):
-
+        #draws all entitites and creates the shaders
         self.clear()
         self.camera.use()
         self.channel0.use()
