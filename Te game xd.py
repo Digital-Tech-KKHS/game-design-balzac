@@ -262,8 +262,8 @@ class MyGame(arcade.View):
         #loads music for individual levels.
         if self.level == 1:
             arcade.stop_sound(self.music)
-            self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
-            self.lighthum = arcade.play_sound(self.humsound, 0.0, looping=True)
+            self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
+            self.lighthum = arcade.play_sound(self.humsound, 0.2, looping=True)
         elif self.level == 2:
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
@@ -304,7 +304,7 @@ class MyGame(arcade.View):
         self.light_layer.add(self.player_light)
 
     def on_draw(self):
-
+        #draws all entitites and creates the shaders
         self.clear()
         self.camera.use()
         self.channel0.use()
@@ -465,12 +465,16 @@ class MyGame(arcade.View):
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W:
             self.up_pressed = False
+            arcade.stop_sound(self.footstep)
         if key == arcade.key.S:
             self.down_pressed = False
+            arcade.stop_sound(self.footstep)
         elif key == arcade.key.A:
             self.left_pressed = False
+            arcade.stop_sound(self.footstep)
         elif key == arcade.key.D:
             self.right_pressed = False
+            arcade.stop_sound(self.footstep)
 
         # if key == arcade.key.ESCAPE:
         # self.escpressed = False
@@ -553,9 +557,6 @@ class MyGame(arcade.View):
         self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
-
-        # if self.player_sprite.change_y or self.player_sprite.change_x != 0:
-        #     self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
 
         for engine in self.enemy_physics_engines:
             engine.update()

@@ -649,13 +649,5 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="10" name="Interactables">
-  <object id="33" gid="249" x="2880" y="20480" width="320" height="320">
-   <properties>
-    <property name="oninteract" value="toggle_switch"/>
-    <property name="toggled" type="bool" value="false"/>
-    <property name="type" value="switch"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup id="10" name="Interactables"/>
 </map>
