@@ -263,7 +263,7 @@ class MyGame(arcade.View):
         if self.level == 1:
             arcade.stop_sound(self.music)
             self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
-            self.lighthum = arcade.play_sound(self.humsound, 0.7, looping=True)
+            self.lighthum = arcade.play_sound(self.humsound, 0.2, looping=True)
         elif self.level == 2:
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
@@ -304,7 +304,7 @@ class MyGame(arcade.View):
         self.light_layer.add(self.player_light)
 
     def on_draw(self):
-
+        #draws all entitites and creates the shaders
         self.clear()
         self.camera.use()
         self.channel0.use()
@@ -375,7 +375,7 @@ class MyGame(arcade.View):
                 anchor_x="right",
                 font_name="Kenney Pixel",
             )
-
+        #sets subtitle text
         if self.level == 1:
             self.levelnum = 0
             self.subtitle = "'The Lobby'"
@@ -407,25 +407,35 @@ class MyGame(arcade.View):
                 PLAYER_MOVEMENT_SPEED + sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = 90
+            arcade.stop_sound(self.footstep)
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
         elif self.down_pressed and not self.up_pressed:
             self.player_sprite.change_y = (
                 -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = -90
+            arcade.stop_sound(self.footstep)
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
         else:
             self.player_sprite.change_y = 0
+            arcade.stop_sound(self.footstep)
         if self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = (
                 PLAYER_MOVEMENT_SPEED + sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = 0
+            arcade.stop_sound(self.footstep)
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
         elif self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = (
                 -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = 0
+            arcade.stop_sound(self.footstep)
+            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
         else:
             self.player_sprite.change_x = 0
+
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.W:
@@ -455,12 +465,16 @@ class MyGame(arcade.View):
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W:
             self.up_pressed = False
+            arcade.stop_sound(self.footstep)
         if key == arcade.key.S:
             self.down_pressed = False
+            arcade.stop_sound(self.footstep)
         elif key == arcade.key.A:
             self.left_pressed = False
+            arcade.stop_sound(self.footstep)
         elif key == arcade.key.D:
             self.right_pressed = False
+            arcade.stop_sound(self.footstep)
 
         # if key == arcade.key.ESCAPE:
         # self.escpressed = False
@@ -543,9 +557,6 @@ class MyGame(arcade.View):
         self.player_sprite.update(delta_time)
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
-
-        if self.player_sprite.change_y or self.player_sprite.change_x != 0:
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=False)
 
         for engine in self.enemy_physics_engines:
             engine.update()
