@@ -11,8 +11,9 @@ from constants import *
 from Enemy import Enemy
 from EnemyFactory import enemy_factory
 
-# -=loading our texture pair=-
+
 def load_texture_pair(filename):
+    """loading our texture pair"""
     return [
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
@@ -21,6 +22,7 @@ def load_texture_pair(filename):
 
 #Custom class that loads when the game starts.
 class MenuView(arcade.View):
+    """..."""
     def __init__(self):
         super().__init__()
         self.background = None
@@ -89,7 +91,7 @@ class LoseView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(
             0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.background
         )
-        #Draws the "Game Over" text
+        # Draws the "Game Over" text
         arcade.draw_text(
             self.text,
             SCREEN_WIDTH / 2,
@@ -169,7 +171,7 @@ class MyGame(arcade.View):
         self.lvl5mus = arcade.load_sound("assets/sounds/fin.mp3")
         self.humsound = arcade.load_sound("assets/sounds/light hum.mp3")
         self.music = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
-        self.lighthum = arcade.play_sound(self.lvl1mus, 0.0, looping=True)
+        self.lighthum = arcade.play_sound(self.humsound, 0.0, looping=True)
         self.wavesound = arcade.load_sound("assets\sounds\waves.mp3")
         self.footstepsound = arcade.load_sound(
             "assets/sounds/bary_footstep_carpet1.mp3"
@@ -210,7 +212,7 @@ class MyGame(arcade.View):
             "lights": {"use_spatial_hash": True},
         }
 
-        #Function used to load the maps.
+        # Function used to load the maps.
         tile_map = arcade.load_tilemap(
             #Uses level number to differentiate the levels.
             f"Level {self.level} assets\lvl{self.level}.tmx",
@@ -229,6 +231,7 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list("enemy_list")
         self.cursor_list = arcade.SpriteList()
 
+        # ...
         self.sprintbarback = arcade.load_texture("assets/sprintbarback.png")
         self.sprintbarfore = arcade.load_texture("assets/sprintbarfore.png")
         self.sanity_img = arcade.load_texture("assets/sanity.png")
@@ -255,10 +258,12 @@ class MyGame(arcade.View):
                 enemy, walls=[self.scene["walls"], self.door_list]
             )
             self.enemy_physics_engines.append(engine)
+
         #Creates camera to follow the player.
         for sprite in self.scene["exit"]:
             self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
             self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
+
         #loads music for individual levels.
         if self.level == 1:
             arcade.stop_sound(self.music)
@@ -295,6 +300,7 @@ class MyGame(arcade.View):
                 )
                 self.light_layer.add(light)
 
+        # variables out of place? ...
         radius = 300
         mode = "soft"
         color = arcade.color_from_hex_string("#363636")
@@ -305,9 +311,11 @@ class MyGame(arcade.View):
 
     def on_draw(self):
         #draws all entitites and creates the shaders
+
+        # sets the camera up and uses channnel 0 for raycasting shadows
         self.clear()
         self.camera.use()
-        self.channel0.use()
+        self.channel0.use() 
         self.channel0.clear()
         self.scene["walls"].draw()
         with self.light_layer:
@@ -396,8 +404,9 @@ class MyGame(arcade.View):
         self.light_layer.resize(width, height)
 
     def process_keychange(self):
-        angle = 0
         sprint_speed = SPRINT_SPEED
+
+        # lots more ...
 
         if self.player_sprite.resting:
             self.player_sprite.sprinting = False
@@ -476,9 +485,6 @@ class MyGame(arcade.View):
             self.right_pressed = False
             arcade.stop_sound(self.footstep)
 
-        # if key == arcade.key.ESCAPE:
-        # self.escpressed = False
-
         # bitwise and of modifier keys. See https://api.arcade.academy/en/latest/keyboard.html#keyboard-modifiers
         self.player_sprite.sprinting = modifiers and arcade.key.MOD_SHIFT
 
@@ -496,6 +502,8 @@ class MyGame(arcade.View):
             getattr(self, interactable.properties["oninteract"])(interactable)
 
     def toggle_switch(self, interactable):
+
+        # more ...
         switches = (
             l for l in self.scene["Interactables"] if l.properties["type"] == "switch"
         )
