@@ -13,16 +13,16 @@ from EnemyFactory import enemy_factory
 
 
 def load_texture_pair(filename):
-    """loading our texture pair"""
+    '''loading our texture pair'''
     return [
         arcade.load_texture(filename),
         arcade.load_texture(filename, flipped_horizontally=True),
     ]
 
 
-#Custom class that loads when the game starts.
 class MenuView(arcade.View):
-    """..."""
+    '''Sets the main menu view when you start the game'''
+
     def __init__(self):
         super().__init__()
         self.background = None
@@ -33,7 +33,6 @@ class MenuView(arcade.View):
         start_button = arcade.gui.UIFlatButton(text="Start Game", width=150)
         self.v_box.add(start_button.with_space_around(bottom=20))
         start_button.on_click = self.on_click_start
-        # quit_button.on_click = self.on_click_quit
 
         # Create a widget to hold the v_box widget, that will center the buttons
         self.manager.add(
@@ -43,19 +42,20 @@ class MenuView(arcade.View):
                 child=self.v_box,
             )
         )
-    #Checks if start button has been pressed, and will start the game if it has.
+    # Checks if start button has been pressed, and will start the game if it has.
+
     def on_click_start(self, event):
         print("Start:", event)
         self.window.show_view(self.game_view)
         self.window.set_mouse_visible(False)
 
-    #Loads the background for the menu
+    # Loads the background for the menu
     def on_show_view(self):
         self.background = arcade.load_texture("assets\menu.png")
         self.game_view = MyGame()
         self.game_view.setup()
 
-    #Draws the menu, the title, buttons etc.
+    # Draws the menu, the title, buttons etc.
     def on_draw(self):
         self.clear()
         arcade.draw_lrwh_rectangle_textured(
@@ -73,14 +73,15 @@ class MenuView(arcade.View):
         self.manager.draw()
 
 
-#Custom class for when the player loses.
 class LoseView(arcade.View):
+    '''Custom class for when the player loses.'''
+
     def __init__(self):
         super().__init__()
         self.text = "Game Over"
         self.background = None
 
-    #Loads the background image.
+    # Loads the background image.
     def on_show_view(self):
         self.background = arcade.load_texture("assets\SPOOKY GAME OVER.png")
         self.game_view = MyGame()
@@ -101,12 +102,15 @@ class LoseView(arcade.View):
             anchor_x="center",
             font_name="Kenney Pixel",
         )
-    #Checks for mouse press on lose screen, if mouse is pressed, the game restarts.
+    # Checks for mouse press on lose screen, if mouse is pressed, the game restarts.
+
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         self.window.show_view(self.game_view)
 
-#Class for the entire game view and everything inside it.
+
 class MyGame(arcade.View):
+    '''Class for the entire game view and everything inside it.'''
+
     def __init__(self):
 
         super().__init__()
@@ -128,7 +132,7 @@ class MyGame(arcade.View):
                 padding=(10, 10, 10, 10),
             )
         )
-        #Our long list of variables.
+        # Our long list of variables.
         self.shadertoy = None
         self.channel0 = None
         self.channel1 = None
@@ -176,24 +180,29 @@ class MyGame(arcade.View):
         self.footstepsound = arcade.load_sound(
             "assets/sounds/bary_footstep_carpet1.mp3"
         )
-        self.footstep = arcade.play_sound(self.footstepsound, 0.0, looping=False)
+        self.footstep = arcade.play_sound(
+            self.footstepsound, 0.0, looping=False)
         arcade.set_background_color(arcade.color_from_hex_string("#7b692f"))
 
     def load_shader(self):
+        '''Raycast shader from arcade documentation https://api.arcade.academy/en/latest/tutorials/raycasting/index.html'''
         # Where is the shader file? Must be specified as a path.
         shader_file_path = Path("shadeer.glsl")
         window_size = [SCREEN_WIDTH, SCREEN_HEIGHT]
 
         # Create the shader toy
-        self.shadertoy = Shadertoy.create_from_file(window_size, shader_file_path)
+        self.shadertoy = Shadertoy.create_from_file(
+            window_size, shader_file_path)
 
         # Create the channels 0 and 1 frame buffers.
         # Make the buffer the size of the window, with 4 channels (RGBA)
         self.channel0 = self.shadertoy.ctx.framebuffer(
-            color_attachments=[self.shadertoy.ctx.texture(window_size, components=4)]
+            color_attachments=[self.shadertoy.ctx.texture(
+                window_size, components=4)]
         )
         self.channel1 = self.shadertoy.ctx.framebuffer(
-            color_attachments=[self.shadertoy.ctx.texture(window_size, components=4)]
+            color_attachments=[self.shadertoy.ctx.texture(
+                window_size, components=4)]
         )
 
         # Assign the frame buffers to the channels
@@ -201,8 +210,8 @@ class MyGame(arcade.View):
         self.shadertoy.channel_1 = self.channel1.color_attachments[0]
 
     def setup(self):
-
-        #Creates and hashes the layers for the game view.
+        '''Sets up all of the assets and scene'''
+        # Creates and hashes the layers for the game view.
         layer_options = {
             "spawn": {"custom_class": PlayerCharacter, "custom_class_args": {}},
             "walls": {"use_spatial_hash": True},
@@ -214,12 +223,12 @@ class MyGame(arcade.View):
 
         # Function used to load the maps.
         tile_map = arcade.load_tilemap(
-            #Uses level number to differentiate the levels.
+            # Uses level number to differentiate the levels.
             f"Level {self.level} assets\lvl{self.level}.tmx",
             TILE_SCALING,
             layer_options=layer_options,
         )
-        #Creates our lists.
+        # Creates our lists.
         self.scene = arcade.Scene.from_tilemap(tile_map)
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -231,13 +240,12 @@ class MyGame(arcade.View):
         self.scene.add_sprite_list("enemy_list")
         self.cursor_list = arcade.SpriteList()
 
-        # ...
+        # loads assets for the ui
         self.sprintbarback = arcade.load_texture("assets/sprintbarback.png")
         self.sprintbarfore = arcade.load_texture("assets/sprintbarfore.png")
         self.sanity_img = arcade.load_texture("assets/sanity.png")
-        for spawn_point in self.scene["enemy_spawn"]:
-            self.scene["enemy_list"].append(enemy_factory(spawn_point))
 
+        #  loads sprites for the player and cursor and appends them to the scene
         torso = f"./assets/dude.png"
         self.torso_sprite = arcade.Sprite(torso, CHARACTER_SCALING)
         self.scene["torso_list"].append(self.torso_sprite)
@@ -248,10 +256,14 @@ class MyGame(arcade.View):
         self.player_sprite = self.scene["spawn"][0]
         self.scene["player_list"].append(self.player_sprite)
         self.light_layer = LightLayer(SCREEN_WIDTH, SCREEN_HEIGHT)
+        #  spawns enemies at their spawn points
+        for spawn_point in self.scene["enemy_spawn"]:
+            self.scene["enemy_list"].append(enemy_factory(spawn_point))
+
+        # Creates physics engines to handle collision with walls, enemies and player.
         self.physics_engine = arcade.PhysicsEngineSimple(
             self.player_sprite, walls=[self.scene["walls"], self.door_list]
         )
-        #Creates physics engine to handle collision with walls.
         self.enemy_physics_engines = []
         for enemy in self.scene["enemy_list"]:
             engine = arcade.PhysicsEngineSimple(
@@ -259,12 +271,12 @@ class MyGame(arcade.View):
             )
             self.enemy_physics_engines.append(engine)
 
-        #Creates camera to follow the player.
+        # Creates camera to follow the player.
         for sprite in self.scene["exit"]:
             self.camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
             self.HUD_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        #loads music for individual levels.
+        # loads music for individual levels.
         if self.level == 1:
             arcade.stop_sound(self.music)
             self.music = arcade.play_sound(self.lvl1mus, 0.2, looping=True)
@@ -281,9 +293,10 @@ class MyGame(arcade.View):
             arcade.stop_sound(self.music)
             arcade.stop_sound(self.lighthum)
             self.music = arcade.play_sound(self.lvl5mus, 0.2, looping=True)
-            self.lighthum = arcade.play_sound(self.wavesound, 0.2, looping=True)
+            self.lighthum = arcade.play_sound(
+                self.wavesound, 0.2, looping=True)
 
-        #Turns lights off for level 2, since the player must turn the power on.
+        # Turns lights off for level 2, since the player must turn the power on.
         if self.level == 2:
             self.lights_on = False
         else:
@@ -300,28 +313,30 @@ class MyGame(arcade.View):
                 )
                 self.light_layer.add(light)
 
-        # variables out of place? ...
-        radius = 300
-        mode = "soft"
-        color = arcade.color_from_hex_string("#363636")
+        # creates the player light
         self.player_light = Light(
-            self.torso_sprite.center_x, self.torso_sprite.center_y, radius, color, mode
+            self.torso_sprite.center_x, self.torso_sprite.center_y, 300, arcade.color_from_hex_string(
+                "#363636"), "soft"
         )
         self.light_layer.add(self.player_light)
 
     def on_draw(self):
-        #draws all entitites and creates the shaders
+        '''Draws the scene'''
 
         # sets the camera up and uses channnel 0 for raycasting shadows
         self.clear()
         self.camera.use()
-        self.channel0.use() 
+        self.channel0.use()
         self.channel0.clear()
         self.scene["walls"].draw()
+
+        # draws the lights
         with self.light_layer:
             self.clear()
             self.scene.draw()
         self.light_layer.draw()
+
+        # Makes sure the raycast starts at the player origin
         p = (
             self.player_sprite.position[0] - self.camera.position[0],
             self.player_sprite.position[1] - self.camera.position[1],
@@ -329,6 +344,8 @@ class MyGame(arcade.View):
         self.shadertoy.program["lightPosition"] = p
         self.shadertoy.program["lightSize"] = 3000
         self.shadertoy.render()
+
+        # draws all of the ui assets without shading
         self.HUD_camera.use()
         self.cursor_list.draw()
         self.manager.draw()
@@ -349,11 +366,12 @@ class MyGame(arcade.View):
             arcade.draw_lrwh_rectangle_textured(
                 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.sanity_img, alpha=150
             )
-
+        # lerp function for fading text
         self.text_alpha = int(arcade.utils.lerp(self.text_alpha, 0, 0.005))
         self.obj_alpha = int(arcade.utils.lerp(self.obj_alpha, 255, 0.01))
         self.esc_alpha = int(arcade.utils.lerp(self.esc_alpha, 0, 0.005))
 
+        # draws all of the text on screen
         arcade.draw_text(
             f"Level {self.levelnum} : {self.subtitle}",
             SCREEN_WIDTH / 2,
@@ -363,16 +381,6 @@ class MyGame(arcade.View):
             anchor_x="center",
             font_name="Kenney Pixel",
         )
-
-        arcade.draw_text(
-            "Objective - Find an exit",
-            SCREEN_WIDTH - 1270,
-            SCREEN_HEIGHT - 30,
-            color=(255, 255, 255, self.obj_alpha),
-            font_size=28,
-            font_name="Kenney Pixel",
-        )
-
         if self.escpressed == True:
             arcade.draw_text(
                 "There is no escape.",
@@ -383,7 +391,8 @@ class MyGame(arcade.View):
                 anchor_x="right",
                 font_name="Kenney Pixel",
             )
-        #sets subtitle text
+
+        # sets subtitle text
         if self.level == 1:
             self.levelnum = 0
             self.subtitle = "'The Lobby'"
@@ -400,31 +409,32 @@ class MyGame(arcade.View):
             self.levelnum = 100
             self.subtitle = "'Silent Waves'"
 
-    def on_resize(self, width, height):
-        self.light_layer.resize(width, height)
-
     def process_keychange(self):
+        '''processes the keyboard inputs'''
+
         sprint_speed = SPRINT_SPEED
 
-        # lots more ...
-
+        # handles the player no longer sprinting
         if self.player_sprite.resting:
             self.player_sprite.sprinting = False
 
+        # processes keyboard input into movement , makes sure sound is played when the player moves and makes the legs move in the correct direction
         if self.up_pressed and not self.down_pressed:
             self.player_sprite.change_y = (
                 PLAYER_MOVEMENT_SPEED + sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = 90
             arcade.stop_sound(self.footstep)
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
+            self.footstep = arcade.play_sound(
+                self.footstepsound, 1, looping=True)
         elif self.down_pressed and not self.up_pressed:
             self.player_sprite.change_y = (
                 -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = -90
             arcade.stop_sound(self.footstep)
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
+            self.footstep = arcade.play_sound(
+                self.footstepsound, 1, looping=True)
         else:
             self.player_sprite.change_y = 0
             arcade.stop_sound(self.footstep)
@@ -434,19 +444,21 @@ class MyGame(arcade.View):
             )
             self.player_sprite.angle = 0
             arcade.stop_sound(self.footstep)
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
+            self.footstep = arcade.play_sound(
+                self.footstepsound, 1, looping=True)
         elif self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = (
                 -PLAYER_MOVEMENT_SPEED + -sprint_speed * self.player_sprite.sprinting
             )
             self.player_sprite.angle = 0
             arcade.stop_sound(self.footstep)
-            self.footstep = arcade.play_sound(self.footstepsound, 1, looping=True)
+            self.footstep = arcade.play_sound(
+                self.footstepsound, 1, looping=True)
         else:
             self.player_sprite.change_x = 0
 
-
     def on_key_press(self, key, modifiers):
+        '''Handles key pressed state with booleans'''
         if key == arcade.key.W:
             self.up_pressed = True
         elif key == arcade.key.S:
@@ -472,6 +484,8 @@ class MyGame(arcade.View):
         self.process_keychange()
 
     def on_key_release(self, key, modifiers):
+        '''Handles key released state with booleans'''
+
         if key == arcade.key.W:
             self.up_pressed = False
             arcade.stop_sound(self.footstep)
@@ -494,6 +508,8 @@ class MyGame(arcade.View):
         self.handle_interact()
 
     def handle_interact(self):
+        '''interaction handling using function in on mouse press'''
+
         objects = arcade.check_for_collision_with_list(
             self.player_sprite, self.scene["Interactables"]
         )
@@ -502,8 +518,8 @@ class MyGame(arcade.View):
             getattr(self, interactable.properties["oninteract"])(interactable)
 
     def toggle_switch(self, interactable):
+        '''handles the switch being toggled and then opens gates and turns on lights on level 2'''
 
-        # more ...
         switches = (
             l for l in self.scene["Interactables"] if l.properties["type"] == "switch"
         )
@@ -515,10 +531,6 @@ class MyGame(arcade.View):
             else:
                 switch.texture = arcade.load_texture(f"assets\leverup.png")
 
-        for door in self.scene["doors"]:
-            door.properties["toggled"] = toggled
-            if toggled:
-                self.scene["doors"].clear()
         if toggled and self.level == 2:
             for sprite in self.scene["lights"]:
                 light = Light(
@@ -532,6 +544,7 @@ class MyGame(arcade.View):
                 self.light_layer.remove(self.player_light)
                 self.light_layer.add(self.player_light)
 
+        #  makes doors open when switch is toggled
         for door in self.scene["doors"]:
             door.properties["toggled"] = toggled
             if toggled:
@@ -546,8 +559,9 @@ class MyGame(arcade.View):
         self.text_area.text = interactable.properties["text"]
 
     def center_camera_to_player(self):
-
-        screen_center_x = self.player_sprite.center_x - (self.camera.viewport_width / 2)
+        '''centers the camera to the center of the player'''
+        screen_center_x = self.player_sprite.center_x - \
+            (self.camera.viewport_width / 2)
 
         screen_center_y = self.player_sprite.center_y - (
             self.camera.viewport_height / 2
@@ -556,9 +570,11 @@ class MyGame(arcade.View):
         self.camera.move_to(player_centered)
 
     def on_update(self, delta_time):
+        '''updates all of the line of sight code and physics engines'''
+
         self.center_camera_to_player()
 
-        #joins the torso to the legs and maps cursor coords to mouse
+        # joins the torso to the legs and maps cursor coords to mouse
         self.torso_sprite.center_x = self.player_sprite.center_x
         self.torso_sprite.center_y = self.player_sprite.center_y
         self.torso_sprite.update()
@@ -566,6 +582,7 @@ class MyGame(arcade.View):
         self.cursor_sprite.center_x = self.window._mouse_x
         self.cursor_sprite.center_y = self.window._mouse_y
 
+        # updates enemies moving and collisions
         for engine in self.enemy_physics_engines:
             engine.update()
 
@@ -576,6 +593,7 @@ class MyGame(arcade.View):
             arcade.stop_sound(self.lighthum)
             self.window.show_view(self.window.lose_view)
 
+        # changes level when colliding with exit
         if arcade.check_for_collision_with_list(
             self.player_sprite, self.scene["exit"], method=1
         ):
@@ -585,12 +603,13 @@ class MyGame(arcade.View):
         start_x = self.torso_sprite.center_x
         start_y = self.torso_sprite.center_y
         dest_x = self.camera.position.x + self.window._mouse_x
-        dest_y = self.camera.position.y + self.window._mouse_y 
+        dest_y = self.camera.position.y + self.window._mouse_y
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
         angle = math.atan2(y_diff, x_diff)
         self.torso_sprite.angle = math.degrees(angle) - 90
 
+        # line of sight and enemie looking code
         self.sanity = False
         for enemy in self.scene["enemy_list"]:
             if arcade.has_line_of_sight(
@@ -613,13 +632,15 @@ class MyGame(arcade.View):
                 enemy.change_y = 0
                 enemy.random_move()
 
+        # puts the player light at the player
         self.player_light.position = self.torso_sprite.position
 
+        # updates player physics engine
         self.physics_engine.update()
 
 
 def main():
-
+    '''draws the menu, lose and game views'''
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     window.menu_view = MenuView()
     window.lose_view = LoseView()
