@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="17" nextobjectid="745">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="17" nextobjectid="770">
  <tileset firstgid="1" source="Wall.tsx"/>
  <tileset firstgid="37" source="props.tsx"/>
  <tileset firstgid="137" source="../Level 2 assets/concreet.tsx"/>
@@ -1097,7 +1097,7 @@
     <property name="radius" type="int" value="600"/>
    </properties>
   </object>
-  <object id="348" gid="22" x="19808" y="31520" width="320" height="320">
+  <object id="348" gid="22" x="19840" y="31360" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff383833"/>
     <property name="radius" type="int" value="600"/>
@@ -2875,24 +2875,24 @@
   </object>
  </objectgroup>
  <objectgroup id="13" name="enemy_spawn">
-  <object id="720" gid="168" x="10560" y="10240" width="320" height="320">
+  <object id="720" gid="168" x="10880" y="9280" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
   </object>
   <object id="722" gid="168" x="4800" y="6080" width="320" height="320">
    <properties>
-    <property name="type" value="faceling"/>
+    <property name="type" value="wretch"/>
    </properties>
   </object>
   <object id="757" gid="168" x="15360" y="12800" width="320" height="320">
    <properties>
-    <property name="type" value="faceling"/>
+    <property name="type" value="skin"/>
    </properties>
   </object>
   <object id="758" gid="168" x="16320" y="12160" width="320" height="320">
    <properties>
-    <property name="type" value="faceling"/>
+    <property name="type" value="skin"/>
    </properties>
   </object>
   <object id="737" gid="168" x="16640" y="27520" width="320" height="320">
@@ -2906,9 +2906,64 @@
     <property name="type" value="faceling"/>
    </properties>
   </object>
+  <object id="756" gid="168" x="19520" y="31360" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="757" gid="168" x="13120" y="30400" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
+   </properties>
+  </object>
+  <object id="758" gid="168" x="18560" y="25280" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="759" gid="168" x="20160" y="22080" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="760" gid="168" x="24320" y="28800" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="761" gid="168" x="28480" y="24640" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="762" gid="168" x="31040" y="19840" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="766" gid="168" x="28800" y="9600" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="767" gid="168" x="26880" y="4480" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="768" gid="168" x="5440" y="2240" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="769" gid="168" x="640" y="2240" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="10" name="spawn">
-  <object id="708" gid="28" x="24168" y="16600" width="320" height="320">
+  <object id="708" gid="28" x="24320" y="16640" width="320" height="320">
    <properties>
     <property name="color" type="color" value="#ff555555"/>
    </properties>
