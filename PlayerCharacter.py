@@ -4,7 +4,6 @@ from constants import *
 # -=our player class, everything relating to the player will go here=-
 
 class PlayerCharacter(arcade.Sprite):
-
     """Player Sprite"""
 
     def __init__(self, **kwargs):
@@ -26,6 +25,8 @@ class PlayerCharacter(arcade.Sprite):
         self.texture = self.idle_texture_pair[0]
         set_hit_box = [[-125, -125], [125, -125], [125, 125], [-125, 125]]
         self.hit_box = set_hit_box
+
+
     def update_animation( self, delta_time : float = 1 / 60):
 
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -75,6 +76,3 @@ class PlayerCharacter(arcade.Sprite):
             self.sprinting = False
 
         self.update_animation()
-
-    def on_draw(self):
-        return
