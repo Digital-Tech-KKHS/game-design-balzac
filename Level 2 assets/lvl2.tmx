@@ -3533,7 +3533,7 @@
     <property name="type" value="skin"/>
    </properties>
   </object>
-  <object id="1108" gid="32" x="32640" y="39360" width="320" height="320">
+  <object id="1108" gid="32" x="32320" y="39360" width="320" height="320">
    <properties>
     <property name="type" value="faceling"/>
    </properties>
