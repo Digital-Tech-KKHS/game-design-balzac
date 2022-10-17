@@ -1,7 +1,7 @@
 #-=defining our values=-
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 960
-SCREEN_TITLE = "crackrooms"
+SCREEN_TITLE = "Level.Null()"
 RIGHT_FACING = 0
 LEFT_FACING = 1
 CHARACTER_SCALING = 0.4
