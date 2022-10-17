@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="17" nextobjectid="770">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="320" tileheight="320" infinite="0" nextlayerid="17" nextobjectid="778">
  <tileset firstgid="1" source="Wall.tsx"/>
  <tileset firstgid="37" source="props.tsx"/>
  <tileset firstgid="137" source="../Level 2 assets/concreet.tsx"/>
@@ -2959,6 +2959,46 @@
   <object id="769" gid="168" x="640" y="2240" width="320" height="320">
    <properties>
     <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="770" gid="168" x="1920" y="18560" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
+   </properties>
+  </object>
+  <object id="771" gid="168" x="2240" y="24960" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
+   </properties>
+  </object>
+  <object id="772" gid="168" x="9600" y="18560" width="320" height="320">
+   <properties>
+    <property name="type" value="wretch"/>
+   </properties>
+  </object>
+  <object id="773" gid="168" x="16960" y="8640" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="774" gid="168" x="15040" y="8960" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="775" gid="168" x="19520" y="12800" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
+   </properties>
+  </object>
+  <object id="776" gid="168" x="15680" y="16320" width="320" height="320">
+   <properties>
+    <property name="type" value="faceling"/>
+   </properties>
+  </object>
+  <object id="777" gid="168" x="960" y="15680" width="320" height="320">
+   <properties>
+    <property name="type" value="skin"/>
    </properties>
   </object>
  </objectgroup>
